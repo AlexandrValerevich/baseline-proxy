@@ -1,0 +1,1900 @@
+"""Exposes a URL that specifies the behaviour of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behaviour of this scalar."""
+  url: String!
+) on SCALAR
+
+type AssignedTrader {
+  id: Int!
+  name: String!
+  email: String!
+}
+
+type AwayTeamHandicapValue implements BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  base: Float!
+}
+
+interface BaseBothShoots {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[YesNo!]!]!
+}
+
+interface BaseDoubleChance {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[DoubleChanceFirstDoubleChanceBothDoubleChanceSecond!]!]!
+}
+
+interface BaseHandicap {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[HomeTeamHandicapValueAwayTeamHandicapValue!]!]!
+}
+
+interface BaseMarket {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+}
+
+interface BaseNthShoot {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  numberOfGoal: Int!
+  odds: [[FirstTeamNobodySecondTeam!]!]!
+}
+
+interface BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+}
+
+interface BaseScore {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[ScoreValue!]!]!
+}
+
+interface BaseTotal {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[LessMore!]!]!
+}
+
+interface BaseTotalOddEven {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[OddEven!]!]!
+}
+
+interface BaseTotalValue {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  base: Float!
+}
+
+interface BaseWinner {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[FirstTeamDrawSecondTeam!]!]!
+}
+
+type BetStop {
+  type: BetstopType!
+  value: BetstopStatus!
+  updatedBy: String!
+  updatedAt: String!
+}
+
+enum BetstopStatus {
+  ok
+  stop
+  ready_to_start
+}
+
+enum BetstopsTypes {
+  scout
+  system
+  analyst
+}
+
+enum BetstopsValues {
+  ok
+  timeout
+  stop
+  ready_to_stop
+  ready_to_start
+}
+
+enum BetstopType {
+  scout
+  system
+  analyst
+}
+
+type BothShoots implements BaseBothShoots & BaseMarket {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[YesNo!]!]!
+}
+
+enum CalculateStatus {
+  win
+  lose
+  not_calculated
+  refund
+  impossible
+}
+
+"""Date with time (isoformat)"""
+scalar DateTime
+
+type DoubleChance implements BaseDoubleChance & BaseMarket {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[DoubleChanceFirstDoubleChanceBothDoubleChanceSecond!]!]!
+}
+
+type DoubleChanceBoth implements BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+}
+
+type DoubleChanceFirst implements BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+}
+
+union DoubleChanceFirstDoubleChanceBothDoubleChanceSecond = DoubleChanceFirst | DoubleChanceBoth | DoubleChanceSecond
+
+type DoubleChanceSecond implements BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+}
+
+type Draw implements BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+}
+
+type Even implements BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+}
+
+type ExternalCountry {
+  id: Int!
+  name: String!
+  languageCode: String!
+}
+
+type ExternalSeason {
+  id: Int!
+  name: String!
+  startDate: String!
+  endDate: String!
+  languageCode: String!
+}
+
+type ExternalSport {
+  id: Int!
+  name: String!
+  languageCode: String!
+}
+
+type ExternalTeam {
+  id: Int!
+  name: String!
+  languageCode: String!
+}
+
+type ExternalTournament {
+  id: Int!
+  name: String!
+  languageCode: String!
+}
+
+type ExternalVenue {
+  id: Int!
+  name: String!
+  languageCode: String!
+}
+
+type FirstTeam implements BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+}
+
+union FirstTeamDrawSecondTeam = FirstTeam | Draw | SecondTeam
+
+union FirstTeamNobodySecondTeam = FirstTeam | Nobody | SecondTeam
+
+type Handicap implements BaseHandicap & BaseMarket {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[HomeTeamHandicapValueAwayTeamHandicapValue!]!]!
+}
+
+type HandicapValue implements MarketTeam & BaseOdd {
+  teamName: Team!
+
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  base: Float!
+}
+
+type HomeTeamHandicapValue implements BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  base: Float!
+}
+
+union HomeTeamHandicapValueAwayTeamHandicapValue = HomeTeamHandicapValue | AwayTeamHandicapValue
+
+type InternalEvent {
+  id: Int!
+  team: String!
+  matchId: Int!
+  eventName: String!
+  eventId: Int!
+  minutes: String!
+  timeOfEvent: String!
+  stage: Int!
+  eventTimestamp: Int!
+  playerId: Int
+  player: String
+  triggerId: String
+  changeType: String
+  timestamp: Float
+}
+
+type Less implements BaseTotalValue & BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  base: Float!
+}
+
+union LessMore = Less | More
+
+enum ManualOutcomeStatus {
+  manual
+  manual_recalculation
+  none
+}
+
+type MarketGroup {
+  id: Int!
+  name: String!
+  markets(matchId: Int!): [BaseMarket!]!
+  timestamp: Float!
+}
+
+enum MarketStatuses {
+  active
+  not_active
+}
+
+interface MarketTeam {
+  teamName: Team!
+}
+
+type Match {
+  id: Int!
+  name: String!
+  startedAt: String!
+  status: MatchStatus!
+  homeTeam: ExternalTeam!
+  awayTeam: ExternalTeam!
+  ingameTime: String
+  betstopStatus: BetstopsValues
+  refundStatus: Boolean
+  triggerId: String
+  options: Options
+  homeScore: Int
+  awayScore: Int
+  periodScores: [PeriodScores!]
+  period: Int
+  aftermatchShootouts: Boolean
+  shootoutsScores: ShootoutScores
+  timer: Int
+  timerStatus: TimerStatus
+  betstop: [BetStop!]
+  assignedTrader: AssignedTrader
+  leagueName: String
+  homeCorrection: Float
+  awayCorrection: Float
+  homeTotal: Float
+  awayTotal: Float
+  matchDelay: Boolean
+  timestamp: Float
+  season: ExternalSeason
+  tournament: ExternalTournament
+  sport: ExternalSport
+  country: ExternalCountry
+  venue: ExternalVenue
+}
+
+enum MatchStatus {
+  planned
+  prematch
+  live
+  done
+  forecast_missed
+}
+
+type More implements BaseTotalValue & BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  base: Float!
+}
+
+type Mutation {
+  reacalcOdd(matchId: Int!, marketId: Int!, oddId: Int!, status: RecalcStatus!): Void
+  refundAllOdds(matchId: Int!): Void
+  updateCorrection(matchId: Int!, homeCorrection: Float, awayCorrection: Float): Void
+  updateBetstop(matchId: Int!, betstopValue: BetstopStatus!, betstopType: BetstopType!): Void
+
+  """Assign trader to match"""
+  assignTrader(userId: Int!, matchId: Int!): Void
+}
+
+type NextShoot implements BaseNthShoot & BaseMarket {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  numberOfGoal: Int!
+  odds: [[FirstTeamNobodySecondTeam!]!]!
+}
+
+type No implements BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+}
+
+type Nobody implements BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+}
+
+type Odd implements BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+}
+
+union OddEven = Odd | Even
+
+enum OddStatuses {
+  active
+  not_active
+}
+
+enum OddTrends {
+  up
+  down
+  na
+}
+
+type Options {
+  periods: Int!
+  periodTime: Int!
+}
+
+interface Period {
+  period: Int!
+}
+
+type PeriodBothShoots implements Period & BaseBothShoots & BaseMarket {
+  period: Int!
+
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[YesNo!]!]!
+}
+
+type PeriodDoubleChance implements Period & BaseDoubleChance & BaseMarket {
+  period: Int!
+
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[DoubleChanceFirstDoubleChanceBothDoubleChanceSecond!]!]!
+}
+
+type PeriodHandicap implements Period & BaseHandicap & BaseMarket {
+  period: Int!
+
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[HomeTeamHandicapValueAwayTeamHandicapValue!]!]!
+}
+
+type PeriodNextShoot implements Period & BaseNthShoot & BaseMarket {
+  period: Int!
+
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  numberOfGoal: Int!
+  odds: [[FirstTeamNobodySecondTeam!]!]!
+}
+
+type PeriodScore implements Period & BaseScore & BaseMarket {
+  period: Int!
+
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[ScoreValue!]!]!
+}
+
+type PeriodScores {
+  period: Int!
+  homeScore: Int!
+  awayScore: Int!
+}
+
+type PeriodTeamTotal implements Period & MarketTeam & BaseTotal & BaseMarket {
+  period: Int!
+  teamName: Team!
+
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[LessMore!]!]!
+}
+
+type PeriodTeamTotalOddEven implements Period & MarketTeam & BaseTotalOddEven & BaseMarket {
+  period: Int!
+  teamName: Team!
+
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[OddEven!]!]!
+}
+
+type PeriodTotal implements Period & BaseTotal & BaseMarket {
+  period: Int!
+
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[LessMore!]!]!
+}
+
+type PeriodTotalOddEven implements Period & BaseTotalOddEven & BaseMarket {
+  period: Int!
+
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[OddEven!]!]!
+}
+
+type PeriodWinner implements Period & BaseWinner & BaseMarket {
+  period: Int!
+
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[FirstTeamDrawSecondTeam!]!]!
+}
+
+type Query {
+  marketGroups(sportId: Int!, bookmakerId: Int!): [MarketGroup!]!
+  match(matchId: Int!, clientId: Int!): Match!
+  matches(dateFrom: String!, dateTo: String!, status: MatchStatus = null, clientId: Int = null, allCalculated: Boolean = null): [Match!]!
+  getMatchScoutEvents(matchId: Int = null, timeFrom: DateTime = null, timeTo: DateTime = null): [InternalEvent!]!
+}
+
+enum RecalcStatus {
+  win
+  lose
+  refund
+  cancel_calculation
+}
+
+type Score implements BaseScore & BaseMarket {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[ScoreValue!]!]!
+}
+
+type ScoreValue implements BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  first: Int!
+  second: Int!
+}
+
+type SecondTeam implements BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+}
+
+type ShootoutNextScore implements BaseMarket {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  numberOfGoal: Int!
+  odds: [[YesNo!]!]!
+}
+
+type ShootoutScores {
+  homeScores: [Int!]!
+  awayScores: [Int!]!
+}
+
+"""
+
+# Live updates available here
+
+Instead of using ordinary graphql subscription you also can use amqp.
+
+
+## AMQP
+
+Connection string is `amqp://bs.underlined.link:15672/demo`
+
+Host will be changed when we'll run service in production.
+
+## SSL
+
+For now it available without ssl. Ssl setting will provided soon. 
+
+## Authentication
+
+Currently you can access `demo` virtual host with `demo`:`demo` credentials.
+
+In production it will be replaced with `prod`, `stage` and `test` virtual hosts,
+accessible with organization name as a login and access token as a password.
+
+
+## Queues
+
+Every match data stream divided into two queues:
+
+`{org_name}-{match_id}-markets` and `{org_name}-{match_id}-outcomes`.
+
+E.g. for demo it may look like `demo-42-markets` and `demo-42-outcomes`.
+
+The format of both data streams are same, see `markets` section bellow.  
+
+## Markets' Lifecycle
+
+In our terminology, we define *Market* as structure describing type of an odd (e.g. Total, Winner, Handicap) and containing
+data describing current state of the market. Every *Market* also contains embedded structure called *Odd*.
+
+*Odd* is a structure containing information about bid such as value of
+coefficient, state of the odd and its type (e.g. FirstTeam for Winner markets, 
+More or Less for Total markets).
+
+See `implementations` to learn about all available market types.
+
+For now, clients will recieve updates every time the system detected new event,
+that triggers it. It could be new update from scout, 
+changing value of correction, updating betstop status etc. Clients will always recieve full line.
+
+### State of Market
+
+*Market's* attribute `status` may switch from `active` to `not_active`. For
+example, markets of the first period becoming not active 
+rigth after ending of the first period.
+
+*Market's* attribute `betstop_status` and `betstop_type` may switch is case of three reasons:
+1) Our system detected not valid feed from scout and put betstop
+2) Scout sended betstop event
+3) Analyst put manual betstop
+
+
+"""
+type Subscription {
+  """
+  
+  Represents one market.
+  
+  See `implementations` to learn about all available market types.
+  
+  ## AMQP queues
+  
+  * `{org_name}-{match_id}-markets` for example `demo-42-markets`
+  
+  * `{org_name}-{match_id}-outcomes` for example `demo-42-outcomes` 
+  
+  """
+  markets(matchId: Int!): [BaseMarket!]!
+  match(matchId: Int!, clientId: Int!): Match!
+}
+
+enum SystemOutcomeStatus {
+  auto
+  scout_error
+}
+
+enum Team {
+  HOME_TEAM
+  AWAY_TEAM
+}
+
+type TeamTotal implements MarketTeam & BaseTotal & BaseMarket {
+  teamName: Team!
+
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[LessMore!]!]!
+}
+
+enum TimerStatus {
+  stopped
+  running
+}
+
+type Total implements BaseTotal & BaseMarket {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[LessMore!]!]!
+}
+
+type TotalOddEven implements BaseTotalOddEven & BaseMarket {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[OddEven!]!]!
+}
+
+"""Represents NULL values"""
+scalar Void
+
+type WillShoots implements BaseMarket {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[YesNo!]!]!
+}
+
+type Winner implements BaseWinner & BaseMarket {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[FirstTeamDrawSecondTeam!]!]!
+}
+
+type WinnerWithShoots implements BaseWinner & BaseMarket {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Status of the market (possibility of betting) (active/not_active)"""
+  status: MarketStatuses!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+  odds: [[FirstTeamDrawSecondTeam!]!]!
+}
+
+type Yes implements BaseOdd {
+  """Uniq within match"""
+  id: Int!
+
+  """Localized name"""
+  name: String!
+
+  """Value of coefficient"""
+  value: Float!
+
+  """Value of coefficient without book's margin"""
+  valueWithoutMargin: Float!
+
+  """Trend of coefficient (up/down/na)"""
+  trend: OddTrends!
+
+  """Status of the odd (possibility of betting) (active/not_active)"""
+  status: OddStatuses!
+
+  """Calculation result (win/lose/refund/not_calculated)"""
+  calculationStatus: CalculateStatus!
+
+  """
+  Determines whether the calculation result was automatic or there was a data error from the scout (auto/scout_error)
+  """
+  outcomeStatusSystem: SystemOutcomeStatus!
+
+  """
+  Determines whether the calculation result was changed manually from initial
+  state of bet or it was manually recalculated (manual/manual_recalculation)
+  """
+  outcomeStatusManual: ManualOutcomeStatus!
+
+  """
+  Status of current betstop (if it actually happens). Default value is 'ok' (ok/stop/ready_to_start)
+  """
+  betstopStatus: BetstopsValues!
+
+  """Determines who raised betstop (system/scout/analyst)"""
+  betstopType: BetstopsTypes!
+  className: String!
+  classNameId: Int!
+}
+
+union YesNo = Yes | No
+
