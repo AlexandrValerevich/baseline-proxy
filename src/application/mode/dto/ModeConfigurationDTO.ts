@@ -1,6 +1,10 @@
+import { ModeDTO } from "./ModeDTO.js";
+
 interface ModeConfigurationDTO {
   mode: ModeDTO;
-  errors: ErrorDTO[];
-  randomErrors: { count: number; sended: number };
+  errorOnce: ErrorDTO;
+  errorInfinity: ErrorDTO;
   queriesResponses: PredefinedResponsesDTO;
 }
+
+export { ModeConfigurationDTO };
