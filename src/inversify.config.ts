@@ -1,8 +1,6 @@
 import { Container } from "inversify";
-import {
-  IScoutService,
-  ScoutService,
-} from "./application/scouts/ScoutService.js";
+import { RandomScoutService } from "./application/scouts/RandomScoutService.js";
+import { IScoutService } from "./application/scouts/IScoutService.js";
 import {
   IModeConfigurationService,
   ModeConfigurationService,
@@ -17,7 +15,13 @@ const TYPES = {
 
 container
   .bind<IScoutService>(TYPES.ScoutsService)
-  .to(ScoutService)
+  .toDynamicValue((context) => {
+    // const modeService = context.container.get<IModeConfigurationService>(
+    //   TYPES.ModeConfigurationService
+    // );
+    // const mode = modeService.read();
+    return new RandomScoutService();
+  })
   .inRequestScope();
 
 container

@@ -1,4 +1,4 @@
-const typeDef = `#graphql
+const typeDefs = `#graphql
 """Date with time (iso format)"""
 scalar DateTime
 
@@ -192,4 +192,4 @@ type PredefinedResponses {
 }
 `;
 
-export { typeDef };
+export { typeDefs };

@@ -9,9 +9,7 @@ interface IModeConfigurationService {
   setRandomMode(): ModeConfigurationDTO;
   setErrorsMode(errors: ErrorDTO[]): ModeConfigurationDTO;
   serRandomErrorsMode(count: number): ModeConfigurationDTO;
-  setPredefinedResponseMode(
-    responses: PredefinedResponsesDTO
-  ): ModeConfigurationDTO;
+  setPredefinedResponseMode(responses: PredefinedResponsesDTO): ModeConfigurationDTO;
 }
 
 @injectable()
@@ -53,9 +51,7 @@ class ModeConfigurationService implements IModeConfigurationService {
   serRandomErrorsMode(count: number): ModeConfigurationDTO {
     throw new Error("Method not implemented.");
   }
-  setPredefinedResponseMode(
-    responses: PredefinedResponsesDTO
-  ): ModeConfigurationDTO {
+  setPredefinedResponseMode(responses: PredefinedResponsesDTO): ModeConfigurationDTO {
     throw new Error("Method not implemented.");
   }
 }

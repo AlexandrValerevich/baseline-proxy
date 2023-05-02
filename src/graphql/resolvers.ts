@@ -1,28 +1,98 @@
+import { ApolloServerErrorCode } from "@apollo/server/errors";
 import { ModeDTO } from "../application/mode/dto/ModeDTO.js";
-import { graphQlDateTime } from "./graphQlDateTime.js";
+import { GraphQLError, GraphQLScalarType, Kind } from "graphql";
 
-const queryResolver = {
+const query = {
   Query: {
     matches: () => [],
     getMatchScoutEvents: (_, { timeFrom, timeTo }, { scoutService }, __) => {
       console.info(
-        `Start resolving getMatchScoutEvents(timeFrom: ${timeFrom}, timeTo: ${timeTo}).`
+        `Start resolving getMatchScoutEvents(timeFrom: ${timeFrom}, timeTo: ${timeTo}).`,
       );
-      return scoutService.getScouts({
+
+      const response = scoutService.getScouts({
         timeFrom: timeFrom,
         timeTo: timeTo,
       });
+
+      console.info(
+        `End resolving getMatchScoutEvents(timeFrom: ${timeFrom}, timeTo: ${timeTo}). Response: ${response}`,
+      );
+      return response;
     },
     getModeConfiguration: (_, __, { modeConfigurationsService }, ___) =>
       modeConfigurationsService.read(),
   },
 };
 
-const dateTimeResolver = {
-  DateTime: graphQlDateTime,
+const dateTime = {
+  DateTime: new GraphQLScalarType({
+    name: "DateTime",
+    description: "Date with time (iso format)",
+    parseValue: (value) => {
+      if (typeof value !== "string") {
+        throw new GraphQLError(
+          `GraphQL DateTime Scalar requires a string input, but received: ${typeof value}`,
+          {
+            extensions: {
+              code: ApolloServerErrorCode.BAD_USER_INPUT,
+              http: { status: 400 },
+            },
+          },
+        );
+      }
+
+      const date = new Date(value);
+
+      if (!date.IsValid()) {
+        throw new GraphQLError(`GraphQL DateTime Scalar failed parse. Provided value: [${value}]`, {
+          extensions: {
+            code: ApolloServerErrorCode.BAD_USER_INPUT,
+            http: { status: 400 },
+          },
+        });
+      }
+
+      return date;
+    },
+    serialize: (value) => {
+      if (value instanceof Date) {
+        return value.toISOString(); // Convert outgoing Date to ISO Date for JSON
+      }
+      throw new GraphQLError("GraphQL DateTime Scalar serializer expected a `Date` object", {
+        extensions: {
+          code: ApolloServerErrorCode.INTERNAL_SERVER_ERROR,
+          http: { status: 500 },
+        },
+      });
+    },
+    parseLiteral: (ast) => {
+      if (ast.kind !== Kind.STRING) {
+        throw new GraphQLError("Provided value is not an ISO Date", {
+          extensions: {
+            code: ApolloServerErrorCode.BAD_USER_INPUT,
+            http: { status: 400 },
+          },
+        });
+      }
+
+      const date = new Date(ast.value);
+
+      if (!date.IsValid()) {
+        throw new GraphQLError("Invalid ISO Date provided", {
+          extensions: {
+            code: ApolloServerErrorCode.BAD_USER_INPUT,
+            http: { status: 400 },
+          },
+        });
+      }
+
+      return date;
+    },
+  }),
 };
 
-const modeResolver = {
+const mode = {
   Mode: {
     direct: ModeDTO.Direct,
     error_infinity: ModeDTO.ErrorInfinity,
@@ -32,6 +102,6 @@ const modeResolver = {
   },
 };
 
-const resolvers = [queryResolver, modeResolver, dateTimeResolver];
+const resolvers = [query, mode, dateTime];
 
 export { resolvers };
