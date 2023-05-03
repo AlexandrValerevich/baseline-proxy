@@ -6,18 +6,10 @@ const query = {
   Query: {
     matches: () => [],
     getMatchScoutEvents: (_, { timeFrom, timeTo }, { scoutService }, __) => {
-      console.info(
-        `Start resolving getMatchScoutEvents(timeFrom: ${timeFrom}, timeTo: ${timeTo}).`,
-      );
-
       const response = scoutService.getScouts({
         timeFrom: timeFrom,
         timeTo: timeTo,
       });
-
-      console.info(
-        `End resolving getMatchScoutEvents(timeFrom: ${timeFrom}, timeTo: ${timeTo}). Response: ${response}`,
-      );
       return response;
     },
     getModeConfiguration: (_, __, { modeConfigurationsService }, ___) =>

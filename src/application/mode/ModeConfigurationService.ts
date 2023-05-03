@@ -1,6 +1,7 @@
 import { injectable } from "inversify";
 import { ModeDTO } from "./dto/ModeDTO.js";
 import { ModeConfigurationDTO } from "./dto/ModeConfigurationDTO.js";
+import { PredefinedResponsesDTO } from "./dto/PredefinedResponsesDTO.js";
 
 interface IModeConfigurationService {
   read(): ModeConfigurationDTO;
@@ -33,7 +34,6 @@ class ModeConfigurationService implements IModeConfigurationService {
   private configuration: ModeConfigurationDTO;
 
   read(): ModeConfigurationDTO {
-    console.log(this.configuration);
     return this.configuration;
   }
   write(config: ModeConfigurationDTO): ModeConfigurationDTO {

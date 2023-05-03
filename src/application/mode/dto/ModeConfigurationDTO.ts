@@ -1,4 +1,5 @@
 import { ModeDTO } from "./ModeDTO.js";
+import { PredefinedResponsesDTO } from "./PredefinedResponsesDTO.js";
 
 interface ModeConfigurationDTO {
   mode: ModeDTO;

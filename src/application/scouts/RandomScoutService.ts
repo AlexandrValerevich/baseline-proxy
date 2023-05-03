@@ -6,6 +6,7 @@ import { getScoutsForPeriodQueryValidationScheme } from "./validation/getScoutsF
 import { IScoutService } from "./IScoutService.js";
 import { faker } from "@faker-js/faker";
 import { v4 as uuidv4 } from "uuid";
+import { ScoutEventTypeDTO } from "./models/ScoutEventTypeDTO.js";
 
 @injectable()
 class RandomScoutService implements IScoutService {
@@ -29,12 +30,18 @@ class RandomScoutService implements IScoutService {
     const randomSecond = faker.datatype.number({ min: 0, max: 59 });
     const randomTime = `0${randomMinute}:${randomSecond}`;
 
+    const scoutEventTypeValues: (string | ScoutEventTypeDTO)[] = Object.values(
+      ScoutEventTypeDTO,
+    ).filter((x) => typeof x === "number");
+    const randomEventTypeId: number = Number(faker.helpers.arrayElement(scoutEventTypeValues));
+    const randomEventName: string = ScoutEventTypeDTO[randomEventTypeId];
+
     return {
       id: faker.datatype.number(),
       team: faker.company.name(),
       matchId: faker.datatype.number(),
-      eventName: faker.random.word(),
-      eventId: faker.datatype.number(),
+      eventName: randomEventName,
+      eventId: randomEventTypeId,
       minutes: randomTime,
       timeOfEvent: faker.date.recent().toString(),
       stage: faker.datatype.number({ min: 1, max: 4 }),

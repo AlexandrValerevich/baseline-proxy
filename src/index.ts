@@ -7,6 +7,7 @@ import { IModeConfigurationService } from "./application/mode/ModeConfigurationS
 import { typeDefs } from "./graphql/schema.js";
 import { resolvers } from "./graphql/resolvers.js";
 import { Container } from "inversify";
+import { LoggingPlugin } from "./plugins/LoggingPlugin.js";
 
 interface IValueContext {
   serviceProvider: Container;
@@ -17,6 +18,8 @@ interface IValueContext {
 const serverOptions: ApolloServerOptions<IValueContext> = {
   typeDefs: typeDefs,
   resolvers: resolvers,
+  plugins: [new LoggingPlugin()],
+  introspection: !(process.env.NODE_ENV === "production"),
 };
 const server = new ApolloServer<IValueContext>(serverOptions);
 
