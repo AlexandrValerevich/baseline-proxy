@@ -19,10 +19,12 @@ class LoggingPlugin implements ApolloServerPlugin {
         if (request.operationName !== "IntrospectionQuery") {
           logger.info(`
             ${chalk.blue("GraphQL request is handled.")}
-            ${chalk.green("Request:")} ${JSON.stringify(request)
-            .replace(/\\n|\\r/g, "")
-            .replace(/[ \t]{2,}/g, " ")},
-            ${chalk.green("Response:")} ${JSON.stringify(response)}
+            ${chalk.green("Request:")} 
+            ${JSON.stringify(request)
+              .replace(/\\n|\\r/g, "")
+              .replace(/[ \t]{2,}/g, " ")},
+            ${chalk.green("Response:")} 
+            ${JSON.stringify(response)}
           `);
         }
       },

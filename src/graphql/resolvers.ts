@@ -24,6 +24,20 @@ const mutation = {
       console.log("Start handler SetDelay");
       return modeConfigurationsService.setDelay(delay);
     },
+    setDirectMode: (_, ___, { modeConfigurationsService }: IValueContext, __) =>
+      modeConfigurationsService.setDirectMode(),
+    setRandomMode: (_, ___, { modeConfigurationsService }: IValueContext, __) =>
+      modeConfigurationsService.setRandomMode(),
+    setErrorOnceMode: (_, { error }, { modeConfigurationsService }: IValueContext, __) =>
+      modeConfigurationsService.setErrorOnceMode(error),
+    setErrorInfinityMode: (_, { error }, { modeConfigurationsService }: IValueContext, __) =>
+      modeConfigurationsService.setErrorInfinityMode(error),
+    setPredefinedResponseMode: (
+      _,
+      { responses },
+      { modeConfigurationsService }: IValueContext,
+      __,
+    ) => modeConfigurationsService.setPredefinedResponseMode(responses),
   },
 };
 

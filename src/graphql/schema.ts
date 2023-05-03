@@ -10,11 +10,10 @@ type Query {
 
 type Mutation{
   setDelay(delay: Int!): ModeConfiguration!
-
   setDirectMode: ModeConfiguration!
   setRandomMode: ModeConfiguration!
-  setErrorsOnceMode(error: ErrorModelInput): ModeConfiguration!
-  setErrorsInfinityMode(error: ErrorModelInput): ModeConfiguration!
+  setErrorOnceMode(error: ErrorModelInput): ModeConfiguration!
+  setErrorInfinityMode(error: ErrorModelInput): ModeConfiguration!
   setPredefinedResponseMode(responses: PredefinedResponsesModelInput): ModeConfiguration!
 }
 

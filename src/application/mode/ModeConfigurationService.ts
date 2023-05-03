@@ -5,6 +5,7 @@ import { PredefinedResponsesDTO } from "./dto/PredefinedResponsesDTO.js";
 import { IModeConfigurationService } from "./IModeConfigurationService.js";
 import { ValidationError } from "../exceptions/ValidationError.js";
 import { errorDTOValidator, predefinedResponsesDTOValidator } from "./dto/validation.js";
+import chalk from "chalk";
 
 @injectable()
 class ModeConfigurationService implements IModeConfigurationService {
@@ -24,26 +25,38 @@ class ModeConfigurationService implements IModeConfigurationService {
       delay: 1000,
     };
   }
+
+  getModeConfiguration(): ModeConfigurationDTO {
+    return this.configuration;
+  }
+
   setDelay(delay: number): ModeConfigurationDTO {
     if (delay <= 0) {
       throw new ValidationError(`Provided delay value less than 0. Delay ${delay}`);
     }
     this.configuration.delay = delay;
-    return this.configuration;
-  }
 
-  getModeConfiguration(): ModeConfigurationDTO {
+    console.log(
+      `${chalk.blue("New configuration value is set")}. ${chalk.green("Configuration")}: ${
+        this.configuration
+      }`,
+    );
+
     return this.configuration;
   }
   setDirectMode(): ModeConfigurationDTO {
     this.configuration.mode = ModeDTO.Direct;
+
+    this.logNewConfigurationValue();
     return this.configuration;
   }
   setRandomMode(): ModeConfigurationDTO {
     this.configuration.mode = ModeDTO.Random;
+
+    this.logNewConfigurationValue();
     return this.configuration;
   }
-  setErrorsOnceMode(error: ErrorDTO): ModeConfigurationDTO {
+  setErrorOnceMode(error: ErrorDTO): ModeConfigurationDTO {
     const validateResult = errorDTOValidator.validate(error);
     if (validateResult.error) {
       throw new ValidationError(
@@ -52,11 +65,14 @@ class ModeConfigurationService implements IModeConfigurationService {
       );
     }
 
-    this.configuration.mode = ModeDTO.ErrorInfinity;
+    this.configuration.mode = ModeDTO.ErrorOnce;
     this.configuration.errorOnce = error;
+
+    this.logNewConfigurationValue();
+
     return this.configuration;
   }
-  setErrorsInfinityMode(error: ErrorDTO): ModeConfigurationDTO {
+  setErrorInfinityMode(error: ErrorDTO): ModeConfigurationDTO {
     const validateResult = errorDTOValidator.validate(error);
     if (validateResult.error) {
       throw new ValidationError(
@@ -67,6 +83,9 @@ class ModeConfigurationService implements IModeConfigurationService {
 
     this.configuration.mode = ModeDTO.ErrorInfinity;
     this.configuration.errorInfinity = error;
+
+    this.logNewConfigurationValue();
+
     return this.configuration;
   }
   setPredefinedResponseMode(responses: PredefinedResponsesDTO): ModeConfigurationDTO {
@@ -76,7 +95,18 @@ class ModeConfigurationService implements IModeConfigurationService {
     }
     this.configuration.mode = ModeDTO.ErrorInfinity;
     this.configuration.queriesResponses = responses;
+
+    this.logNewConfigurationValue();
+
     return this.configuration;
+  }
+
+  private logNewConfigurationValue() {
+    console.log(
+      `${chalk.blue("New configuration value is set")}. ${chalk.green(
+        "Configuration",
+      )}: ${JSON.stringify(this.configuration)}`,
+    );
   }
 }
 

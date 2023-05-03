@@ -44,22 +44,11 @@ class BaseLineClient implements IBaseLineClient {
         scouts: ScoutModel[];
       };
 
-      console.log(`
-        ${chalk.blue("Send graphql request to BaseLine Api is completed successfully.")}
-        ${chalk.green("Query:")} ${query},
-        ${chalk.green("Variables:")} ${JSON.stringify(variables)},
-        ${chalk.green("Operation Name:")} ${operationName},
-        ${chalk.green("Response:")} ${JSON.stringify(data)}
-    `);
+      this.logSuccess(query, variables, operationName, data);
 
       return data.scouts;
     } catch (ex) {
-      console.error(`
-        ${chalk.blue(`Send graphql request to BaseLine Api has failed. ${ex}`)}
-        ${chalk.green("Query:")} ${query},
-        ${chalk.green("Variables:")} ${JSON.stringify(variables)},
-        ${chalk.green("Operation Name:")} ${operationName},
-      `);
+      this.logError(ex, variables, query, operationName);
     }
   }
 
@@ -160,26 +149,43 @@ class BaseLineClient implements IBaseLineClient {
     };
     try {
       const data = (await this.client.request(query, variables, { operationName })) as {
-        scouts: MatchModel[];
+        matches: MatchModel[];
       };
 
-      console.log(`
-        ${chalk.blue("Send graphql request to BaseLine Api is completed successfully.")}
-        ${chalk.green("Query:")} ${query},
-        ${chalk.green("Variables:")} ${JSON.stringify(variables)},
-        ${chalk.green("Operation Name:")} ${operationName},
-        ${chalk.green("Response:")} ${JSON.stringify(data)}
-    `);
+      this.logSuccess(query, variables, operationName, data);
 
-      return data.scouts;
+      return data.matches;
     } catch (ex) {
-      console.error(`
-        ${chalk.blue(`Send graphql request to BaseLine Api has failed. ${ex}`)}
-        ${chalk.green("Query:")} ${query},
-        ${chalk.green("Variables:")} ${JSON.stringify(variables)},
-        ${chalk.green("Operation Name:")} ${operationName},
-      `);
+      this.logError(ex, variables, query, operationName);
     }
+  }
+
+  private logSuccess(query: string, variables: any, operationName: string, data: any) {
+    console.log(`
+        ${chalk.blue("Send graphql request to BaseLine Api is completed successfully.")}
+        ${chalk.green("Query:")} 
+        ${query},
+        ${chalk.green("Variables:")} 
+        ${JSON.stringify(variables)},
+        ${chalk.green("Operation Name:")} 
+        ${operationName},
+        ${chalk.green("Response:")} 
+        ${JSON.stringify(data)}
+    `);
+  }
+
+  private logError(ex: any, variables: any, query: string, operationName: string) {
+    console.error(`
+        ${chalk.blue(`Send graphql request to BaseLine Api has failed. 
+        ${chalk.green("Exception:")} 
+        ${ex}`)}
+        ${chalk.green("Query:")} 
+        ${query},
+        ${chalk.green("Variables:")} 
+        ${JSON.stringify(variables)},
+        ${chalk.green("Operation Name:")} 
+        ${operationName},
+      `);
   }
 }
 

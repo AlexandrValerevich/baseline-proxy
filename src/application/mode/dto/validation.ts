@@ -7,6 +7,7 @@ const errorDTOValidator = Joi.object<ErrorDTO>({
   http: Joi.object<{ status: number }>({
     status: Joi.number().integer().min(400).max(599),
   }),
+  details: Joi.string().not().required(),
 });
 
 const scoutDTOValidator = Joi.object<ScoutDTO>({

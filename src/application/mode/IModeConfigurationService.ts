@@ -6,7 +6,7 @@ export interface IModeConfigurationService {
   setDelay(delay: number): ModeConfigurationDTO;
   setDirectMode(): ModeConfigurationDTO;
   setRandomMode(): ModeConfigurationDTO;
-  setErrorsOnceMode(error: ErrorDTO): ModeConfigurationDTO;
-  setErrorsInfinityMode(error: ErrorDTO): ModeConfigurationDTO;
+  setErrorOnceMode(error: ErrorDTO): ModeConfigurationDTO;
+  setErrorInfinityMode(error: ErrorDTO): ModeConfigurationDTO;
   setPredefinedResponseMode(responses: PredefinedResponsesDTO): ModeConfigurationDTO;
 }
