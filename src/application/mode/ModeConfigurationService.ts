@@ -2,16 +2,7 @@ import { injectable } from "inversify";
 import { ModeDTO } from "./dto/ModeDTO.js";
 import { ModeConfigurationDTO } from "./dto/ModeConfigurationDTO.js";
 import { PredefinedResponsesDTO } from "./dto/PredefinedResponsesDTO.js";
-
-interface IModeConfigurationService {
-  read(): ModeConfigurationDTO;
-  write(config: ModeConfigurationDTO): ModeConfigurationDTO;
-  setDirectMode(): ModeConfigurationDTO;
-  setRandomMode(): ModeConfigurationDTO;
-  setErrorsMode(errors: ErrorDTO[]): ModeConfigurationDTO;
-  serRandomErrorsMode(count: number): ModeConfigurationDTO;
-  setPredefinedResponseMode(responses: PredefinedResponsesDTO): ModeConfigurationDTO;
-}
+import { IModeConfigurationService } from "./IModeConfigurationService.js";
 
 @injectable()
 class ModeConfigurationService implements IModeConfigurationService {
@@ -29,14 +20,15 @@ class ModeConfigurationService implements IModeConfigurationService {
       errorOnce: defaultError,
       errorInfinity: defaultError,
       queriesResponses: { scouts: [], matches: [] },
+      delay: 1000,
     };
   }
   private configuration: ModeConfigurationDTO;
 
-  read(): ModeConfigurationDTO {
+  getModeConfiguration(): ModeConfigurationDTO {
     return this.configuration;
   }
-  write(config: ModeConfigurationDTO): ModeConfigurationDTO {
+  setModeConfiguration(config: ModeConfigurationDTO): ModeConfigurationDTO {
     throw new Error("Method not implemented.");
   }
   setDirectMode(): ModeConfigurationDTO {

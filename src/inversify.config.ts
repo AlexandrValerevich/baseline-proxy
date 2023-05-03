@@ -2,9 +2,9 @@ import { Container } from "inversify";
 import { RandomScoutService } from "./application/scouts/RandomScoutService.js";
 import { IScoutService } from "./application/scouts/IScoutService.js";
 import {
-  IModeConfigurationService,
   ModeConfigurationService,
 } from "./application/mode/ModeConfigurationService.js";
+import { IModeConfigurationService } from "./application/mode/IModeConfigurationService.js";
 
 const container = new Container();
 

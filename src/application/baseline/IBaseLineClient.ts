@@ -1,0 +1,4 @@
+interface IBaseLineClient {
+  getScoutsForPeriod();
+  getMatchesForPeriod();
+}

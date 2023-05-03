@@ -13,7 +13,7 @@ const query = {
       return response;
     },
     getModeConfiguration: (_, __, { modeConfigurationsService }, ___) =>
-      modeConfigurationsService.read(),
+      modeConfigurationsService.getModeConfiguration(),
   },
 };
 

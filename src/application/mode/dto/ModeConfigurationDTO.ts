@@ -6,6 +6,7 @@ interface ModeConfigurationDTO {
   errorOnce: ErrorDTO;
   errorInfinity: ErrorDTO;
   queriesResponses: PredefinedResponsesDTO;
+  delay: number;
 }
 
 export { ModeConfigurationDTO };
