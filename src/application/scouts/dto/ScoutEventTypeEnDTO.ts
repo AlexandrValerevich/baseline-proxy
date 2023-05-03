@@ -1,4 +1,4 @@
-enum ScoutEventTypeDTO {
+enum ScoutEventTypeEnDTO {
   Goal = 13,
   Assist = 15,
   Violation = 16,
@@ -33,4 +33,4 @@ enum ScoutEventTypeDTO {
   PenaltyShot = 72,
 }
 
-export { ScoutEventTypeDTO };
+export { ScoutEventTypeEnDTO };

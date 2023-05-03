@@ -2,15 +2,16 @@ import "reflect-metadata";
 import "../extensions/validation-error-extensions.js";
 import { injectable } from "inversify";
 import { ValidationError } from "../exceptions/ValidationError.js";
-import { getScoutsForPeriodQueryValidationScheme } from "./validation/getScoutsForPeriodQueryValidationScheme.js";
+import { getScoutsForPeriodQueryValidationScheme } from "./dto/validation.js";
 import { IScoutService } from "./IScoutService.js";
 import { faker } from "@faker-js/faker";
 import { v4 as uuidv4 } from "uuid";
-import { ScoutEventTypeDTO } from "./models/ScoutEventTypeDTO.js";
+import chalk from "chalk";
+import { ScoutEventTypeRuDTO } from "./dto/ScoutEventTypeRuDTO.js";
 
 @injectable()
 class RandomScoutService implements IScoutService {
-  getScouts(query: GetScoutsForPeriodQuery): ScoutDTO[] {
+  async getScouts(query: GetScoutsForPeriodQuery): Promise<ScoutDTO[]> {
     const { error } = getScoutsForPeriodQueryValidationScheme.validate(query);
     if (error) {
       throw new ValidationError(error.message, error.detailsAsSting());
@@ -22,6 +23,8 @@ class RandomScoutService implements IScoutService {
       scoutDTOs.push(this.generateRandomScoutDTO());
     }
 
+    console.info(`${chalk.blue("Generate random scout data.")}`);
+
     return scoutDTOs;
   }
 
@@ -30,11 +33,11 @@ class RandomScoutService implements IScoutService {
     const randomSecond = faker.datatype.number({ min: 0, max: 59 });
     const randomTime = `0${randomMinute}:${randomSecond}`;
 
-    const scoutEventTypeValues: (string | ScoutEventTypeDTO)[] = Object.values(
-      ScoutEventTypeDTO,
+    const scoutEventTypeValues: (string | ScoutEventTypeRuDTO)[] = Object.values(
+      ScoutEventTypeRuDTO,
     ).filter((x) => typeof x === "number");
     const randomEventTypeId: number = Number(faker.helpers.arrayElement(scoutEventTypeValues));
-    const randomEventName: string = ScoutEventTypeDTO[randomEventTypeId];
+    const randomEventName: string = ScoutEventTypeRuDTO[randomEventTypeId];
 
     return {
       id: faker.datatype.number(),
@@ -49,7 +52,7 @@ class RandomScoutService implements IScoutService {
       playerId: faker.datatype.number(),
       player: faker.name.fullName(),
       triggerId: uuidv4(),
-      changeType: faker.random.word(),
+      changeType: faker.helpers.arrayElement(["ADDED", "REMOVED", "SYSTEM"]),
       timestamp: faker.datatype.number(),
     };
   }

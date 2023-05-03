@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-const getScoutsForPeriodQueryValidationScheme = Joi.object({
+const getScoutsForPeriodQueryValidationScheme = Joi.object<GetScoutsForPeriodQuery>({
   timeFrom: Joi.date().required(),
   timeTo: Joi.date().required(),
 });

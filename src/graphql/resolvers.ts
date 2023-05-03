@@ -1,19 +1,29 @@
 import { ApolloServerErrorCode } from "@apollo/server/errors";
 import { ModeDTO } from "../application/mode/dto/ModeDTO.js";
 import { GraphQLError, GraphQLScalarType, Kind } from "graphql";
+import { IValueContext } from "./context.js";
 
 const query = {
   Query: {
     matches: () => [],
-    getMatchScoutEvents: (_, { timeFrom, timeTo }, { scoutService }, __) => {
+    getMatchScoutEvents: (_, { timeFrom, timeTo }, { scoutService }: IValueContext, __) => {
       const response = scoutService.getScouts({
         timeFrom: timeFrom,
         timeTo: timeTo,
       });
       return response;
     },
-    getModeConfiguration: (_, __, { modeConfigurationsService }, ___) =>
+    getModeConfiguration: (_, __, { modeConfigurationsService }: IValueContext, ___) =>
       modeConfigurationsService.getModeConfiguration(),
+  },
+};
+
+const mutation = {
+  Mutation: {
+    setDelay: (_, { delay }, { modeConfigurationsService }: IValueContext, __) => {
+      console.log("Start handler SetDelay");
+      return modeConfigurationsService.setDelay(delay);
+    },
   },
 };
 
@@ -94,6 +104,6 @@ const mode = {
   },
 };
 
-const resolvers = [query, mode, dateTime];
+const resolvers = [query, mutation, mode, dateTime];
 
 export { resolvers };

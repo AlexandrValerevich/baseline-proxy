@@ -1,3 +1,3 @@
 export interface IScoutService {
-  getScouts(query: GetScoutsForPeriodQuery): ScoutDTO[];
+  getScouts(query: GetScoutsForPeriodQuery): Promise<ScoutDTO[]>;
 }

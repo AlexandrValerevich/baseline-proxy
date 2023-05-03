@@ -8,6 +8,16 @@ type Query {
   getModeConfiguration: ModeConfiguration!
 }
 
+type Mutation{
+  setDelay(delay: Int!): ModeConfiguration!
+
+  setDirectMode: ModeConfiguration!
+  setRandomMode: ModeConfiguration!
+  setErrorsOnceMode(error: ErrorModelInput): ModeConfiguration!
+  setErrorsInfinityMode(error: ErrorModelInput): ModeConfiguration!
+  setPredefinedResponseMode(responses: PredefinedResponsesModelInput): ModeConfiguration!
+}
+
 type Match {
   id: Int!
   name: String!
@@ -166,6 +176,7 @@ type ModeConfiguration{
   errorOnce: ErrorModel!
   errorInfinity: ErrorModel!
   queriesResponses: PredefinedResponses!
+  delay: Int!
 }
 
 enum Mode {
@@ -190,6 +201,143 @@ type PredefinedResponses {
   scouts: [InternalEvent!]!
   matches: [Match!]!
 }
+
+input ErrorModelInput{
+  http: HttpModelInput!
+  message: String!
+  details: String
+}
+
+input HttpModelInput{
+  status: Int!
+}
+
+input PredefinedResponsesModelInput{
+  scouts: [InternalEventInput!]!
+  matches: [MatchInput!]!
+}
+
+input InternalEventInput {
+  id: Int!
+  team: String!
+  matchId: Int!
+  eventName: String!
+  eventId: Int!
+  minutes: String!
+  timeOfEvent: String!
+  stage: Int!
+  eventTimestamp: Int!
+  playerId: Int
+  player: String
+  triggerId: String
+  changeType: String
+  timestamp: Float
+}
+
+input MatchInput {
+  id: Int!
+  name: String!
+  startedAt: String!
+  status: MatchStatus!
+  homeTeam: ExternalTeamInput!
+  awayTeam: ExternalTeamInput!
+  ingameTime: String
+  betstopStatus: BetstopsValues
+  refundStatus: Boolean
+  triggerId: String
+  options: OptionsInput
+  homeScore: Int
+  awayScore: Int
+  periodScores: [PeriodScoresInput!]
+  period: Int
+  aftermatchShootouts: Boolean
+  shootoutsScores: ShootoutScoresInput
+  timer: Int
+  timerStatus: TimerStatus
+  betstop: [BetStopInput!]
+  assignedTrader: AssignedTraderInput
+  leagueName: String
+  homeCorrection: Float
+  awayCorrection: Float
+  homeTotal: Float
+  awayTotal: Float
+  matchDelay: Boolean
+  timestamp: Float
+  season: ExternalSeasonInput
+  tournament: ExternalTournamentInput
+  sport: ExternalSportInput
+  country: ExternalCountryInput
+  venue: ExternalVenueInput
+}
+
+input ExternalTeamInput {
+  id: Int!
+  name: String!
+  languageCode: String!
+}
+
+
+input OptionsInput {
+  periods: Int!
+  periodTime: Int!
+}
+
+input PeriodScoresInput {
+  period: Int!
+  homeScore: Int!
+  awayScore: Int!
+}
+
+input ShootoutScoresInput {
+  homeScores: [Int!]!
+  awayScores: [Int!]!
+}
+
+input BetStopInput {
+  type: BetstopType!
+  value: BetstopStatus!
+  updatedBy: String!
+  updatedAt: String!
+}
+
+input AssignedTraderInput {
+  id: Int!
+  name: String!
+  email: String!
+}
+
+input ExternalSeasonInput {
+  id: Int!
+  name: String!
+  startDate: String!
+  endDate: String!
+  languageCode: String!
+}
+
+input ExternalTournamentInput {
+  id: Int!
+  name: String!
+  languageCode: String!
+}
+
+input ExternalVenueInput {
+  id: Int!
+  name: String!
+  languageCode: String!
+}
+
+input ExternalSportInput {
+  id: Int!
+  name: String!
+  languageCode: String!
+}
+
+input ExternalCountryInput {
+  id: Int!
+  name: String!
+  languageCode: String!
+}
+
 `;
 
 export { typeDefs };
