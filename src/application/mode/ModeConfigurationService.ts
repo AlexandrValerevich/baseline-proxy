@@ -1,11 +1,9 @@
-import { injectable } from "inversify";
-import { ModeDTO } from "./dto/ModeDTO.js";
-import { ModeConfigurationDTO } from "./dto/ModeConfigurationDTO.js";
-import { PredefinedResponsesDTO } from "./dto/PredefinedResponsesDTO.js";
-import { IModeConfigurationService } from "./IModeConfigurationService.js";
-import { ValidationError } from "../exceptions/ValidationError.js";
-import { errorDTOValidator, predefinedResponsesDTOValidator } from "./dto/validation.js";
 import chalk from "chalk";
+import { injectable } from "inversify";
+import { IModeConfigurationService } from "./IModeConfigurationService.js";
+import { errorDTOValidator, predefinedResponsesDTOValidator } from "./validation/index.js";
+import { ModeError, ValidationError, WrongConfigurationModeError } from "../exceptions/index.js";
+import { ErrorDTO, ModeDTO, ModeConfigurationDTO, PredefinedResponsesDTO } from "./dto/index.js";
 
 @injectable()
 class ModeConfigurationService implements IModeConfigurationService {
@@ -23,8 +21,25 @@ class ModeConfigurationService implements IModeConfigurationService {
         message: "Internal Error",
       },
       queriesResponses: { scouts: [], matches: [] },
-      delay: 1000,
+      delay: 100,
     };
+  }
+
+  throwOnceError() {
+    if (this.configuration.mode !== ModeDTO.ErrorOnce) {
+      throw new WrongConfigurationModeError(this.configuration.mode, ModeDTO.ErrorOnce);
+    }
+    this.configuration.mode = ModeDTO.Direct;
+    const { message, http, details } = this.configuration.errorOnce;
+    throw new ModeError(message, http, details);
+  }
+
+  throwInfinityError() {
+    if (this.configuration.mode !== ModeDTO.ErrorOnce) {
+      throw new WrongConfigurationModeError(this.configuration.mode, ModeDTO.ErrorInfinity);
+    }
+    const { message, http, details } = this.configuration.errorInfinity;
+    throw new ModeError(message, http, details);
   }
 
   getModeConfiguration(): ModeConfigurationDTO {

@@ -1,8 +1,10 @@
+import { TYPES } from "../../container/types.js";
+import { IBaseLineClient } from "../baseline/index.js";
 import { inject, injectable } from "inversify";
+import { ValidationError } from "../exceptions/index.js";
 import { IScoutService } from "./IScoutService.js";
-import { TYPES } from "../../types.js";
-import { getScoutsForPeriodQueryValidationScheme } from "./dto/validation.js";
-import { ValidationError } from "../exceptions/ValidationError.js";
+import { GetScoutsForPeriodQuery, ScoutDTO } from "./dto/index.js";
+import { getScoutsForPeriodQueryValidator } from "./validation/index.js";
 
 @injectable()
 class DirectScoutService implements IScoutService {
@@ -13,7 +15,7 @@ class DirectScoutService implements IScoutService {
   }
 
   getScouts(query: GetScoutsForPeriodQuery): Promise<ScoutDTO[]> {
-    const { error } = getScoutsForPeriodQueryValidationScheme.validate(query);
+    const { error } = getScoutsForPeriodQueryValidator.validate(query);
     if (error) {
       throw new ValidationError(error.message, error.detailsAsSting());
     }

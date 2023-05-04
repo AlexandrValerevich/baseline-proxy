@@ -1,13 +1,9 @@
 import Joi from "joi";
-import { PredefinedResponsesDTO } from "./PredefinedResponsesDTO.js";
-import { ScoutEventTypeRuDTO } from "../../scouts/dto/ScoutEventTypeRuDTO.js";
+import { ScoutDTO, GetScoutsForPeriodQuery, ScoutEventTypeRuDTO } from "../dto/index.js";
 
-const errorDTOValidator = Joi.object<ErrorDTO>({
-  message: Joi.string().required(),
-  http: Joi.object<{ status: number }>({
-    status: Joi.number().integer().min(400).max(599),
-  }),
-  details: Joi.string().not().required(),
+const getScoutsForPeriodQueryValidator = Joi.object<GetScoutsForPeriodQuery>({
+  timeFrom: Joi.date().required(),
+  timeTo: Joi.date().required(),
 });
 
 const scoutDTOValidator = Joi.object<ScoutDTO>({
@@ -30,8 +26,4 @@ const scoutDTOValidator = Joi.object<ScoutDTO>({
   timestamp: Joi.number().integer().min(0).required(),
 });
 
-const predefinedResponsesDTOValidator = Joi.object<PredefinedResponsesDTO>({
-  scouts: Joi.array().items(scoutDTOValidator),
-});
-
-export { errorDTOValidator, predefinedResponsesDTOValidator };
+export { getScoutsForPeriodQueryValidator, scoutDTOValidator };

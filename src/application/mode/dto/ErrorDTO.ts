@@ -3,3 +3,5 @@ interface ErrorDTO {
   message: string;
   details?: string;
 }
+
+export { ErrorDTO };

@@ -14,3 +14,5 @@ interface ScoutModel {
   changeType?: string;
   timestamp?: number;
 }
+
+export { ScoutModel };

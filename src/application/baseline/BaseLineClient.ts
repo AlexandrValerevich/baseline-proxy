@@ -1,7 +1,15 @@
+import "reflect-metadata";
 import { inject, injectable } from "inversify";
 import { GraphQLClient } from "graphql-request";
-import { TYPES } from "../../types.js";
+import { TYPES } from "../../container/types.js";
 import chalk from "chalk";
+import {
+  GetMatchesForPeriodRequestModel,
+  GetScoutsFroPeriodRequestModel,
+  MatchModel,
+  ScoutModel,
+} from "./models/index.js";
+import { IBaseLineClient } from "./IBaseLineClient.js";
 
 @injectable()
 class BaseLineClient implements IBaseLineClient {
@@ -11,7 +19,7 @@ class BaseLineClient implements IBaseLineClient {
     this.client = client;
   }
 
-  async getScoutsForPeriod(request: GetScoutFroPeriodRequestModel): Promise<ScoutModel[]> {
+  async getScoutsForPeriod(request: GetScoutsFroPeriodRequestModel): Promise<ScoutModel[]> {
     const query = `
       query GetScoutsForPeriod($dateFrom: DateTime!, $dateTo: DateTime!) {
         scouts: getMatchScoutEvents(timeFrom: $dateFrom, timeTo: $dateTo) {

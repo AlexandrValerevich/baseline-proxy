@@ -14,3 +14,5 @@ interface ScoutDTO {
   changeType?: string;
   timestamp?: number;
 }
+
+export { ScoutDTO };

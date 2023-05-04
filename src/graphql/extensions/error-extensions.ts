@@ -1,6 +1,6 @@
 import { GraphQLError } from "graphql";
-import { ValidationError } from "../../application/exceptions/ValidationError.js";
-import { ApolloServerErrorCode } from "@apollo/server/dist/esm/errors";
+import { ApolloServerErrorCode } from "@apollo/server/errors";
+import { ValidationError } from "../../application/exceptions/index.js";
 
 declare global {
   interface Error {
