@@ -58,6 +58,14 @@ container
         const client = context.container.get<IBaseLineClient>(TYPES.BaseLineClient);
         return new DirectScoutService(client);
       }
+      case ModeDTO.ErrorOnce: {
+        modeService.throwOnceError();
+        break;
+      }
+      case ModeDTO.ErrorInfinity: {
+        modeService.throwInfinityError();
+        break;
+      }
       default: {
         const scoutGenerator = context.container.get<IRandomScoutGenerator>(
           TYPES.RandomScoutGenerator,

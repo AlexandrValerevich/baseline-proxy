@@ -29,6 +29,7 @@ class ModeConfigurationService implements IModeConfigurationService {
     if (this.configuration.mode !== ModeDTO.ErrorOnce) {
       throw new WrongConfigurationModeError(this.configuration.mode, ModeDTO.ErrorOnce);
     }
+    logger.debug("Throw once error and switch to direct mode.");
     this.configuration.mode = ModeDTO.Direct;
     const { message, http, details } = this.configuration.errorOnce;
     throw new ModeError(message, http, details);
@@ -38,6 +39,7 @@ class ModeConfigurationService implements IModeConfigurationService {
     if (this.configuration.mode !== ModeDTO.ErrorOnce) {
       throw new WrongConfigurationModeError(this.configuration.mode, ModeDTO.ErrorInfinity);
     }
+    logger.debug("Throw infinity error.");
     const { message, http, details } = this.configuration.errorInfinity;
     throw new ModeError(message, http, details);
   }
@@ -114,7 +116,9 @@ class ModeConfigurationService implements IModeConfigurationService {
 
   private logNewConfigurationValue() {
     logger.info({
-      message: `New configuration value is set. Mode: ${this.configuration.mode}, Delay ${this.configuration.delay}`,
+      message: `New configuration value is set. Mode: ${ModeDTO[this.configuration.mode]}, Delay ${
+        this.configuration.delay
+      }`,
       configuration: this.configuration,
     });
   }
