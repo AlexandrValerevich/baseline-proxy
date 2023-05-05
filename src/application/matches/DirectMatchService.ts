@@ -62,7 +62,7 @@ class DirectMatchService implements IMatchService {
         homeTeam: x.homeTeam,
         awayTeam: x.awayTeam,
         ingameTime: x.ingameTime,
-        betstopStatus: betStopValueMapper(x.betstopStatus),
+        betstopStatus: betStopValueMapper(x?.betstopStatus),
         refundStatus: x.refundStatus,
         triggerId: x.triggerId,
         options: x.options,
@@ -74,7 +74,7 @@ class DirectMatchService implements IMatchService {
         shootoutsScores: x.shootoutsScores,
         timer: x.timer,
         timerStatus: timerStatusMapper(x.timerStatus),
-        betstop: x.betstop.map(
+        betstop: x?.betstop?.map(
           (betstop): BetStopDTO => ({
             updatedAt: betstop.updatedAt,
             updatedBy: betstop.updatedBy,

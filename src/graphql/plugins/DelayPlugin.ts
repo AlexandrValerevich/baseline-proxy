@@ -1,17 +1,13 @@
-import { ApolloServerPlugin, GraphQLRequestContext, GraphQLRequestListener } from "@apollo/server";
-import { IValueContext } from "../context";
+import { ApolloServerPlugin, GraphQLRequestListener } from "@apollo/server";
+import { IContext } from "../context";
 import { logger } from "../../logger/index.js";
 
 class DelayPlugin implements ApolloServerPlugin {
-  async requestDidStart(
-    requestContext: GraphQLRequestContext<IValueContext>,
-  ): Promise<GraphQLRequestListener<IValueContext>> {
-    const modeConfig = requestContext.contextValue.modeConfigurationsService.getModeConfiguration();
-    const delay = modeConfig.delay;
-
+  async requestDidStart(): Promise<GraphQLRequestListener<IContext>> {
     return {
-      async willSendResponse({ request }) {
+      async willSendResponse({ contextValue, request }) {
         if (request.operationName !== "IntrospectionQuery") {
+          const delay = contextValue.modeConfigurationsService.getDelay();
           await new Promise((resolve) => setTimeout(resolve, delay));
           logger.info(`Request handling was delayed on ${delay}ms`);
         }

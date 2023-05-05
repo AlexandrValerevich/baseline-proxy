@@ -4,9 +4,8 @@ import { PredefinedResponsesDTO } from "./PredefinedResponsesDTO.js";
 
 interface ModeConfigurationDTO {
   mode: ModeDTO;
-  errorOnce: ErrorDTO;
-  errorInfinity: ErrorDTO;
-  queriesResponses: PredefinedResponsesDTO;
+  error: ErrorDTO;
+  predefinedResponses: PredefinedResponsesDTO;
   delay: number;
 }
 

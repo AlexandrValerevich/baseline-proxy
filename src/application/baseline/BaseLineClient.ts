@@ -57,6 +57,7 @@ class BaseLineClient implements IBaseLineClient {
       return data.scouts;
     } catch (ex) {
       this.logError(ex, variables, query, operationName);
+      throw ex;
     }
   }
 
@@ -165,6 +166,7 @@ class BaseLineClient implements IBaseLineClient {
       return data.matches;
     } catch (ex) {
       this.logError(ex, variables, query, operationName);
+      throw ex;
     }
   }
 

@@ -1,25 +1,18 @@
 import { TYPES } from "./types.js";
 import { Container } from "inversify";
 import { GraphQLClient } from "graphql-request";
+import { matchServiceResolver, scoutServiceResolver } from "./resolvers/index.js";
 import { BaseLineClient, IBaseLineClient } from "../application/baseline/index.js";
+import { IModeConfigurationService, ModeConfigurationService } from "../application/mode/index.js";
 import {
-  ModeDTO,
-  IModeConfigurationService,
-  ModeConfigurationService,
-} from "../application/mode/index.js";
-import {
-  DirectMatchService,
   IMatchService,
   IRandomMatchGenerator,
   RandomMatchGenerator,
-  RandomMatchService,
 } from "../application/matches/index.js";
 import {
-  IScoutService,
-  DirectScoutService,
-  RandomScoutService,
   IRandomScoutGenerator,
   RandomScoutGenerator,
+  IScoutService,
 } from "../application/scouts/index.js";
 
 const container = new Container();
@@ -41,60 +34,25 @@ container
 
 container
   .bind<GraphQLClient>(TYPES.GraphQlBaseLineClient)
-  .toDynamicValue(() => new GraphQLClient(process.env.BaseLineClient__Address))
+  .toDynamicValue(() => {
+    const address = process.env.BaseLineClient__Address;
+    if (!address) {
+      throw new Error("BaseLineClient__Address environment variable not provided.");
+    }
+    return new GraphQLClient(process.env.BaseLineClient__Address ?? "");
+  })
   .inRequestScope();
 
 container.bind<IBaseLineClient>(TYPES.BaseLineClient).to(BaseLineClient).inRequestScope();
 
 container
   .bind<IScoutService>(TYPES.ScoutsService)
-  .toDynamicValue((context) => {
-    const modeService = context.container.get<IModeConfigurationService>(
-      TYPES.ModeConfigurationService,
-    );
-    const modeConfig = modeService.getModeConfiguration();
-    switch (modeConfig.mode) {
-      case ModeDTO.Direct: {
-        const client = context.container.get<IBaseLineClient>(TYPES.BaseLineClient);
-        return new DirectScoutService(client);
-      }
-      case ModeDTO.ErrorOnce: {
-        modeService.throwOnceError();
-        break;
-      }
-      case ModeDTO.ErrorInfinity: {
-        modeService.throwInfinityError();
-        break;
-      }
-      default: {
-        const scoutGenerator = context.container.get<IRandomScoutGenerator>(
-          TYPES.RandomScoutGenerator,
-        );
-        return new RandomScoutService(scoutGenerator);
-      }
-    }
-  })
+  .toDynamicValue(scoutServiceResolver)
   .inRequestScope();
 
 container
   .bind<IMatchService>(TYPES.MatchesService)
-  .toDynamicValue((context) => {
-    const modeService = context.container.get<IModeConfigurationService>(
-      TYPES.ModeConfigurationService,
-    );
-    const modeConfig = modeService.getModeConfiguration();
-    switch (modeConfig.mode) {
-      case ModeDTO.Direct: {
-        const client = context.container.get<IBaseLineClient>(TYPES.BaseLineClient);
-        return new DirectMatchService(client);
-      }
-      default:
-        const matchGenerator = context.container.get<IRandomMatchGenerator>(
-          TYPES.RandomMatchGenerator,
-        );
-        return new RandomMatchService(matchGenerator);
-    }
-  })
+  .toDynamicValue(matchServiceResolver)
   .inRequestScope();
 
 export { container };

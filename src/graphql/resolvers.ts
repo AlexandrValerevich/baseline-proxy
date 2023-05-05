@@ -1,49 +1,62 @@
 import { ApolloServerErrorCode } from "@apollo/server/errors";
 import { ModeDTO } from "../application/mode/dto/ModeDTO.js";
 import { GraphQLError, GraphQLScalarType, Kind } from "graphql";
-import { IValueContext } from "./context.js";
+import { IContext } from "./context.js";
 import {
   BetStopStatusDTO,
   BetStopTypeDTO,
   BetStopValueDTO,
+  ErrorDTO,
+  MatchDTO,
   MatchStatusDTO,
+  ModeConfigurationService,
+  ScoutDTO,
   TimerStatusDTO,
 } from "../application/index.js";
 
 const query = {
   Query: {
-    matches: (_, { dateFrom, dateTo }, { matchesService }: IValueContext, __) => {
+    matches: (_, { dateFrom, dateTo }, { matchesService }: IContext, __) => {
       const response = matchesService.getMatches({ timeFrom: dateFrom, timeTo: dateTo });
       return response;
     },
-    getMatchScoutEvents: (_, { timeFrom, timeTo }, { scoutService }: IValueContext, __) => {
+    getMatchScoutEvents: (_, { timeFrom, timeTo }, { scoutService }: IContext, __) => {
       const response = scoutService.getScouts({ timeFrom: timeFrom, timeTo: timeTo });
       return response;
     },
-    getModeConfiguration: (_, __, { modeConfigurationsService }: IValueContext, ___) =>
+    getModeConfiguration: (_, __, { modeConfigurationsService }: IContext, ___) =>
       modeConfigurationsService.getModeConfiguration(),
   },
 };
 
 const mutation = {
   Mutation: {
-    setDelay: (_, { delay }, { modeConfigurationsService }: IValueContext, __) => {
-      return modeConfigurationsService.setDelay(delay);
-    },
-    setDirectMode: (_, ___, { modeConfigurationsService }: IValueContext, __) =>
-      modeConfigurationsService.setDirectMode(),
-    setRandomMode: (_, ___, { modeConfigurationsService }: IValueContext, __) =>
-      modeConfigurationsService.setRandomMode(),
-    setErrorOnceMode: (_, { error }, { modeConfigurationsService }: IValueContext, __) =>
-      modeConfigurationsService.setErrorOnceMode(error),
-    setErrorInfinityMode: (_, { error }, { modeConfigurationsService }: IValueContext, __) =>
-      modeConfigurationsService.setErrorInfinityMode(error),
-    setPredefinedResponseMode: (
+    onDirectMode: (_, ___, { modeConfigurationsService }: IContext, __) =>
+      modeConfigurationsService.onDirectMode(),
+    onRandomMode: (_, ___, { modeConfigurationsService }: IContext, __) =>
+      modeConfigurationsService.onRandomMode(),
+    onErrorOnceMode: (_, ___, { modeConfigurationsService }: IContext, __) =>
+      modeConfigurationsService.onErrorOnceMode(),
+    onErrorInfinityMode: (_, ___, { modeConfigurationsService }: IContext, __) =>
+      modeConfigurationsService.onErrorInfinityMode(),
+    onPredefinedResponseMode: (_, ___, { modeConfigurationsService }: IContext, __) =>
+      modeConfigurationsService.onPredefinedResponseMode(),
+    setDelay: (_, { delay }: { delay: number }, { modeConfigurationsService }: IContext, __) =>
+      modeConfigurationsService.setDelay(delay),
+    setError: (_, { error }: { error: ErrorDTO }, { modeConfigurationsService }: IContext, __) =>
+      modeConfigurationsService.setError(error),
+    setPredefinedScouts: (
       _,
-      { responses },
-      { modeConfigurationsService }: IValueContext,
+      { scouts }: { scouts: ScoutDTO[] },
+      { modeConfigurationsService }: IContext,
       __,
-    ) => modeConfigurationsService.setPredefinedResponseMode(responses),
+    ) => modeConfigurationsService.setPredefinedScouts(scouts),
+    setPredefinedMatches: (
+      _,
+      { matches }: { matches: MatchDTO[] },
+      { modeConfigurationsService }: IContext,
+      __,
+    ) => modeConfigurationsService.setPredefinedMatches(matches),
   },
 };
 
@@ -118,7 +131,7 @@ const mode = {
   Mode: {
     direct: ModeDTO.Direct,
     error_infinity: ModeDTO.ErrorInfinity,
-    error_once: ModeDTO.ErrorInfinity,
+    error_once: ModeDTO.ErrorOnce,
     predefined_responses: ModeDTO.PredefinedResponses,
     random: ModeDTO.Random,
   },

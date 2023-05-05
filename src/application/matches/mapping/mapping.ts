@@ -1,4 +1,3 @@
-import { logger } from "../../../logger/index.js";
 import {
   BetStopStatusModel,
   BetStopTypeModel,
@@ -17,7 +16,7 @@ import {
 
 const matchStatusMapper = (matchStatus: MatchStatusModel): MatchStatusDTO => {
   switch (matchStatus) {
-    case "planed":
+    case "planned":
       return MatchStatusDTO.Planned;
     case "prematch":
       return MatchStatusDTO.Prematch;
@@ -32,7 +31,7 @@ const matchStatusMapper = (matchStatus: MatchStatusModel): MatchStatusDTO => {
   }
 };
 
-const betStopValueMapper = (betStopValue: BetStopValueModel): BetStopValueDTO => {
+const betStopValueMapper = (betStopValue: BetStopValueModel): BetStopValueDTO | undefined => {
   switch (betStopValue) {
     case "ok":
       return BetStopValueDTO.Ok;
@@ -44,17 +43,23 @@ const betStopValueMapper = (betStopValue: BetStopValueModel): BetStopValueDTO =>
       return BetStopValueDTO.ReadToStop;
     case "timeout":
       return BetStopValueDTO.Timeout;
+    case undefined:
+    case null:
+      return;
     default:
       throw new InternalError(`Unknown BetStopValueModel value: ${betStopValue}`);
   }
 };
 
-const timerStatusMapper = (timerStatus: TimerStatusModel): TimerStatusDTO => {
+const timerStatusMapper = (timerStatus: TimerStatusModel): TimerStatusDTO | undefined => {
   switch (timerStatus) {
     case "running":
       return TimerStatusDTO.Running;
     case "stopped":
       return TimerStatusDTO.Stopped;
+    case undefined:
+    case null:
+      return;
     default:
       throw new InternalError(`Unknown TimerStatusModel value: ${timerStatus}`);
   }

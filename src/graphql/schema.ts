@@ -10,11 +10,15 @@ type Query {
 
 type Mutation{
   setDelay(delay: Int!): ModeConfiguration!
-  setDirectMode: ModeConfiguration!
-  setRandomMode: ModeConfiguration!
-  setErrorOnceMode(error: ErrorModelInput): ModeConfiguration!
-  setErrorInfinityMode(error: ErrorModelInput): ModeConfiguration!
-  setPredefinedResponseMode(responses: PredefinedResponsesModelInput): ModeConfiguration!
+  setError(error: ErrorModelInput): ModeConfiguration!
+  setPredefinedScouts(scouts: [InternalEventInput!]): ModeConfiguration!
+  setPredefinedMatches(matches: [MatchInput!]): ModeConfiguration!
+
+  onDirectMode: ModeConfiguration!
+  onRandomMode: ModeConfiguration!
+  onErrorOnceMode: ModeConfiguration!
+  onErrorInfinityMode: ModeConfiguration!
+  onPredefinedResponseMode: ModeConfiguration!
 }
 
 type Match {
@@ -172,10 +176,9 @@ type ExternalCountry {
 
 type ModeConfiguration{
   mode: Mode!
-  errorOnce: ErrorModel!
-  errorInfinity: ErrorModel!
-  queriesResponses: PredefinedResponses!
   delay: Int!
+  error: ErrorModel!
+  predefinedResponses: PredefinedResponses!
 }
 
 enum Mode {
@@ -209,11 +212,6 @@ input ErrorModelInput{
 
 input HttpModelInput{
   status: Int!
-}
-
-input PredefinedResponsesModelInput{
-  scouts: [InternalEventInput!]!
-  matches: [MatchInput!]!
 }
 
 input InternalEventInput {

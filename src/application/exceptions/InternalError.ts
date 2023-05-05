@@ -2,7 +2,7 @@ import { ApplicationError } from "./ApplicationError.js";
 
 class InternalError extends ApplicationError {
   constructor(message?: string, detail?: string) {
-    super(message, detail);
+    super(message ?? "Internal Error", detail);
     this.name = "InternalError";
   }
 

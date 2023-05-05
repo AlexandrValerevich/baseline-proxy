@@ -20,10 +20,13 @@ const scoutDTOValidator = Joi.object<ScoutDTO>({
   timeOfEvent: Joi.date().required(),
   stage: Joi.number().integer().min(1).max(4),
   eventTimestamp: Joi.number().integer().min(0).required(),
-  playerId: Joi.number().integer().min(0).required(),
-  triggerId: Joi.string().guid(),
+  playerId: Joi.number().integer().min(0).allow(null).optional(),
+  player: Joi.string().allow(null).optional(),
+  triggerId: Joi.string().guid().optional(),
   changeType: Joi.string().valid("ADDED", "REMOVED", "SYSTEM"),
-  timestamp: Joi.number().integer().min(0).required(),
+  timestamp: Joi.number().min(0),
 });
 
-export { getScoutsForPeriodQueryValidator, scoutDTOValidator };
+const arrayScoutDTOValidator = Joi.array<ScoutDTO[]>().items(scoutDTOValidator);
+
+export { getScoutsForPeriodQueryValidator, scoutDTOValidator, arrayScoutDTOValidator };

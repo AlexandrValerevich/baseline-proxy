@@ -1,9 +1,14 @@
+import "reflect-metadata";
 import { injectable } from "inversify";
 import { IModeConfigurationService } from "./IModeConfigurationService.js";
 import { errorDTOValidator, predefinedResponsesDTOValidator } from "./validation/index.js";
 import { ModeError, ValidationError, WrongConfigurationModeError } from "../exceptions/index.js";
 import { ErrorDTO, ModeDTO, ModeConfigurationDTO, PredefinedResponsesDTO } from "./dto/index.js";
 import { logger } from "../../logger/index.js";
+import { MatchDTO } from "../matches/index.js";
+import { ScoutDTO } from "../scouts/index.js";
+import { arrayScoutDTOValidator } from "../scouts/validation/index.js";
+import { arrayMatchDtoValidator } from "../matches/validation/index.js";
 
 @injectable()
 class ModeConfigurationService implements IModeConfigurationService {
@@ -12,17 +17,64 @@ class ModeConfigurationService implements IModeConfigurationService {
   constructor() {
     this.configuration = {
       mode: ModeDTO.Direct,
-      errorOnce: {
+      error: {
         http: { status: 500 },
         message: "Internal Error",
+        details: "Some error details",
       },
-      errorInfinity: {
-        http: { status: 500 },
-        message: "Internal Error",
-      },
-      queriesResponses: { scouts: [], matches: [] },
+      predefinedResponses: { scouts: [], matches: [] },
       delay: 100,
     };
+  }
+
+  setError(error?: ErrorDTO | undefined): ModeConfigurationDTO {
+    const { value, error: validationError } = errorDTOValidator.validate(error);
+    if (validationError) {
+      throw new ValidationError(validationError.message, validationError.detailsAsSting());
+    }
+    this.configuration.error = value;
+    this.logNewConfigurationValue();
+    return this.configuration;
+  }
+
+  setPredefinedScouts(scouts: ScoutDTO[]): ModeConfigurationDTO {
+    const { value, error } = arrayScoutDTOValidator.validate(scouts);
+    if (error) {
+      throw new ValidationError(error.message, error.detailsAsSting());
+    }
+    this.configuration.predefinedResponses.scouts = value;
+    this.logNewConfigurationValue();
+    return this.configuration;
+  }
+
+  setPredefinedMatches(matches: MatchDTO[]): ModeConfigurationDTO {
+    const { value, error } = arrayMatchDtoValidator.validate(matches);
+    if (error) {
+      throw new ValidationError(error.message, error.detailsAsSting());
+    }
+    this.configuration.predefinedResponses.matches = value;
+    this.logNewConfigurationValue();
+    return this.configuration;
+  }
+
+  getModeConfiguration(): ModeConfigurationDTO {
+    return this.configuration;
+  }
+
+  getDelay(): number {
+    return this.configuration.delay;
+  }
+
+  getMode(): ModeDTO {
+    return this.configuration.mode;
+  }
+
+  getPredefinedScouts(): ScoutDTO[] {
+    return this.configuration.predefinedResponses.scouts;
+  }
+
+  getPredefinedMatches(): MatchDTO[] {
+    return this.configuration.predefinedResponses.matches;
   }
 
   throwOnceError() {
@@ -31,21 +83,17 @@ class ModeConfigurationService implements IModeConfigurationService {
     }
     logger.debug("Throw once error and switch to direct mode.");
     this.configuration.mode = ModeDTO.Direct;
-    const { message, http, details } = this.configuration.errorOnce;
-    throw new ModeError(message, http, details);
+    const error = this.configuration.error;
+    throw new ModeError(error.message, error.http, error.details);
   }
 
   throwInfinityError() {
-    if (this.configuration.mode !== ModeDTO.ErrorOnce) {
+    if (this.configuration.mode !== ModeDTO.ErrorInfinity) {
       throw new WrongConfigurationModeError(this.configuration.mode, ModeDTO.ErrorInfinity);
     }
     logger.debug("Throw infinity error.");
-    const { message, http, details } = this.configuration.errorInfinity;
-    throw new ModeError(message, http, details);
-  }
-
-  getModeConfiguration(): ModeConfigurationDTO {
-    return this.configuration;
+    const error = this.configuration.error;
+    throw new ModeError(error.message, error.http, error.details);
   }
 
   setDelay(delay: number): ModeConfigurationDTO {
@@ -57,60 +105,33 @@ class ModeConfigurationService implements IModeConfigurationService {
     return this.configuration;
   }
 
-  setDirectMode(): ModeConfigurationDTO {
+  onDirectMode(): ModeConfigurationDTO {
     this.configuration.mode = ModeDTO.Direct;
     this.logNewConfigurationValue();
     return this.configuration;
   }
 
-  setRandomMode(): ModeConfigurationDTO {
+  onRandomMode(): ModeConfigurationDTO {
     this.configuration.mode = ModeDTO.Random;
     this.logNewConfigurationValue();
     return this.configuration;
   }
 
-  setErrorOnceMode(error?: ErrorDTO): ModeConfigurationDTO {
-    if (error) {
-      const { error: validationError } = errorDTOValidator.validate(error);
-      if (validationError) {
-        throw new ValidationError(validationError.message, validationError.detailsAsSting());
-      }
-      this.configuration.errorOnce = error;
-    }
-
+  onErrorOnceMode(): ModeConfigurationDTO {
     this.configuration.mode = ModeDTO.ErrorOnce;
     this.logNewConfigurationValue();
     return this.configuration;
   }
 
-  setErrorInfinityMode(error?: ErrorDTO): ModeConfigurationDTO {
-    if (error) {
-      const { error: validationError } = errorDTOValidator.validate(error);
-      if (validationError) {
-        throw new ValidationError(validationError.message, validationError.detailsAsSting());
-      }
-      this.configuration.errorInfinity = error;
-    }
-
+  onErrorInfinityMode(): ModeConfigurationDTO {
     this.configuration.mode = ModeDTO.ErrorInfinity;
-    this.configuration.errorInfinity = error;
-
     this.logNewConfigurationValue();
-
     return this.configuration;
   }
-  setPredefinedResponseMode(responses?: PredefinedResponsesDTO): ModeConfigurationDTO {
-    if (responses) {
-      const { error } = predefinedResponsesDTOValidator.validate(responses);
-      if (error) {
-        throw new ValidationError(error.message, error.detailsAsSting());
-      }
-      this.configuration.mode = ModeDTO.ErrorInfinity;
-    }
-    this.configuration.queriesResponses = responses;
 
+  onPredefinedResponseMode(): ModeConfigurationDTO {
+    this.configuration.mode = ModeDTO.PredefinedResponses;
     this.logNewConfigurationValue();
-
     return this.configuration;
   }
 

@@ -1,32 +1,54 @@
-import { GraphQLError } from "graphql";
+import { GraphQLFormattedError } from "graphql";
 import { ApolloServerErrorCode } from "@apollo/server/errors";
-import { ValidationError } from "../../application/exceptions/index.js";
+import {
+  ModeError,
+  ValidationError,
+  WrongConfigurationModeError,
+} from "../../application/exceptions/index.js";
 
 declare global {
   interface Error {
-    toGraphQlError(): GraphQLError;
+    toGraphQLFormattedError(): GraphQLFormattedError;
   }
 }
 
-Error.prototype.toGraphQlError = function (this: Error): GraphQLError {
-  if (this instanceof ValidationError) {
-    return new GraphQLError(this.message, {
-      // originalError: this,
-      extensions: {
-        code: ApolloServerErrorCode.BAD_REQUEST,
-        details: this.detail,
-        http: { status: 400 },
-      },
-    });
-  }
+Error.prototype.toGraphQLFormattedError = function (this: Error): GraphQLFormattedError {
+  const originalError = this;
+  let extensions: {
+    code: string | ApolloServerErrorCode;
+    details?: string;
+    http: { status: number };
+  };
 
-  return new GraphQLError(this.message, {
-    // originalError: this,
-    extensions: {
+  if (originalError instanceof ValidationError) {
+    extensions = {
+      code: ApolloServerErrorCode.BAD_REQUEST,
+      details: originalError.detail,
+      http: { status: 400 },
+    };
+  } else if (originalError instanceof WrongConfigurationModeError) {
+    extensions = {
+      code: ApolloServerErrorCode.INTERNAL_SERVER_ERROR,
+      details: originalError.detail,
+      http: { status: 500 },
+    };
+  } else if (originalError instanceof ModeError) {
+    extensions = {
+      code: "CUSTOM_GENERATED_ERROR",
+      details: originalError.detail,
+      http: { status: originalError.http.status },
+    };
+  } else {
+    extensions = {
       code: ApolloServerErrorCode.INTERNAL_SERVER_ERROR,
       http: { status: 500 },
-    },
-  });
+    };
+  }
+
+  return {
+    message: originalError.message,
+    extensions,
+  };
 };
 
 export {};

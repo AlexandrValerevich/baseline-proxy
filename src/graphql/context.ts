@@ -1,11 +1,11 @@
 import { Container } from "inversify";
 import { IScoutService, IMatchService, IModeConfigurationService } from "../application";
 
-interface IValueContext {
+interface IContext {
   serviceProvider: Container;
   scoutService: IScoutService;
   matchesService: IMatchService;
   modeConfigurationsService: IModeConfigurationService;
 }
 
-export { IValueContext };
+export { IContext };
