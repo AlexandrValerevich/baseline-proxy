@@ -2,8 +2,14 @@ import { faker } from "@faker-js/faker";
 import { injectable } from "inversify";
 import { v4 as uuidv4 } from "uuid";
 import { IRandomMatchGenerator } from "./IRandomMatchGenerator.js";
-import { BetStopStatusDTO, BetStopTypeDTO, BetStopValueDTO, MatchDTO, MatchStatusDTO, TimerStatusDTO } from "../dto/index.js";
-
+import {
+  BetStopStatusDTO,
+  BetStopTypeDTO,
+  BetStopValueDTO,
+  MatchDTO,
+  MatchStatusDTO,
+  TimerStatusDTO,
+} from "../dto/index.js";
 
 @injectable()
 class RandomMatchGenerator implements IRandomMatchGenerator {
@@ -21,25 +27,25 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
 
   generate(): MatchDTO {
     const randomBetstopStatus = faker.helpers.arrayElement(
-      Object.values(BetStopStatusDTO),
+      Object.values(BetStopStatusDTO).filter((x) => typeof x === "number"),
     ) as BetStopStatusDTO;
     const randomBetstopType = faker.helpers.arrayElement(
-      Object.values(BetStopTypeDTO),
+      Object.values(BetStopTypeDTO).filter((x) => typeof x === "number"),
     ) as BetStopTypeDTO;
     const randomBetstopValue = faker.helpers.arrayElement(
-      Object.values(BetStopValueDTO),
+      Object.values(BetStopValueDTO).filter((x) => typeof x === "number"),
     ) as BetStopValueDTO;
     const randomMatchStatus = faker.helpers.arrayElement(
-      Object.values(MatchStatusDTO),
+      Object.values(MatchStatusDTO).filter((x) => typeof x === "number"),
     ) as MatchStatusDTO;
     const randomTimerStatus = faker.helpers.arrayElement(
-      Object.values(TimerStatusDTO),
+      Object.values(TimerStatusDTO).filter((x) => typeof x === "number"),
     ) as TimerStatusDTO;
 
     return {
       id: faker.datatype.number(),
       name: faker.company.name(),
-      startedAt: faker.date.recent().toString(),
+      startedAt: faker.date.recent().toISOString().slice(0, -5),
       status: randomMatchStatus as MatchStatusDTO,
       homeTeam: {
         id: faker.datatype.number(),
@@ -69,8 +75,8 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
       period: faker.datatype.number({ min: 1, max: 3 }),
       aftermatchShootouts: faker.datatype.boolean(),
       shootoutsScores: {
-        homeScores: Array.from({ length: 5 }, () => faker.datatype.number({ min: 0, max: 10 })),
-        awayScores: Array.from({ length: 5 }, () => faker.datatype.number({ min: 0, max: 10 })),
+        homeScores: Array.from({ length: 5 }, () => faker.datatype.number({ min: 0, max: 1 })),
+        awayScores: Array.from({ length: 5 }, () => faker.datatype.number({ min: 0, max: 1 })),
       },
       timer: faker.datatype.number({ min: 0, max: 90 }),
       timerStatus: randomTimerStatus,
@@ -79,7 +85,7 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
           type: randomBetstopType,
           value: randomBetstopStatus,
           updatedBy: faker.name.firstName(),
-          updatedAt: faker.date.recent().toString(),
+          updatedAt: faker.date.recent().toISOString().slice(0, -5),
         },
       ],
       assignedTrader: {
@@ -98,8 +104,8 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
         id: faker.datatype.number(),
         name: faker.lorem.word(),
         languageCode: "RU",
-        startDate: faker.date.recent().toISOString(),
-        endDate: faker.date.future().toISOString(),
+        startDate: faker.date.recent().toISOString().slice(0, -5),
+        endDate: faker.date.future().toISOString().slice(0, -5),
       },
       tournament: {
         id: faker.datatype.number(),
@@ -108,7 +114,7 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
       },
       sport: {
         id: faker.datatype.number(),
-        name: faker.lorem.word(),
+        name: "hockey",
         languageCode: "RU",
       },
       country: {

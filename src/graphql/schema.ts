@@ -70,18 +70,18 @@ type InternalEvent {
   timestamp: Float
 }
 
+type ExternalTeam {
+  id: Int!
+  name: String!
+  languageCode: String!
+}
+
 enum MatchStatus {
   planned
   prematch
   live
   done
   forecast_missed
-}
-
-type ExternalTeam {
-  id: Int!
-  name: String!
-  languageCode: String!
 }
 
 enum BetstopsValues {

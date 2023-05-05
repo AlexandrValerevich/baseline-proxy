@@ -8,6 +8,7 @@ import {
   ModeConfigurationService,
 } from "../application/mode/index.js";
 import {
+  DirectMatchService,
   IMatchService,
   IRandomMatchGenerator,
   RandomMatchGenerator,
@@ -70,18 +71,21 @@ container
 container
   .bind<IMatchService>(TYPES.MatchesService)
   .toDynamicValue((context) => {
-    // const modeService = context.container.get<IModeConfigurationService>(
-    //   TYPES.ModeConfigurationService,
-    // );
-    // const modeConfig = modeService.getModeConfiguration();
-    // switch (modeConfig.mode) {
-    //   case ModeDTO.Direct: {
-    //     const client = context.container.get<IBaseLineClient>(TYPES.BaseLineClient);
-    //     return new DirectScoutService(client);
-    //   }
-    //   default:
-    const matchGenerator = context.container.get<IRandomMatchGenerator>(TYPES.RandomMatchGenerator);
-    return new RandomMatchService(matchGenerator);
+    const modeService = context.container.get<IModeConfigurationService>(
+      TYPES.ModeConfigurationService,
+    );
+    const modeConfig = modeService.getModeConfiguration();
+    switch (modeConfig.mode) {
+      case ModeDTO.Direct: {
+        const client = context.container.get<IBaseLineClient>(TYPES.BaseLineClient);
+        return new DirectMatchService(client);
+      }
+      default:
+        const matchGenerator = context.container.get<IRandomMatchGenerator>(
+          TYPES.RandomMatchGenerator,
+        );
+        return new RandomMatchService(matchGenerator);
+    }
   })
   .inRequestScope();
 

@@ -2,7 +2,6 @@ import "reflect-metadata";
 import { inject, injectable } from "inversify";
 import { GraphQLClient } from "graphql-request";
 import { TYPES } from "../../container/types.js";
-import chalk from "chalk";
 import {
   GetMatchesForPeriodRequestModel,
   GetScoutsFroPeriodRequestModel,
@@ -10,6 +9,7 @@ import {
   ScoutModel,
 } from "./models/index.js";
 import { IBaseLineClient } from "./IBaseLineClient.js";
+import { logger } from "../../logger/logger.js";
 
 @injectable()
 class BaseLineClient implements IBaseLineClient {
@@ -169,31 +169,21 @@ class BaseLineClient implements IBaseLineClient {
   }
 
   private logSuccess(query: string, variables: any, operationName: string, data: any) {
-    console.log(`
-        ${chalk.blue("Send graphql request to BaseLine Api is completed successfully.")}
-        ${chalk.green("Query:")} 
-        ${query},
-        ${chalk.green("Variables:")} 
-        ${JSON.stringify(variables)},
-        ${chalk.green("Operation Name:")} 
-        ${operationName},
-        ${chalk.green("Response:")} 
-        ${JSON.stringify(data)}
-    `);
+    logger.info("Send graphql request to BaseLine Api is completed successfully.", {
+      query,
+      variables,
+      operationName,
+      data,
+    });
   }
 
   private logError(ex: any, variables: any, query: string, operationName: string) {
-    console.error(`
-        ${chalk.blue(`Send graphql request to BaseLine Api has failed. 
-        ${chalk.green("Exception:")} 
-        ${ex}`)}
-        ${chalk.green("Query:")} 
-        ${query},
-        ${chalk.green("Variables:")} 
-        ${JSON.stringify(variables)},
-        ${chalk.green("Operation Name:")} 
-        ${operationName},
-      `);
+    logger.error("Send graphql request to BaseLine Api has failed.", {
+      exception: ex,
+      query,
+      variables,
+      operationName,
+    });
   }
 }
 

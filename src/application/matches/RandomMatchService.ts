@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import { inject } from "inversify";
 import { TYPES } from "../../container/types.js";
 import { ValidationError } from "../exceptions/index.js";
@@ -6,6 +5,7 @@ import { IMatchService } from "./IMatchService.js";
 import { IRandomMatchGenerator } from "./generator/index.js";
 import { GetMatchesForPeriodQuery, MatchDTO } from "./dto/index.js";
 import { getMatchesForPeriodQueryValidator } from "./validation/index.js";
+import { logger } from "../../logger/index.js";
 
 class RandomMatchService implements IMatchService {
   private matchGenerator: IRandomMatchGenerator;
@@ -20,10 +20,15 @@ class RandomMatchService implements IMatchService {
       throw new ValidationError(error.message, error.detailsAsSting());
     }
 
-    const scoutDTOs = this.matchGenerator.generateArray(10);
-    console.info(`${chalk.blue("Generate random matches data.")}`);
+    const matchesDto = this.matchGenerator.generateArray(5);
 
-    return scoutDTOs;
+    logger.debug({
+      message: `Random matches resolving is completed successfully.`,
+      query,
+      matchesDto,
+    });
+
+    return matchesDto;
   }
 }
 

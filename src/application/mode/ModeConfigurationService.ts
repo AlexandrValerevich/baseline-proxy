@@ -1,9 +1,9 @@
-import chalk from "chalk";
 import { injectable } from "inversify";
 import { IModeConfigurationService } from "./IModeConfigurationService.js";
 import { errorDTOValidator, predefinedResponsesDTOValidator } from "./validation/index.js";
 import { ModeError, ValidationError, WrongConfigurationModeError } from "../exceptions/index.js";
 import { ErrorDTO, ModeDTO, ModeConfigurationDTO, PredefinedResponsesDTO } from "./dto/index.js";
+import { logger } from "../../logger/index.js";
 
 @injectable()
 class ModeConfigurationService implements IModeConfigurationService {
@@ -113,11 +113,10 @@ class ModeConfigurationService implements IModeConfigurationService {
   }
 
   private logNewConfigurationValue() {
-    console.log(
-      `${chalk.blue("New configuration value is set")}. ${chalk.green(
-        "Configuration",
-      )}: ${JSON.stringify(this.configuration)}`,
-    );
+    logger.info({
+      message: `New configuration value is set. Mode: ${this.configuration.mode}, Delay ${this.configuration.delay}`,
+      configuration: this.configuration,
+    });
   }
 }
 

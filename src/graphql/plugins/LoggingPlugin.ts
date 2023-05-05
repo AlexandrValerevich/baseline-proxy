@@ -1,35 +1,26 @@
-import {
-  ApolloServerPlugin,
-  BaseContext,
-  GraphQLRequestListener,
-  GraphQLServerContext,
-  GraphQLServerListener,
-} from "@apollo/server";
-
-import chalk from "chalk";
+import { ApolloServerPlugin, BaseContext, GraphQLRequestListener } from "@apollo/server";
+import { logger } from "../../logger/index.js";
 
 class LoggingPlugin implements ApolloServerPlugin {
-  async serverWillStart(service: GraphQLServerContext): Promise<void | GraphQLServerListener> {
-    service.logger.info(chalk.blue("Server starting up!"));
-  }
-
   async requestDidStart(): Promise<void | GraphQLRequestListener<BaseContext>> {
     return {
-      async willSendResponse({ request, response, logger }) {
-        if (request.operationName !== "IntrospectionQuery") {
-          logger.info(`
-            ${chalk.blue("GraphQL request is handled.")}
-            ${chalk.green("Request:")} 
-            ${JSON.stringify(request)
-              .replace(/\\n|\\r/g, "")
-              .replace(/[ \t]{2,}/g, " ")},
-            ${chalk.green("Response:")} 
-            ${JSON.stringify(response)}
-          `);
+      async willSendResponse({ request, response }) {
+        if (request.operationName === "IntrospectionQuery") {
+          return;
         }
+
+        const logData = {
+          request: {
+            query: request.query?.replace(/\\n|\\r/g, "").replace(/[ \t]{2,}/g, " "),
+            variables: request.variables,
+            operationName: request.operationName,
+          },
+          response,
+        };
+
+        logger.info({ message: "GraphQL request handled.", logData });
       },
     };
   }
 }
-
 export { LoggingPlugin };

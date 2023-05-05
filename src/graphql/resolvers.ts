@@ -2,15 +2,22 @@ import { ApolloServerErrorCode } from "@apollo/server/errors";
 import { ModeDTO } from "../application/mode/dto/ModeDTO.js";
 import { GraphQLError, GraphQLScalarType, Kind } from "graphql";
 import { IValueContext } from "./context.js";
+import {
+  BetStopStatusDTO,
+  BetStopTypeDTO,
+  BetStopValueDTO,
+  MatchStatusDTO,
+  TimerStatusDTO,
+} from "../application/index.js";
 
 const query = {
   Query: {
-    matches: () => [],
+    matches: (_, { dateFrom, dateTo }, { matchesService }: IValueContext, __) => {
+      const response = matchesService.getMatches({ timeFrom: dateFrom, timeTo: dateTo });
+      return response;
+    },
     getMatchScoutEvents: (_, { timeFrom, timeTo }, { scoutService }: IValueContext, __) => {
-      const response = scoutService.getScouts({
-        timeFrom: timeFrom,
-        timeTo: timeTo,
-      });
+      const response = scoutService.getScouts({ timeFrom: timeFrom, timeTo: timeTo });
       return response;
     },
     getModeConfiguration: (_, __, { modeConfigurationsService }: IValueContext, ___) =>
@@ -21,7 +28,6 @@ const query = {
 const mutation = {
   Mutation: {
     setDelay: (_, { delay }, { modeConfigurationsService }: IValueContext, __) => {
-      console.log("Start handler SetDelay");
       return modeConfigurationsService.setDelay(delay);
     },
     setDirectMode: (_, ___, { modeConfigurationsService }: IValueContext, __) =>
@@ -118,6 +124,59 @@ const mode = {
   },
 };
 
-const resolvers = [query, mutation, mode, dateTime];
+const matchStatus = {
+  MatchStatus: {
+    planned: MatchStatusDTO.Planned,
+    prematch: MatchStatusDTO.Prematch,
+    live: MatchStatusDTO.Live,
+    done: MatchStatusDTO.Done,
+    forecast_missed: MatchStatusDTO.ForecastMissed,
+  },
+};
+
+const betstopValues = {
+  BetstopsValues: {
+    ok: BetStopValueDTO.Ok,
+    timeout: BetStopValueDTO.Timeout,
+    stop: BetStopValueDTO.Stop,
+    ready_to_stop: BetStopValueDTO.ReadToStop,
+    ready_to_start: BetStopValueDTO.ReadToStart,
+  },
+};
+
+const timerStatus = {
+  TimerStatus: {
+    stopped: TimerStatusDTO.Stopped,
+    running: TimerStatusDTO.Running,
+  },
+};
+
+const betstopType = {
+  BetstopType: {
+    scout: BetStopTypeDTO.Scout,
+    system: BetStopTypeDTO.System,
+    analyst: BetStopTypeDTO.Analyst,
+  },
+};
+
+const betstopStatus = {
+  BetstopStatus: {
+    ok: BetStopStatusDTO.Ok,
+    stop: BetStopStatusDTO.Stop,
+    ready_to_start: BetStopStatusDTO.ReadToStart,
+  },
+};
+
+const resolvers = [
+  query,
+  mutation,
+  mode,
+  matchStatus,
+  betstopValues,
+  timerStatus,
+  betstopType,
+  betstopStatus,
+  dateTime,
+];
 
 export { resolvers };
