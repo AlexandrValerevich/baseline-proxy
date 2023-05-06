@@ -14,6 +14,7 @@ import {
   RandomScoutGenerator,
   IScoutService,
 } from "../application/scouts/index.js";
+import { BaseLineClientLoggerDecorator } from "../application/baseline/BaseLineClientLoggerDecorator.js";
 
 const container = new Container();
 
@@ -39,11 +40,18 @@ container
     if (!address) {
       throw new Error("BaseLineClient__Address environment variable not provided.");
     }
-    return new GraphQLClient(process.env.BaseLineClient__Address ?? "");
+    return new GraphQLClient(address);
   })
   .inRequestScope();
 
-container.bind<IBaseLineClient>(TYPES.BaseLineClient).to(BaseLineClient).inRequestScope();
+container
+  .bind<IBaseLineClient>(TYPES.BaseLineClient)
+  .toDynamicValue((context) => {
+    const graphQlClint = context.container.get<GraphQLClient>(TYPES.GraphQlBaseLineClient);
+    const baseLineClient = new BaseLineClient(graphQlClint);
+    return new BaseLineClientLoggerDecorator(baseLineClient);
+  })
+  .inRequestScope();
 
 container
   .bind<IScoutService>(TYPES.ScoutsService)

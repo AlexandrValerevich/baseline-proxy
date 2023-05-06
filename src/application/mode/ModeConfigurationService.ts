@@ -12,7 +12,7 @@ import { arrayMatchDtoValidator } from "../matches/validation/index.js";
 
 @injectable()
 class ModeConfigurationService implements IModeConfigurationService {
-  private configuration: ModeConfigurationDTO;
+  private readonly configuration: ModeConfigurationDTO;
 
   constructor() {
     this.configuration = {

@@ -9,7 +9,6 @@ import {
   ScoutModel,
 } from "./models/index.js";
 import { IBaseLineClient } from "./IBaseLineClient.js";
-import { logger } from "../../logger/logger.js";
 
 @injectable()
 class BaseLineClient implements IBaseLineClient {
@@ -47,18 +46,11 @@ class BaseLineClient implements IBaseLineClient {
     };
     const operationName = "GetScoutsForPeriod";
 
-    try {
-      const data = (await this.client.request(query, variables, { operationName })) as {
-        scouts: ScoutModel[];
-      };
+    const data = (await this.client.request(query, variables, { operationName })) as {
+      scouts: ScoutModel[];
+    };
 
-      this.logSuccess(query, variables, operationName, data);
-
-      return data.scouts;
-    } catch (ex) {
-      this.logError(ex, variables, query, operationName);
-      throw ex;
-    }
+    return data.scouts;
   }
 
   async getMatchesForPeriod(request: GetMatchesForPeriodRequestModel): Promise<MatchModel[]> {
@@ -156,36 +148,12 @@ class BaseLineClient implements IBaseLineClient {
       dateFrom: request.dateFrom,
       dateTo: request.dateTo,
     };
-    try {
-      const data = (await this.client.request(query, variables, { operationName })) as {
-        matches: MatchModel[];
-      };
 
-      this.logSuccess(query, variables, operationName, data);
+    const data = (await this.client.request(query, variables, { operationName })) as {
+      matches: MatchModel[];
+    };
 
-      return data.matches;
-    } catch (ex) {
-      this.logError(ex, variables, query, operationName);
-      throw ex;
-    }
-  }
-
-  private logSuccess(query: string, variables: any, operationName: string, data: any) {
-    logger.info("Send graphql request to BaseLine Api is completed successfully.", {
-      query,
-      variables,
-      operationName,
-      data,
-    });
-  }
-
-  private logError(ex: any, variables: any, query: string, operationName: string) {
-    logger.error("Send graphql request to BaseLine Api has failed.", {
-      exception: ex,
-      query,
-      variables,
-      operationName,
-    });
+    return data.matches;
   }
 }
 
