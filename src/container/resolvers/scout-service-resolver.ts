@@ -8,6 +8,7 @@ import {
   ModeDTO,
   RandomScoutService,
   ScoutDTO,
+  ScoutServiceLoggerDecorator,
 } from "../../application/index.js";
 import { TYPES } from "../types.js";
 
@@ -16,39 +17,45 @@ const scoutServiceResolver = (context: interfaces.Context): IScoutService => {
     TYPES.ModeConfigurationService,
   );
   const mode = modeService.getMode();
-
+  let scoutService: IScoutService;
   switch (mode) {
     case ModeDTO.Direct: {
       const client = context.container.get<IBaseLineClient>(TYPES.BaseLineClient);
-      return new DirectScoutService(client);
+      scoutService = new DirectScoutService(client);
+      break;
     }
     case ModeDTO.ErrorOnce:
-      return {
+      scoutService = {
         getScouts: async (): Promise<ScoutDTO[]> => {
           modeService.throwOnceError();
           return [];
         },
       };
+      break;
     case ModeDTO.ErrorInfinity:
-      return {
+      scoutService = {
         getScouts: async (): Promise<ScoutDTO[]> => {
           modeService.throwInfinityError();
           return [];
         },
       };
+      break;
     case ModeDTO.PredefinedResponses:
-      return {
+      scoutService = {
         getScouts: async (): Promise<ScoutDTO[]> => {
           return modeService.getPredefinedScouts();
         },
       };
+      break;
     default: {
       type NewType = IRandomScoutGenerator;
 
       const scoutGenerator = context.container.get<NewType>(TYPES.RandomScoutGenerator);
-      return new RandomScoutService(scoutGenerator);
+      scoutService = new RandomScoutService(scoutGenerator);
     }
   }
+
+  return new ScoutServiceLoggerDecorator(scoutService);
 };
 
 export { scoutServiceResolver };

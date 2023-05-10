@@ -5,7 +5,9 @@ import {
   IMatchService,
   IModeConfigurationService,
   IRandomMatchGenerator,
+  IScoutService,
   MatchDTO,
+  MatchServiceLoggerDecorator,
   ModeDTO,
   RandomMatchService,
 } from "../../application/index.js";
@@ -16,35 +18,43 @@ const matchServiceResolver = (context: interfaces.Context): IMatchService => {
     TYPES.ModeConfigurationService,
   );
   const mode = modeService.getMode();
+  let matchService: IMatchService;
   switch (mode) {
     case ModeDTO.Direct:
-      return new DirectMatchService(context.container.get<IBaseLineClient>(TYPES.BaseLineClient));
+      matchService = new DirectMatchService(
+        context.container.get<IBaseLineClient>(TYPES.BaseLineClient),
+      );
+      break;
     case ModeDTO.ErrorOnce:
-      return {
+      matchService = {
         getMatches: async (): Promise<MatchDTO[]> => {
           modeService.throwOnceError();
           return [];
         },
       };
+      break;
     case ModeDTO.ErrorInfinity:
-      return {
+      matchService = {
         getMatches: async (): Promise<MatchDTO[]> => {
           modeService.throwInfinityError();
           return [];
         },
       };
+      break;
     case ModeDTO.PredefinedResponses:
-      return {
+      matchService = {
         getMatches: async (): Promise<MatchDTO[]> => {
           return modeService.getPredefinedMatches();
         },
       };
+      break;
     default:
       const matchGenerator = context.container.get<IRandomMatchGenerator>(
         TYPES.RandomMatchGenerator,
       );
-      return new RandomMatchService(matchGenerator);
+      matchService = new RandomMatchService(matchGenerator);
   }
+  return new MatchServiceLoggerDecorator(matchService);
 };
 
 export { matchServiceResolver };

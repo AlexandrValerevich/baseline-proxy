@@ -5,7 +5,6 @@ import { IMatchService } from "./IMatchService.js";
 import { IRandomMatchGenerator } from "./generator/index.js";
 import { GetMatchesForPeriodQuery, MatchDTO } from "./dto/index.js";
 import { getMatchesForPeriodQueryValidator } from "./validation/index.js";
-import { logger } from "../../logger/index.js";
 
 class RandomMatchService implements IMatchService {
   private matchGenerator: IRandomMatchGenerator;
@@ -21,13 +20,6 @@ class RandomMatchService implements IMatchService {
     }
 
     const matchesDto = this.matchGenerator.generateArray(5);
-
-    logger.debug({
-      message: `Random matches resolving is completed successfully.`,
-      query,
-      matchesDto,
-    });
-
     return matchesDto;
   }
 }

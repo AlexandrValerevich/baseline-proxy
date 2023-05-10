@@ -35,6 +35,18 @@ class LoggingPlugin implements ApolloServerPlugin {
 
         logger.info("GraphQL request handled.", logData);
       },
+      async didEncounterErrors(ctx: GraphQLRequestContext<BaseContext>): Promise<void> {
+        const logData = {
+          request: {
+            query: ctx.request.query?.replace(/\\n|\\r/g, "").replace(/[ \t]{2,}/g, " "),
+            variables: ctx.request.variables,
+            operationName: ctx.request.operationName,
+          },
+          errors: ctx.errors,
+        };
+
+        logger.error("GraphQL request encountered errors.", logData);
+      },
     };
   }
 

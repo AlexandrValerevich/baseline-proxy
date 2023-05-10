@@ -22,7 +22,7 @@ class BaseLineClientLoggerDecorator implements IBaseLineClient {
     const start = performance.now();
     try {
       const response = await this.client.getScoutsForPeriod(request);
-      const elapsed = performance.now() - start;
+      const elapsed = (performance.now() - start).toFixed(2);
 
       logger.info({
         message: `Send GraphQL request to BaseLine API for scouts is completed successfully in ${elapsed} ms.`,
@@ -32,7 +32,7 @@ class BaseLineClientLoggerDecorator implements IBaseLineClient {
 
       return response;
     } catch (error) {
-      const elapsed = performance.now() - start;
+      const elapsed = (performance.now() - start).toFixed(2);;
       logger.error({
         message: `Send GraphQL request to BaseLine API for scouts has failed in ${elapsed} ms.`,
         error,
@@ -46,7 +46,7 @@ class BaseLineClientLoggerDecorator implements IBaseLineClient {
     const start = performance.now();
     try {
       const response = await this.client.getMatchesForPeriod(request);
-      const elapsed = performance.now() - start;
+      const elapsed = (performance.now() - start).toFixed(2);;
 
       logger.info({
         message: `Send GraphQL request to BaseLine API for matches is completed successfully in ${elapsed} ms.`,
@@ -56,7 +56,7 @@ class BaseLineClientLoggerDecorator implements IBaseLineClient {
 
       return response;
     } catch (error) {
-      const elapsed = performance.now() - start;
+      const elapsed = (performance.now() - start).toFixed(2);;
       logger.error({
         message: `Send GraphQL request to BaseLine API for matches has failed in ${elapsed} ms.`,
         error,

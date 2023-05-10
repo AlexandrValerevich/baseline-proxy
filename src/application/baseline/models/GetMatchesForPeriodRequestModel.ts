@@ -1,6 +1,6 @@
 interface GetMatchesForPeriodRequestModel {
-  dateFrom: Date;
-  dateTo: Date;
+  dateFrom: string;
+  dateTo: string;
 }
 
 export { GetMatchesForPeriodRequestModel };

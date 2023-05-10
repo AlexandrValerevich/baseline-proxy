@@ -1,20 +1,18 @@
-import { TYPES } from "./types.js";
 import { Container } from "inversify";
 import { GraphQLClient } from "graphql-request";
-import { matchServiceResolver, scoutServiceResolver } from "./resolvers/index.js";
-import { BaseLineClient, IBaseLineClient } from "../application/baseline/index.js";
+
+import { TYPES } from "./types.js";
+import {
+  BaseLineClient,
+  IBaseLineClient,
+  BaseLineClientLoggerDecorator,
+} from "../application/baseline/index.js";
 import { IModeConfigurationService, ModeConfigurationService } from "../application/mode/index.js";
-import {
-  IMatchService,
-  IRandomMatchGenerator,
-  RandomMatchGenerator,
-} from "../application/matches/index.js";
-import {
-  IRandomScoutGenerator,
-  RandomScoutGenerator,
-  IScoutService,
-} from "../application/scouts/index.js";
-import { BaseLineClientLoggerDecorator } from "../application/baseline/BaseLineClientLoggerDecorator.js";
+import { IRandomMatchGenerator, RandomMatchGenerator } from "../application/matches/index.js";
+import { IMatchService } from "../application/matches/IMatchService.js";
+import { IRandomScoutGenerator, RandomScoutGenerator } from "../application/scouts/index.js";
+import { IScoutService } from "../application/scouts/IScoutService.js";
+import { scoutServiceResolver, matchServiceResolver } from "./resolvers/index.js";
 
 const container = new Container();
 
@@ -22,12 +20,10 @@ container
   .bind<IModeConfigurationService>(TYPES.ModeConfigurationService)
   .to(ModeConfigurationService)
   .inSingletonScope();
-
 container
   .bind<IRandomMatchGenerator>(TYPES.RandomMatchGenerator)
   .to(RandomMatchGenerator)
   .inSingletonScope();
-
 container
   .bind<IRandomScoutGenerator>(TYPES.RandomScoutGenerator)
   .to(RandomScoutGenerator)
@@ -57,7 +53,6 @@ container
   .bind<IScoutService>(TYPES.ScoutsService)
   .toDynamicValue(scoutServiceResolver)
   .inRequestScope();
-
 container
   .bind<IMatchService>(TYPES.MatchesService)
   .toDynamicValue(matchServiceResolver)

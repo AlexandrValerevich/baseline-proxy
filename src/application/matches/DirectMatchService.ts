@@ -11,7 +11,6 @@ import {
   matchStatusMapper,
   timerStatusMapper,
 } from "./mapping/index.js";
-import { logger } from "../../logger/logger.js";
 
 @injectable()
 class DirectMatchService implements IMatchService {
@@ -22,34 +21,19 @@ class DirectMatchService implements IMatchService {
   }
 
   async getMatches(query: GetMatchesForPeriodQuery): Promise<MatchDTO[]> {
-    try {
-      const { error } = getMatchesForPeriodQueryValidator.validate(query);
-      if (error) {
-        throw new ValidationError(error.message, error.detailsAsSting());
-      }
-
-      const response = await this.client.getMatchesForPeriod({
-        dateFrom: query.timeFrom,
-        dateTo: query.timeTo,
-      });
-
-      const matchesDto = this.map(response);
-
-      logger.debug({
-        message: `Direct matches resolving is completed successfully.`,
-        query,
-        matchesDto,
-      });
-
-      return matchesDto;
-    } catch (error) {
-      logger.error({
-        message: `Direct matches resolving failed.`,
-        query,
-        error,
-      });
-      throw error;
+    const { error } = getMatchesForPeriodQueryValidator.validate(query);
+    if (error) {
+      throw new ValidationError(error.message, error.detailsAsSting());
     }
+
+    const response = await this.client.getMatchesForPeriod({
+      dateFrom: query.timeFrom,
+      dateTo: query.timeTo,
+    });
+
+    const matchesDto = this.map(response);
+
+    return matchesDto;
   }
 
   private map(matches: MatchModel[]): MatchDTO[] {

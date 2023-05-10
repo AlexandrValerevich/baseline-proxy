@@ -5,7 +5,6 @@ import { ValidationError } from "../exceptions/index.js";
 import { IScoutService } from "./IScoutService.js";
 import { GetScoutsForPeriodQuery, ScoutDTO } from "./dto/index.js";
 import { getScoutsForPeriodQueryValidator } from "./validation/index.js";
-import { logger } from "../../logger/index.js";
 
 @injectable()
 class DirectScoutService implements IScoutService {
@@ -16,32 +15,17 @@ class DirectScoutService implements IScoutService {
   }
 
   async getScouts(query: GetScoutsForPeriodQuery): Promise<ScoutDTO[]> {
-    try {
-      const { error } = getScoutsForPeriodQueryValidator.validate(query);
-      if (error) {
-        throw new ValidationError(error.message, error.detailsAsSting());
-      }
-
-      const response = await this.client.getScoutsForPeriod({
-        dateFrom: query.timeFrom,
-        dateTo: query.timeTo,
-      });
-
-      logger.debug({
-        message: "Direct scouts resolving is completed successfully.",
-        query,
-        response,
-      });
-
-      return response;
-    } catch (error) {
-      logger.error({
-        message: `Direct matches resolving failed.`,
-        query,
-        error,
-      });
-      throw error;
+    const { error } = getScoutsForPeriodQueryValidator.validate(query);
+    if (error) {
+      throw new ValidationError(error.message, error.detailsAsSting());
     }
+
+    const response = await this.client.getScoutsForPeriod({
+      dateFrom: query.timeFrom,
+      dateTo: query.timeTo,
+    });
+
+    return response;
   }
 }
 

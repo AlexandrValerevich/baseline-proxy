@@ -1,6 +1,6 @@
 interface GetMatchesForPeriodQuery {
-  timeFrom: Date;
-  timeTo: Date;
+  timeFrom: string;
+  timeTo: string;
 }
 
 export { GetMatchesForPeriodQuery };
