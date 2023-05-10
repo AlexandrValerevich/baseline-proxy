@@ -13,8 +13,6 @@ const serverOptions: ApolloServerOptions<IContext> = {
   typeDefs: typeDefs,
   resolvers: resolvers,
   plugins: [new LoggingPlugin(), new DelayPlugin()],
-  introspection: process.env.NODE_ENV !== "production",
-  includeStacktraceInErrorResponses: false,
   formatError(formattedError: GraphQLFormattedError, error: GraphQLError): GraphQLFormattedError {
     const originError = error.originalError;
     if (!originError) {
