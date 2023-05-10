@@ -16,15 +16,17 @@ const scoutDTOValidator = Joi.object<ScoutDTO>({
   eventId: Joi.string().valid(
     ...Object.values(ScoutEventTypeRuDTO).filter((x) => typeof x === "number"),
   ),
-  minutes: Joi.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
-  timeOfEvent: Joi.date().required(),
-  stage: Joi.number().integer().min(1).max(4),
-  eventTimestamp: Joi.number().integer().min(0).required(),
+  minutes: Joi.string()
+    .regex(/^([01]\d|2[0-3]):[0-5]\d$/)
+    .required(),
+  timeOfEvent: Joi.string().required(),
+  stage: Joi.number().integer().min(0).max(4).required(),
+  eventTimestamp: Joi.number().min(0).required(),
   playerId: Joi.number().integer().min(0).allow(null).optional(),
   player: Joi.string().allow(null).optional(),
-  triggerId: Joi.string().guid().optional(),
-  changeType: Joi.string().valid("ADDED", "REMOVED", "SYSTEM"),
-  timestamp: Joi.number().min(0),
+  triggerId: Joi.string().guid().allow(null).optional(),
+  changeType: Joi.string().valid("ADDED", "REMOVED", "SYSTEM").allow(null).optional(),
+  timestamp: Joi.number().min(0).allow(null).optional(),
 });
 
 const arrayScoutDTOValidator = Joi.array<ScoutDTO[]>().items(scoutDTOValidator);

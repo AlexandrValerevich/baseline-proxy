@@ -29,13 +29,13 @@ const matchDTOValidator = Joi.object<MatchDTO>({
   homeTeam: teamDtoValidator,
   awayTeam: teamDtoValidator,
   ingameTime: Joi.string().allow(null, "").optional(),
-  betstopStatus: Joi.valid(...Object.values(BetStopStatusDTO)).optional(),
-  refundStatus: Joi.boolean().optional(),
-  triggerId: Joi.string().guid().optional(),
+  betstopStatus: Joi.valid(...Object.values(BetStopStatusDTO)).allow(null).optional(),
+  refundStatus: Joi.boolean().allow(null).optional(),
+  triggerId: Joi.string().guid().allow(null).optional(),
   options: Joi.object({
     periods: Joi.number().integer().min(0).required(),
     periodTime: Joi.number().integer().min(0).required(),
-  }).optional(),
+  }).allow(null).optional(),
   homeScore: Joi.number().integer().min(0).optional(),
   awayScore: Joi.number().integer().min(0).optional(),
   periodScores: Joi.array()
@@ -46,15 +46,15 @@ const matchDTOValidator = Joi.object<MatchDTO>({
         awayScore: Joi.number().integer().min(0).required(),
       }),
     )
-    .optional(),
-  period: Joi.number().integer().min(0).optional(),
-  aftermatchShootouts: Joi.boolean().optional(),
+    .allow(null).optional(),
+  period: Joi.number().integer().min(0).allow(null).optional(),
+  aftermatchShootouts: Joi.boolean().allow(null).optional(),
   shootoutsScores: Joi.object({
     homeScores: Joi.array().items(Joi.number().integer().min(0)).required(),
     awayScores: Joi.array().items(Joi.number().integer().min(0)).required(),
-  }).optional(),
-  timer: Joi.number().integer().min(0).optional(),
-  timerStatus: Joi.valid(...Object.values(TimerStatusDTO)).optional(),
+  }).allow(null).optional(),
+  timer: Joi.number().integer().min(0).allow(null).optional(),
+  timerStatus: Joi.valid(...Object.values(TimerStatusDTO)).allow(null).optional(),
   betstop: Joi.array()
     .items(
       Joi.object({
@@ -64,46 +64,46 @@ const matchDTOValidator = Joi.object<MatchDTO>({
         updatedAt: Joi.string().allow("", null).optional(),
       }),
     )
-    .optional(),
+    .allow(null).optional(),
   assignedTrader: Joi.object({
     id: Joi.number().integer().min(0).required(),
     name: Joi.string().trim().required(),
     email: Joi.string().email().required(),
-  }).optional(),
+  }).allow(null).optional(),
   leagueName: Joi.string().trim().allow(null, "").optional(),
-  homeCorrection: Joi.number().optional(),
-  awayCorrection: Joi.number().optional(),
-  homeTotal: Joi.number().min(0).optional(),
-  awayTotal: Joi.number().min(0).optional(),
-  matchDelay: Joi.boolean().optional(),
-  timestamp: Joi.number().min(0).optional(),
+  homeCorrection: Joi.number().allow(null).optional(),
+  awayCorrection: Joi.number().allow(null).optional(),
+  homeTotal: Joi.number().min(0).allow(null).optional(),
+  awayTotal: Joi.number().min(0).allow(null).optional(),
+  matchDelay: Joi.boolean().allow(null).optional(),
+  timestamp: Joi.number().min(0).allow(null).optional(),
   season: Joi.object({
     id: Joi.number().integer().min(0).required(),
     name: Joi.string().trim().required(),
     languageCode: Joi.string().required(),
     startDate: Joi.date().iso().required(),
     endDate: Joi.date().iso().required(),
-  }).optional(),
+  }).allow(null).optional(),
   tournament: Joi.object({
     id: Joi.number().required(),
     name: Joi.string().required(),
     languageCode: Joi.string().required(),
-  }).optional(),
+  }).allow(null).optional(),
   sport: Joi.object({
     id: Joi.number().required(),
     name: Joi.string().required(),
     languageCode: Joi.string().required(),
-  }).optional(),
+  }).allow(null).optional(),
   country: Joi.object({
     id: Joi.number().required(),
     name: Joi.string().required(),
     languageCode: Joi.string().required(),
-  }).optional(),
+  }).allow(null).optional(),
   venue: Joi.object({
     id: Joi.number().required(),
     name: Joi.string().required(),
     languageCode: Joi.string().required(),
-  }).optional(),
+  }).allow(null).optional(),
 });
 
 const arrayMatchDtoValidator = Joi.array<MatchDTO[]>().items(matchDTOValidator);
