@@ -1,4 +1,4 @@
-import Joi, { string } from "joi";
+import Joi from "joi";
 
 import {
   BetStopStatusDTO,
@@ -24,7 +24,7 @@ const teamDtoValidator = Joi.object<TeamDTO>({
 const matchDTOValidator = Joi.object<MatchDTO>({
   id: Joi.number().integer().min(0).required(),
   name: Joi.string().trim().required(),
-  startedAt: Joi.date().iso().required(),
+  startedAt: Joi.string().required(),
   status: Joi.valid(...Object.values(MatchStatusDTO)).required(),
   homeTeam: teamDtoValidator,
   awayTeam: teamDtoValidator,
@@ -61,7 +61,7 @@ const matchDTOValidator = Joi.object<MatchDTO>({
         type: Joi.valid(...Object.values(BetStopTypeDTO)).required(),
         value: Joi.valid(...Object.values(BetStopStatusDTO)).required(),
         updatedBy: Joi.string().allow("").optional(),
-        updatedAt: Joi.date().iso().allow("", null).optional(),
+        updatedAt: Joi.string().allow("", null).optional(),
       }),
     )
     .optional(),
