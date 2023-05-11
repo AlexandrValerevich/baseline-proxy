@@ -9,7 +9,7 @@ modeRouter
   .get("/api/mode", (req: Request, res: Response) => {
     const modeService = container.get<IModeConfigurationService>(TYPES.ModeConfigurationService);
     const mode = modeService.getMode();
-    return res.json(mode);
+    return res.json({ mode });
   })
   .put("/api/mode", (req: Request<{}, {}, ChangeModeRequest>, res: Response) => {
     const { mode } = req.body;

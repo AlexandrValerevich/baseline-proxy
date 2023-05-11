@@ -82,8 +82,8 @@ const matchDTOValidator = Joi.object<MatchDTO>({
     id: Joi.number().integer().min(0).required(),
     name: Joi.string().trim().required(),
     languageCode: Joi.string().required(),
-    startDate: Joi.date().iso().required(),
-    endDate: Joi.date().iso().required(),
+    startDate: Joi.string().required(),
+    endDate: Joi.string().required(),
   })
     .allow(null)
     .optional(),
