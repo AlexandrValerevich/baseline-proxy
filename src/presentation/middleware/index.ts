@@ -18,7 +18,7 @@ class Middleware {
     }
     const message = modeService.getBodySubstitutionMessage();
     res.send(message);
-    logger.info(`Current mode is BodySubstitution. Response Body ${message}`);
+    logger.info({ message: `Current mode is BodySubstitution.`, body: message });
     return;
   }
 
