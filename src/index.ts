@@ -27,7 +27,8 @@ dotenv.config();
 const app = express();
 const httpServer = http.createServer(app);
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 app.use(Middleware.logger);
 
 app.use(modeRouter);
