@@ -5,12 +5,13 @@ import { SeasonDTO } from "./SeasonDTO.js";
 import { BetStopDTO } from "./BetStopDTO.js";
 import { CountryDTO } from "./CountryDTO.js";
 import { TournamentDTO } from "./TournamentDTO.js";
-import { MatchStatusDTO } from "./MatchStatusDTO.js";
 import { PeriodScoreDTO } from "./PeriodScoreDTO.js";
-import { TimerStatusDTO } from "./TimerStatusDTO.js";
-import { BetStopValueDTO } from "./BetStopValueDTO.js";
 import { ShootoutScoresDTO } from "./ShootoutScoresDTO.js";
 import { AssignedTraderDTO } from "./AssignedTraderDTO.js";
+
+type BetStopValueDTO = "ok" | "timeout" | "stop" | "read_to_stop" | "read_to_start";
+type MatchStatusDTO = "planned" | "prematch" | "live" | "done" | "forecast_missed";
+type TimerStatusDTO = "stopped" | "running";
 
 interface MatchDTO {
   id: number;
@@ -51,4 +52,4 @@ interface MatchDTO {
   venue?: VenueDTO;
 }
 
-export { MatchDTO };
+export { MatchDTO, BetStopValueDTO, MatchStatusDTO, TimerStatusDTO };

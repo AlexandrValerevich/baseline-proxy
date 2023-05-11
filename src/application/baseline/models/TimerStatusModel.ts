@@ -1,3 +1,3 @@
-type TimerStatusModel = "running" | "stopped" | undefined | null;
+type TimerStatusModel = "running" | "stopped" | undefined;
 
 export { TimerStatusModel };

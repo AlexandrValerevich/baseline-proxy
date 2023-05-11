@@ -1,7 +1,12 @@
 import { Container } from "inversify";
-import { IScoutService, IMatchService, IModeConfigurationService } from "../application";
+import {
+  IScoutService,
+  IMatchService,
+  IModeConfigurationService,
+} from "../../application/index.js";
+import { BaseContext } from "@apollo/server";
 
-interface IContext {
+interface IContext extends BaseContext {
   serviceProvider: Container;
   scoutService: IScoutService;
   matchesService: IMatchService;

@@ -4,7 +4,7 @@ import {
   ModeError,
   ValidationError,
   WrongConfigurationModeError,
-} from "../../application/exceptions/index.js";
+} from "../../../application/exceptions/index.js";
 
 declare global {
   interface Error {

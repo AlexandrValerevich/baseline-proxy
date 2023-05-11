@@ -7,6 +7,7 @@ interface ModeConfigurationDTO {
   error: ErrorDTO;
   predefinedResponses: PredefinedResponsesDTO;
   delay: number;
+  bodySubstitutionMessage?: string;
 }
 
 export { ModeConfigurationDTO };

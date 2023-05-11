@@ -5,9 +5,9 @@ import {
   GraphQLRequestContextExecutionDidStart,
   GraphQLRequestListener,
 } from "@apollo/server";
-import { logger } from "../../logger/index.js";
+import { logger } from "../../../logger/index.js";
 import { IContext } from "../context.js";
-import { ModeDTO } from "../../application/index.js";
+import { ModeDTO } from "../../../application/index.js";
 
 const introspectionQuery = "IntrospectionQuery";
 
@@ -21,7 +21,7 @@ class LoggingPlugin implements ApolloServerPlugin {
     return {
       async executionDidStart({ contextValue }: GraphQLRequestContextExecutionDidStart<IContext>) {
         const modeService = contextValue.modeConfigurationsService;
-        logger.info(`Current service mode: ${ModeDTO[modeService.getMode()]}`);
+        logger.info(`Current service mode: ${modeService.getMode()}`);
       },
       async willSendResponse({ request, response }) {
         const logData = {

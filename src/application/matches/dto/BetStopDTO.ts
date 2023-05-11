@@ -1,5 +1,5 @@
-import { BetStopStatusDTO } from "./BetStopStatusDTO.js";
-import { BetStopTypeDTO } from "./BetStopTypeDTO.js";
+type BetStopStatusDTO = "ok" | "stop" | "read_to_start";
+type BetStopTypeDTO = "scout" | "system" | "analyst";
 
 interface BetStopDTO {
   type: BetStopTypeDTO;
@@ -8,4 +8,4 @@ interface BetStopDTO {
   updatedAt: string;
 }
 
-export { BetStopDTO };
+export { BetStopDTO, BetStopStatusDTO, BetStopTypeDTO };

@@ -1,6 +1,6 @@
 import { ApolloServerPlugin, GraphQLRequestListener } from "@apollo/server";
 import { IContext } from "../context";
-import { logger } from "../../logger/index.js";
+import { logger } from "../../../logger/index.js";
 
 class DelayPlugin implements ApolloServerPlugin {
   async requestDidStart(): Promise<GraphQLRequestListener<IContext>> {

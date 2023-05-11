@@ -5,7 +5,6 @@ import {
   IModeConfigurationService,
   IRandomScoutGenerator,
   IScoutService,
-  ModeDTO,
   RandomScoutService,
   ScoutDTO,
   ScoutServiceLoggerDecorator,
@@ -19,12 +18,12 @@ const scoutServiceResolver = (context: interfaces.Context): IScoutService => {
   const mode = modeService.getMode();
   let scoutService: IScoutService;
   switch (mode) {
-    case ModeDTO.Direct: {
+    case "direct": {
       const client = context.container.get<IBaseLineClient>(TYPES.BaseLineClient);
       scoutService = new DirectScoutService(client);
       break;
     }
-    case ModeDTO.ErrorOnce:
+    case "error_once":
       scoutService = {
         getScouts: async (): Promise<ScoutDTO[]> => {
           modeService.throwOnceError();
@@ -32,7 +31,7 @@ const scoutServiceResolver = (context: interfaces.Context): IScoutService => {
         },
       };
       break;
-    case ModeDTO.ErrorInfinity:
+    case "error_infinity":
       scoutService = {
         getScouts: async (): Promise<ScoutDTO[]> => {
           modeService.throwInfinityError();
@@ -40,7 +39,7 @@ const scoutServiceResolver = (context: interfaces.Context): IScoutService => {
         },
       };
       break;
-    case ModeDTO.PredefinedResponses:
+    case "predefined_response":
       scoutService = {
         getScouts: async (): Promise<ScoutDTO[]> => {
           return modeService.getPredefinedScouts();

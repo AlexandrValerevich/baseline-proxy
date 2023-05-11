@@ -2,14 +2,7 @@ import { faker } from "@faker-js/faker";
 import { injectable } from "inversify";
 import { v4 as uuidv4 } from "uuid";
 import { IRandomMatchGenerator } from "./IRandomMatchGenerator.js";
-import {
-  BetStopStatusDTO,
-  BetStopTypeDTO,
-  BetStopValueDTO,
-  MatchDTO,
-  MatchStatusDTO,
-  TimerStatusDTO,
-} from "../dto/index.js";
+import { MatchDTO } from "../dto/index.js";
 
 @injectable()
 class RandomMatchGenerator implements IRandomMatchGenerator {
@@ -26,27 +19,17 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
   }
 
   generate(): MatchDTO {
-    const randomBetstopStatus = faker.helpers.arrayElement(
-      Object.values(BetStopStatusDTO).filter((x) => typeof x === "number"),
-    ) as BetStopStatusDTO;
-    const randomBetstopType = faker.helpers.arrayElement(
-      Object.values(BetStopTypeDTO).filter((x) => typeof x === "number"),
-    ) as BetStopTypeDTO;
-    const randomBetstopValue = faker.helpers.arrayElement(
-      Object.values(BetStopValueDTO).filter((x) => typeof x === "number"),
-    ) as BetStopValueDTO;
-    const randomMatchStatus = faker.helpers.arrayElement(
-      Object.values(MatchStatusDTO).filter((x) => typeof x === "number"),
-    ) as MatchStatusDTO;
-    const randomTimerStatus = faker.helpers.arrayElement(
-      Object.values(TimerStatusDTO).filter((x) => typeof x === "number"),
-    ) as TimerStatusDTO;
-
     return {
       id: faker.datatype.number(),
       name: faker.company.name(),
       startedAt: faker.date.recent().toISOString().slice(0, -5),
-      status: randomMatchStatus as MatchStatusDTO,
+      status: faker.helpers.arrayElement([
+        "planned",
+        "prematch",
+        "live",
+        "done",
+        "forecast_missed",
+      ]),
       homeTeam: {
         id: faker.datatype.number(),
         name: faker.company.name(),
@@ -58,7 +41,13 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
         languageCode: "RU",
       },
       ingameTime: "00:00",
-      betstopStatus: randomBetstopValue,
+      betstopStatus: faker.helpers.arrayElement([
+        "ok",
+        "timeout",
+        "stop",
+        "read_to_stop",
+        "read_to_start",
+      ]),
       refundStatus: faker.datatype.boolean(),
       triggerId: uuidv4(),
       options: {
@@ -79,11 +68,11 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
         awayScores: Array.from({ length: 5 }, () => faker.datatype.number({ min: 0, max: 1 })),
       },
       timer: faker.datatype.number({ min: 0, max: 90 }),
-      timerStatus: randomTimerStatus,
+      timerStatus: faker.helpers.arrayElement(["stopped", "running"]),
       betstop: [
         {
-          type: randomBetstopType,
-          value: randomBetstopStatus,
+          type: faker.helpers.arrayElement(["scout", "system", "analyst"]),
+          value: faker.helpers.arrayElement(["ok", "stop", "read_to_start"]),
           updatedBy: faker.name.firstName(),
           updatedAt: faker.date.recent().toISOString().slice(0, -5),
         },

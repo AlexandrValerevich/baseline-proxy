@@ -9,17 +9,15 @@ export interface IModeConfigurationService {
   getPredefinedMatches(): MatchDTO[];
   getMode(): ModeDTO;
   getDelay(): number;
+  getBodySubstitutionMessage(): string | undefined;
+  getError(): ErrorDTO;
 
-  onDirectMode(): ModeConfigurationDTO;
-  onRandomMode(): ModeConfigurationDTO;
-  onErrorOnceMode(): ModeConfigurationDTO;
-  onErrorInfinityMode(): ModeConfigurationDTO;
-  onPredefinedResponseMode(): ModeConfigurationDTO;
-
+  setMode(mode: ModeDTO): ModeConfigurationDTO;
   setError(error?: ErrorDTO): ModeConfigurationDTO;
   setDelay(delay: number): ModeConfigurationDTO;
   setPredefinedScouts(scouts: ScoutDTO[]): ModeConfigurationDTO;
   setPredefinedMatches(matches: MatchDTO[]): ModeConfigurationDTO;
+  setBodySubstitutionMessage(message?: string): ModeConfigurationDTO;
 
   throwOnceError();
   throwInfinityError();

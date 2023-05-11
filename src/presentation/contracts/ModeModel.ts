@@ -1,4 +1,4 @@
-type ModeDTO =
+type ModeModel =
   | "direct"
   | "random"
   | "predefined_response"
@@ -6,4 +6,4 @@ type ModeDTO =
   | "error_infinity"
   | "body_substitution";
 
-export { ModeDTO };
+export { ModeModel };

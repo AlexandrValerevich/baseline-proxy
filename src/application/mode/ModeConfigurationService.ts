@@ -1,9 +1,9 @@
 import "reflect-metadata";
 import { injectable } from "inversify";
 import { IModeConfigurationService } from "./IModeConfigurationService.js";
-import { errorDTOValidator, predefinedResponsesDTOValidator } from "./validation/index.js";
+import { errorDTOValidator } from "./validation/index.js";
 import { ModeError, ValidationError, WrongConfigurationModeError } from "../exceptions/index.js";
-import { ErrorDTO, ModeDTO, ModeConfigurationDTO, PredefinedResponsesDTO } from "./dto/index.js";
+import { ErrorDTO, ModeDTO, ModeConfigurationDTO } from "./dto/index.js";
 import { logger } from "../../logger/index.js";
 import { MatchDTO } from "../matches/index.js";
 import { ScoutDTO } from "../scouts/index.js";
@@ -16,7 +16,7 @@ class ModeConfigurationService implements IModeConfigurationService {
 
   constructor() {
     this.configuration = {
-      mode: ModeDTO.Direct,
+      mode: "direct",
       error: {
         http: { status: 500 },
         message: "Internal Error",
@@ -24,7 +24,14 @@ class ModeConfigurationService implements IModeConfigurationService {
       },
       predefinedResponses: { scouts: [], matches: [] },
       delay: 100,
+      bodySubstitutionMessage: "",
     };
+  }
+
+  setBodySubstitutionMessage(message?: string): ModeConfigurationDTO {
+    this.configuration.bodySubstitutionMessage = message;
+    this.logNewConfigurationValue();
+    return this.configuration;
   }
 
   setError(error?: ErrorDTO | undefined): ModeConfigurationDTO {
@@ -77,19 +84,27 @@ class ModeConfigurationService implements IModeConfigurationService {
     return this.configuration.predefinedResponses.matches;
   }
 
+  getBodySubstitutionMessage(): string | undefined {
+    return this.configuration.bodySubstitutionMessage;
+  }
+
+  getError(): ErrorDTO {
+    return this.configuration.error;
+  }
+
   throwOnceError() {
-    if (this.configuration.mode !== ModeDTO.ErrorOnce) {
-      throw new WrongConfigurationModeError(this.configuration.mode, ModeDTO.ErrorOnce);
+    if (this.configuration.mode !== "error_once") {
+      throw new WrongConfigurationModeError(this.configuration.mode, "error_once");
     }
     logger.debug("Throw once error and switch to direct mode.");
-    this.configuration.mode = ModeDTO.Direct;
+    this.configuration.mode = "direct";
     const error = this.configuration.error;
     throw new ModeError(error.message, error.http, error.details);
   }
 
   throwInfinityError() {
-    if (this.configuration.mode !== ModeDTO.ErrorInfinity) {
-      throw new WrongConfigurationModeError(this.configuration.mode, ModeDTO.ErrorInfinity);
+    if (this.configuration.mode !== "error_infinity") {
+      throw new WrongConfigurationModeError(this.configuration.mode, "error_infinity");
     }
     logger.debug("Throw infinity error.");
     const error = this.configuration.error;
@@ -105,41 +120,15 @@ class ModeConfigurationService implements IModeConfigurationService {
     return this.configuration;
   }
 
-  onDirectMode(): ModeConfigurationDTO {
-    this.configuration.mode = ModeDTO.Direct;
-    this.logNewConfigurationValue();
-    return this.configuration;
-  }
-
-  onRandomMode(): ModeConfigurationDTO {
-    this.configuration.mode = ModeDTO.Random;
-    this.logNewConfigurationValue();
-    return this.configuration;
-  }
-
-  onErrorOnceMode(): ModeConfigurationDTO {
-    this.configuration.mode = ModeDTO.ErrorOnce;
-    this.logNewConfigurationValue();
-    return this.configuration;
-  }
-
-  onErrorInfinityMode(): ModeConfigurationDTO {
-    this.configuration.mode = ModeDTO.ErrorInfinity;
-    this.logNewConfigurationValue();
-    return this.configuration;
-  }
-
-  onPredefinedResponseMode(): ModeConfigurationDTO {
-    this.configuration.mode = ModeDTO.PredefinedResponses;
+  setMode(mode: ModeDTO): ModeConfigurationDTO {
+    this.configuration.mode = mode;
     this.logNewConfigurationValue();
     return this.configuration;
   }
 
   private logNewConfigurationValue() {
     logger.info({
-      message: `New configuration value is set. Mode: ${ModeDTO[this.configuration.mode]}, Delay ${
-        this.configuration.delay
-      }`,
+      message: `New configuration value is set. Mode: ${this.configuration.mode}, Delay ${this.configuration.delay}`,
       configuration: this.configuration,
     });
   }
