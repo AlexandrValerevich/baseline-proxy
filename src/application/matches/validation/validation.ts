@@ -20,7 +20,7 @@ const matchDTOValidator = Joi.object<MatchDTO>({
   homeTeam: teamDtoValidator,
   awayTeam: teamDtoValidator,
   ingameTime: Joi.string().allow(null, "").optional(),
-  betstopStatus: Joi.valid("ok", "timeout", "stop", "read_to_stop", "read_to_start")
+  betstopStatus: Joi.valid("ok", "timeout", "stop", "read_to_stop", "ready_to_start")
     .allow(null)
     .optional(),
   refundStatus: Joi.boolean().allow(null).optional(),
@@ -57,7 +57,7 @@ const matchDTOValidator = Joi.object<MatchDTO>({
     .items(
       Joi.object({
         type: Joi.valid("scout", "system", "analyst").required(),
-        value: Joi.valid("ok", "stop", "read_to_start").required(),
+        value: Joi.valid("ok", "stop", "ready_to_start").required(),
         updatedBy: Joi.string().allow("").optional(),
         updatedAt: Joi.string().allow("", null).optional(),
       }),

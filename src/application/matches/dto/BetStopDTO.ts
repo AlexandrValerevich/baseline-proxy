@@ -1,4 +1,4 @@
-type BetStopStatusDTO = "ok" | "stop" | "read_to_start";
+type BetStopStatusDTO = "ok" | "stop" | "ready_to_start";
 type BetStopTypeDTO = "scout" | "system" | "analyst";
 
 interface BetStopDTO {

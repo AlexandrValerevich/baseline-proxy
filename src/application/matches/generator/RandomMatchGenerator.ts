@@ -46,7 +46,7 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
         "timeout",
         "stop",
         "read_to_stop",
-        "read_to_start",
+        "ready_to_start",
       ]),
       refundStatus: faker.datatype.boolean(),
       triggerId: uuidv4(),
@@ -72,7 +72,7 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
       betstop: [
         {
           type: faker.helpers.arrayElement(["scout", "system", "analyst"]),
-          value: faker.helpers.arrayElement(["ok", "stop", "read_to_start"]),
+          value: faker.helpers.arrayElement(["ok", "stop", "ready_to_start"]),
           updatedBy: faker.name.firstName(),
           updatedAt: faker.date.recent().toISOString().slice(0, -5),
         },
