@@ -1,15 +1,14 @@
+import { ErrorDTO } from "../mode/index.js";
 import { ApplicationError } from "./ApplicationError.js";
 
 class ModeError extends ApplicationError {
-  constructor(message: string, http: { status: number }, detail?: string) {
-    super(message, detail);
+  constructor(error: ErrorDTO) {
+    super(error.message, error.details);
     this.name = "ModeError";
-    this.http = http;
+    this.extensions = error.extensions;
   }
 
-  detail?: string;
-  message: string;
-  http: { status: number };
+  extensions?: any;
 }
 
 export { ModeError };

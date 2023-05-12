@@ -1,14 +1,12 @@
 import Joi from "joi";
-import { PredefinedResponsesDTO, ErrorDTO } from "../dto/index.js";
+import { PredefinedResponsesDTO, ErrorDTO, ModeDTO, ModeConfigurationDTO } from "../dto/index.js";
 import { matchDTOValidator } from "../../matches/validation/index.js";
 import { scoutDTOValidator } from "../../scouts/validation/index.js";
 
 const errorDTOValidator = Joi.object<ErrorDTO>({
   message: Joi.string().required(),
-  http: Joi.object<{ status: number }>({
-    status: Joi.number().integer().min(400).max(599),
-  }),
   details: Joi.string().optional(),
+  extensions: Joi.any().allow(null).optional(),
 });
 
 const predefinedResponsesDTOValidator = Joi.object<PredefinedResponsesDTO>({
@@ -16,4 +14,26 @@ const predefinedResponsesDTOValidator = Joi.object<PredefinedResponsesDTO>({
   matches: Joi.array().items(matchDTOValidator),
 });
 
-export { errorDTOValidator, predefinedResponsesDTOValidator };
+const modeDTOValidator = Joi.string<ModeDTO>().valid(
+  "direct",
+  "random",
+  "predefined_response",
+  "error_once",
+  "error_infinity",
+  "body_substitution",
+);
+
+const modeConfigurationDTOValidator = Joi.object<ModeConfigurationDTO>({
+  mode: modeDTOValidator,
+  delay: Joi.number().min(0),
+  error: errorDTOValidator,
+  predefinedResponses: predefinedResponsesDTOValidator,
+  bodySubstitutionMessage: Joi.string().allow("", null),
+});
+
+export {
+  errorDTOValidator,
+  predefinedResponsesDTOValidator,
+  modeDTOValidator,
+  modeConfigurationDTOValidator,
+};

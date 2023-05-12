@@ -9,7 +9,7 @@ import { PeriodScoreDTO } from "./PeriodScoreDTO.js";
 import { ShootoutScoresDTO } from "./ShootoutScoresDTO.js";
 import { AssignedTraderDTO } from "./AssignedTraderDTO.js";
 
-type BetStopValueDTO = "ok" | "timeout" | "stop" | "read_to_stop" | "ready_to_start";
+type BetStopValueDTO = "ok" | "timeout" | "stop" | "ready_to_stop" | "ready_to_start";
 type MatchStatusDTO = "planned" | "prematch" | "live" | "done" | "forecast_missed";
 type TimerStatusDTO = "stopped" | "running";
 

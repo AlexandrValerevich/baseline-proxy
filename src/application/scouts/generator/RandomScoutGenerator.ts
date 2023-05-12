@@ -43,7 +43,7 @@ class RandomScoutGenerator implements IRandomScoutGenerator {
       player: faker.name.fullName(),
       triggerId: uuidv4(),
       changeType: faker.helpers.arrayElement(["ADDED", "REMOVED", "SYSTEM"]),
-      timestamp: faker.datatype.number(),
+      timestamp: faker.datatype.number({ min: 1680000000, max: Date.now() }),
     };
   }
 }

@@ -9,7 +9,7 @@ class DelayPlugin implements ApolloServerPlugin {
         if (request.operationName !== "IntrospectionQuery") {
           const delay = contextValue.modeConfigurationsService.getDelay();
           await new Promise((resolve) => setTimeout(resolve, delay));
-          logger.info(`Request handling was delayed on ${delay}ms`);
+          logger.debug(`Request handling was delayed on ${delay}ms`);
         }
       },
     };

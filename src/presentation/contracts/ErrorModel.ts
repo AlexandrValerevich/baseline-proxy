@@ -1,8 +1,7 @@
 interface ErrorModel {
-    http: { status: number };
-    message: string;
-    details?: string;
-  }
-  
-  export { ErrorModel };
-  
+  message: string;
+  details?: string;
+  extensions?: any;
+}
+
+export { ErrorModel };

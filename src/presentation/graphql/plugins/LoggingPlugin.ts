@@ -21,7 +21,7 @@ class LoggingPlugin implements ApolloServerPlugin {
     return {
       async executionDidStart({ contextValue }: GraphQLRequestContextExecutionDidStart<IContext>) {
         const modeService = contextValue.modeConfigurationsService;
-        logger.info(`Current service mode: ${modeService.getMode()}`);
+        logger.debug(`Current service mode: ${modeService.getMode()}`);
       },
       async willSendResponse({ request, response }) {
         const logData = {

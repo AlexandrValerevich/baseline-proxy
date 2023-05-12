@@ -4,20 +4,21 @@ import { ModeConfigurationDTO } from "./dto/ModeConfigurationDTO.js";
 import { ErrorDTO, ModeDTO } from "./dto/index.js";
 
 export interface IModeConfigurationService {
-  getModeConfiguration(): ModeConfigurationDTO;
+  getMode(): ModeDTO;
+  getError(): ErrorDTO;
+  getDelay(): number;
   getPredefinedScouts(): ScoutDTO[];
   getPredefinedMatches(): MatchDTO[];
-  getMode(): ModeDTO;
-  getDelay(): number;
   getBodySubstitutionMessage(): string | undefined;
-  getError(): ErrorDTO;
+  getModeConfiguration(): ModeConfigurationDTO;
 
-  setMode(mode: ModeDTO): ModeConfigurationDTO;
-  setError(error?: ErrorDTO): ModeConfigurationDTO;
-  setDelay(delay: number): ModeConfigurationDTO;
-  setPredefinedScouts(scouts: ScoutDTO[]): ModeConfigurationDTO;
-  setPredefinedMatches(matches: MatchDTO[]): ModeConfigurationDTO;
-  setBodySubstitutionMessage(message?: string): ModeConfigurationDTO;
+  setMode(mode: ModeDTO): void;
+  setError(error?: ErrorDTO): void;
+  setDelay(delay: number): void;
+  setPredefinedScouts(scouts: ScoutDTO[]): void;
+  setPredefinedMatches(matches: MatchDTO[]): void;
+  setBodySubstitutionMessage(message?: string): void;
+  setModeConfiguration(configuration: ModeConfigurationDTO): void;
 
   throwOnceError();
   throwInfinityError();

@@ -1,7 +1,11 @@
 import "reflect-metadata";
 import { injectable } from "inversify";
 import { IModeConfigurationService } from "./IModeConfigurationService.js";
-import { errorDTOValidator } from "./validation/index.js";
+import {
+  errorDTOValidator,
+  modeConfigurationDTOValidator,
+  modeDTOValidator,
+} from "./validation/index.js";
 import { ModeError, ValidationError, WrongConfigurationModeError } from "../exceptions/index.js";
 import { ErrorDTO, ModeDTO, ModeConfigurationDTO } from "./dto/index.js";
 import { logger } from "../../logger/index.js";
@@ -18,9 +22,9 @@ class ModeConfigurationService implements IModeConfigurationService {
     this.configuration = {
       mode: "direct",
       error: {
-        http: { status: 500 },
         message: "Internal Error",
         details: "Some error details",
+        extensions: { http: { status: 500 }, randomField: "randomValue" },
       },
       predefinedResponses: { scouts: [], matches: [] },
       delay: 100,
@@ -28,40 +32,65 @@ class ModeConfigurationService implements IModeConfigurationService {
     };
   }
 
-  setBodySubstitutionMessage(message?: string): ModeConfigurationDTO {
-    this.configuration.bodySubstitutionMessage = message;
+  setDelay(delay: number): void {
+    if (delay <= 0) {
+      throw new ValidationError(`Provided delay value less than 0. Delay ${delay}`);
+    }
+    this.configuration.delay = delay;
     this.logNewConfigurationValue();
-    return this.configuration;
   }
 
-  setError(error?: ErrorDTO | undefined): ModeConfigurationDTO {
+  setMode(mode: ModeDTO): void {
+    const { value, error: validationError } = modeDTOValidator.validate(mode);
+    if (validationError) {
+      throw new ValidationError(validationError.message, validationError.detailsAsSting());
+    }
+    this.configuration.mode = value;
+    this.logNewConfigurationValue();
+  }
+
+  setBodySubstitutionMessage(message?: string): void {
+    this.configuration.bodySubstitutionMessage = message;
+    this.logNewConfigurationValue();
+  }
+
+  setError(error?: ErrorDTO | undefined): void {
     const { value, error: validationError } = errorDTOValidator.validate(error);
     if (validationError) {
       throw new ValidationError(validationError.message, validationError.detailsAsSting());
     }
     this.configuration.error = value;
     this.logNewConfigurationValue();
-    return this.configuration;
   }
 
-  setPredefinedScouts(scouts: ScoutDTO[]): ModeConfigurationDTO {
+  setPredefinedScouts(scouts: ScoutDTO[]): void {
     const { value, error } = arrayScoutDTOValidator.validate(scouts);
     if (error) {
       throw new ValidationError(error.message, error.detailsAsSting());
     }
     this.configuration.predefinedResponses.scouts = value;
     this.logNewConfigurationValue();
-    return this.configuration;
   }
 
-  setPredefinedMatches(matches: MatchDTO[]): ModeConfigurationDTO {
+  setPredefinedMatches(matches: MatchDTO[]): void {
     const { value, error } = arrayMatchDtoValidator.validate(matches);
     if (error) {
       throw new ValidationError(error.message, error.detailsAsSting());
     }
     this.configuration.predefinedResponses.matches = value;
     this.logNewConfigurationValue();
-    return this.configuration;
+  }
+
+  setModeConfiguration(configuration: ModeConfigurationDTO): void {
+    const { value, error } = modeConfigurationDTOValidator.validate(configuration);
+    if (error) {
+      throw new ValidationError(error.message, error.detailsAsSting());
+    }
+    this.configuration.mode = value.mode;
+    this.configuration.delay = value.delay;
+    this.configuration.error = value.error;
+    this.configuration.predefinedResponses = value.predefinedResponses;
+    this.configuration.bodySubstitutionMessage = value.bodySubstitutionMessage;
   }
 
   getModeConfiguration(): ModeConfigurationDTO {
@@ -98,8 +127,7 @@ class ModeConfigurationService implements IModeConfigurationService {
     }
     logger.debug("Throw once error and switch to direct mode.");
     this.configuration.mode = "direct";
-    const error = this.configuration.error;
-    throw new ModeError(error.message, error.http, error.details);
+    throw new ModeError(this.configuration.error);
   }
 
   throwInfinityError() {
@@ -107,27 +135,11 @@ class ModeConfigurationService implements IModeConfigurationService {
       throw new WrongConfigurationModeError(this.configuration.mode, "error_infinity");
     }
     logger.debug("Throw infinity error.");
-    const error = this.configuration.error;
-    throw new ModeError(error.message, error.http, error.details);
-  }
-
-  setDelay(delay: number): ModeConfigurationDTO {
-    if (delay <= 0) {
-      throw new ValidationError(`Provided delay value less than 0. Delay ${delay}`);
-    }
-    this.configuration.delay = delay;
-    this.logNewConfigurationValue();
-    return this.configuration;
-  }
-
-  setMode(mode: ModeDTO): ModeConfigurationDTO {
-    this.configuration.mode = mode;
-    this.logNewConfigurationValue();
-    return this.configuration;
+    throw new ModeError(this.configuration.error);
   }
 
   private logNewConfigurationValue() {
-    logger.info({
+    logger.debug({
       message: `New configuration value is set. Mode: ${this.configuration.mode}, Delay ${this.configuration.delay}`,
       configuration: this.configuration,
     });

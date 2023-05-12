@@ -45,7 +45,7 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
         "ok",
         "timeout",
         "stop",
-        "read_to_stop",
+        "ready_to_stop",
         "ready_to_start",
       ]),
       refundStatus: faker.datatype.boolean(),
@@ -88,7 +88,7 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
       homeTotal: faker.datatype.number({ min: 0, max: 10 }),
       awayTotal: faker.datatype.number({ min: 0, max: 10 }),
       matchDelay: faker.datatype.boolean(),
-      timestamp: faker.datatype.number(),
+      timestamp: faker.datatype.number({ min: 1680000000, max: Date.now() }),
       season: {
         id: faker.datatype.number(),
         name: faker.lorem.word(),

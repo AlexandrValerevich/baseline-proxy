@@ -2,7 +2,7 @@ type BetStopValueModel =
   | "ok"
   | "timeout"
   | "stop"
-  | "read_to_stop"
+  | "ready_to_stop"
   | "ready_to_start"
   | undefined;
 

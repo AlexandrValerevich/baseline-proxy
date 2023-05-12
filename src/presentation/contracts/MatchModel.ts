@@ -1,4 +1,4 @@
-type BetStopValueModel = "ok" | "timeout" | "stop" | "read_to_stop" | "ready_to_start";
+type BetStopValueModel = "ok" | "timeout" | "stop" | "ready_to_stop" | "ready_to_start";
 type BetStopStatusModel = "ok" | "stop" | "ready_to_start";
 type BetStopTypeModel = "scout" | "system" | "analyst";
 type MatchStatusModel = "planned" | "prematch" | "live" | "done" | "forecast_missed";

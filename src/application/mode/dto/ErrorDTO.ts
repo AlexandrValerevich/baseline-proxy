@@ -1,7 +1,7 @@
 interface ErrorDTO {
-  http: { status: number };
   message: string;
   details?: string;
+  extensions?: any;
 }
 
 export { ErrorDTO };

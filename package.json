@@ -17,6 +17,7 @@
     "@faker-js/faker": "^7.6.0",
     "@types/node": "^18.16.2",
     "dotenv": "^16.0.3",
+    "express-validator": "^7.0.1",
     "graphql": "^16.6.0",
     "graphql-request": "^6.0.0",
     "inversify": "^6.0.1",

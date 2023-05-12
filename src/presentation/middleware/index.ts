@@ -1,6 +1,5 @@
 import {
   IModeConfigurationService,
-  ModeDTO,
   ModeError,
   ValidationError,
   WrongConfigurationModeError,
@@ -18,12 +17,12 @@ class Middleware {
     }
     const message = modeService.getBodySubstitutionMessage();
     res.send(message);
-    logger.info({ message: `Current mode is BodySubstitution.`, body: message });
+    logger.debug({ message: `Current mode is BodySubstitution.`, body: message });
     return;
   }
 
-  public static logger(req: Request, res: Response, next: NextFunction) {
-    logger.info({
+  public static logger( req: Request, res: Response, next: NextFunction) {
+    logger.debug({
       message: `HTTP Request ${req.method} ${req.originalUrl}`,
       headers: req.headers,
       request: req.body,
@@ -33,6 +32,7 @@ class Middleware {
       logger.info({
         message: `HTTP Response ${req.method} ${req.originalUrl} ${res.statusCode}`,
         response: res.sendDate,
+        request: req.body,
       });
     });
 
