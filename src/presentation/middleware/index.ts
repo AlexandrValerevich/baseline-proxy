@@ -21,16 +21,18 @@ class Middleware {
     return;
   }
 
-  public static logger( req: Request, res: Response, next: NextFunction) {
+  public static logger(req: Request, res: Response, next: NextFunction) {
     logger.debug({
       message: `HTTP Request ${req.method} ${req.originalUrl}`,
       headers: req.headers,
       request: req.body,
     });
 
+    const start = performance.now();
     res.on("close", () => {
+      const elapsed = (performance.now() - start).toFixed(2);
       logger.info({
-        message: `HTTP Response ${req.method} ${req.originalUrl} ${res.statusCode}`,
+        message: `HTTP Response ${req.method} ${req.originalUrl} ${res.statusCode} is complied in ${elapsed}`,
         response: res.sendDate,
         request: req.body,
       });

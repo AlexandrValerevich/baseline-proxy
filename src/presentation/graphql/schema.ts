@@ -45,6 +45,8 @@ type ExternalTeam {
   id: Int!
   name: String!
   languageCode: String!
+  total: Float
+  probability: Float
 }
 
 enum MatchStatus {
