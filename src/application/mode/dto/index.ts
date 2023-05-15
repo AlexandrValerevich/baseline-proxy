@@ -1,4 +1,4 @@
-export { ErrorDTO } from "./ErrorDTO.js";
-export { ModeConfigurationDTO } from "./ModeConfigurationDTO.js";
-export { ModeDTO } from "./ModeDTO.js";
-export { PredefinedResponsesDTO } from "./PredefinedResponsesDTO.js";
+export type { ErrorDTO } from './ErrorDTO.js'
+export type { ModeConfigurationDTO } from './ModeConfigurationDTO.js'
+export type { ModeDTO } from './ModeDTO.js'
+export type { PredefinedResponsesDTO } from './PredefinedResponsesDTO.js'

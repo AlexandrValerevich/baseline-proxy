@@ -1,9 +1,9 @@
-import { MatchDTO } from "../../matches/dto/MatchDTO.js";
-import { ScoutDTO } from "../../scouts/dto/index.js";
+import { type MatchDTO } from '../../matches/dto/MatchDTO.js'
+import { type ScoutDTO } from '../../scouts/dto/index.js'
 
 interface PredefinedResponsesDTO {
-  scouts: ScoutDTO[];
-  matches: MatchDTO[];
+  scouts: ScoutDTO[]
+  matches: MatchDTO[]
 }
 
-export { PredefinedResponsesDTO };
+export type { PredefinedResponsesDTO }

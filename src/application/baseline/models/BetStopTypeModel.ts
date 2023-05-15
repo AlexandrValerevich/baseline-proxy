@@ -1,3 +1,3 @@
-type BetStopTypeModel = "scout" | "system" | "analyst";
+type BetStopTypeModel = 'scout' | 'system' | 'analyst'
 
-export { BetStopTypeModel };
+export type { BetStopTypeModel }

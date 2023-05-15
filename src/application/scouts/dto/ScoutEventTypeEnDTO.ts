@@ -33,4 +33,4 @@ enum ScoutEventTypeEnDTO {
   PenaltyShot = 72,
 }
 
-export { ScoutEventTypeEnDTO };
+export { ScoutEventTypeEnDTO }

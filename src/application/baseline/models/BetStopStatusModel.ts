@@ -1,3 +1,3 @@
-type BetStopStatusModel = "ok" | "stop" | "ready_to_start";
+type BetStopStatusModel = 'ok' | 'stop' | 'ready_to_start'
 
-export { BetStopStatusModel };
+export type { BetStopStatusModel }

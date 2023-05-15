@@ -1,7 +1,7 @@
 interface SportModel {
-  id: number;
-  name: string;
-  languageCode: string;
+  id: number
+  name: string
+  languageCode: string
 }
 
-export { SportModel };
+export type { SportModel }

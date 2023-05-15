@@ -1,9 +1,9 @@
-import { MatchModel } from "./MatchModel.js";
-import { ScoutModel } from "./ScoutModel.js";
+import { type MatchModel } from './MatchModel.js'
+import { type ScoutModel } from './ScoutModel.js'
 
 interface PredefinedResponsesModel {
-  scouts: ScoutModel[];
-  matches: MatchModel[];
+  scouts: ScoutModel[]
+  matches: MatchModel[]
 }
 
-export { PredefinedResponsesModel };
+export type { PredefinedResponsesModel }

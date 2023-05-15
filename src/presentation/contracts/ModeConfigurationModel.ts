@@ -1,13 +1,13 @@
-import { ErrorModel } from "./ErrorModel.js";
-import { ModeModel } from "./ModeModel.js";
-import { PredefinedResponsesModel } from "./PredefinedResponsesModel.js";
+import { type ErrorModel } from './ErrorModel.js'
+import { type ModeModel } from './ModeModel.js'
+import { type PredefinedResponsesModel } from './PredefinedResponsesModel.js'
 
 interface ModeConfigurationModel {
-  mode: ModeModel;
-  error: ErrorModel;
-  predefinedResponses: PredefinedResponsesModel;
-  delay: number;
-  bodySubstitutionMessage?: string;
+  mode: ModeModel
+  error: ErrorModel
+  predefinedResponses: PredefinedResponsesModel
+  delay: number
+  bodySubstitutionMessage?: string
 }
 
-export { ModeConfigurationModel };
+export type { ModeConfigurationModel }

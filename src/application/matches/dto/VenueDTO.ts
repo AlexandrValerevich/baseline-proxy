@@ -1,7 +1,7 @@
 interface VenueDTO {
-  id: number;
-  name: string;
-  languageCode: string;
+  id: number
+  name: string
+  languageCode: string
 }
 
-export { VenueDTO };
+export type { VenueDTO }

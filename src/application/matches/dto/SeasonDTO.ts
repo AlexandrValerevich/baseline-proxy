@@ -1,9 +1,9 @@
 interface SeasonDTO {
-  id: number;
-  name: string;
-  languageCode: string;
-  startDate: string;
-  endDate: string;
+  id: number
+  name: string
+  languageCode: string
+  startDate: string
+  endDate: string
 }
 
-export { SeasonDTO };
+export type { SeasonDTO }

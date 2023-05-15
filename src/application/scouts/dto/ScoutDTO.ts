@@ -1,18 +1,14 @@
+type TeamType = 1 | 2 | undefined
+type ChangeType = 'ADDED' | 'REMOVED' | 'RESTORED' | undefined
+
 interface ScoutDTO {
-  id: number;
-  team: string;
-  matchId: number;
-  eventName: string;
-  eventId: number;
-  minutes: string;
-  timeOfEvent: string;
-  stage: number;
-  eventTimestamp: number;
-  playerId?: number;
-  player?: string;
-  triggerId?: string;
-  changeType?: string;
-  timestamp?: number;
+  id: number
+  matchId: number
+  team?: TeamType
+  eventId: number
+  scoutTime: string
+  timestamp?: number
+  changeType?: ChangeType
 }
 
-export { ScoutDTO };
+export type { ScoutDTO }

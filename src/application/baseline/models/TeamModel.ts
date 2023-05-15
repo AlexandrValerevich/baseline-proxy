@@ -1,7 +1,7 @@
 interface TeamModel {
-  id: number;
-  name: string;
-  languageCode: string;
+  id: number
+  name: string
+  languageCode: string
 }
 
-export { TeamModel };
+export type { TeamModel }

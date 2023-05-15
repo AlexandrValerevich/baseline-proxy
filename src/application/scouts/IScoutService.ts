@@ -1,7 +1,7 @@
-import { GetScoutsForPeriodQuery, ScoutDTO } from "./dto";
+import { type GetScoutsForPeriodQuery, type ScoutDTO } from './dto'
 
 interface IScoutService {
-  getScouts(query: GetScoutsForPeriodQuery): Promise<ScoutDTO[]>;
+  getScouts: (query: GetScoutsForPeriodQuery) => Promise<ScoutDTO[]>
 }
 
-export { IScoutService };
+export type { IScoutService }

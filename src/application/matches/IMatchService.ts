@@ -1,7 +1,7 @@
-import { GetMatchesForPeriodQuery, MatchDTO } from "./dto/index.js";
+import { type GetMatchesForPeriodQuery, type MatchDTO } from './dto/index.js'
 
 interface IMatchService {
-  getMatches(query: GetMatchesForPeriodQuery): Promise<MatchDTO[]>;
+  getMatches: (query: GetMatchesForPeriodQuery) => Promise<MatchDTO[]>
 }
 
-export { IMatchService };
+export type { IMatchService }

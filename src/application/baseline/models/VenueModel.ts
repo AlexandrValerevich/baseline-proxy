@@ -1,7 +1,7 @@
 interface VenueModel {
-  id: number;
-  name: string;
-  languageCode: string;
+  id: number
+  name: string
+  languageCode: string
 }
 
-export { VenueModel };
+export type { VenueModel }

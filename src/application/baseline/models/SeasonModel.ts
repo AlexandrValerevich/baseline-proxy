@@ -1,9 +1,9 @@
 interface SeasonModel {
-  id: number;
-  name: string;
-  languageCode: string;
-  startDate: string;
-  endDate: string;
+  id: number
+  name: string
+  languageCode: string
+  startDate: string
+  endDate: string
 }
 
-export { SeasonModel };
+export type { SeasonModel }

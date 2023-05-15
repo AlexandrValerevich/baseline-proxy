@@ -1,12 +1,12 @@
-export { AssignedTraderDTO } from "./AssignedTraderDTO.js";
-export { BetStopDTO } from "./BetStopDTO.js";
-export { CountryDTO } from "./CountryDTO.js";
-export { GetMatchesForPeriodQuery } from "./GetMatchesForPeriodQuery.js";
-export { MatchDTO } from "./MatchDTO.js";
-export { PeriodScoreDTO } from "./PeriodScoreDTO.js";
-export { SeasonDTO } from "./SeasonDTO.js";
-export { ShootoutScoresDTO } from "./ShootoutScoresDTO.js";
-export { SportDTO } from "./SportDTO.js";
-export { TeamDTO } from "./TeamDTO.js";
-export { TournamentDTO } from "./TournamentDTO.js";
-export { VenueDTO } from "./VenueDTO.js";
+export type { AssignedTraderDTO } from './AssignedTraderDTO.js'
+export type { BetStopDTO } from './BetStopDTO.js'
+export type { CountryDTO } from './CountryDTO.js'
+export type { GetMatchesForPeriodQuery } from './GetMatchesForPeriodQuery.js'
+export type { MatchDTO } from './MatchDTO.js'
+export type { PeriodScoreDTO } from './PeriodScoreDTO.js'
+export type { SeasonDTO } from './SeasonDTO.js'
+export type { ShootoutScoresDTO } from './ShootoutScoresDTO.js'
+export type { SportDTO } from './SportDTO.js'
+export type { TeamDTO } from './TeamDTO.js'
+export type { TournamentDTO } from './TournamentDTO.js'
+export type { VenueDTO } from './VenueDTO.js'

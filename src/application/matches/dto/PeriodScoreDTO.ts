@@ -1,7 +1,7 @@
 interface PeriodScoreDTO {
-  period: number;
-  homeScore: number;
-  awayScore: number;
+  period: number
+  homeScore: number
+  awayScore: number
 }
 
-export { PeriodScoreDTO };
+export type { PeriodScoreDTO }

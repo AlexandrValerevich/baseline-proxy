@@ -1,5 +1,5 @@
-export * from "./plugins/index.js";
-export * from "./extensions/index.js";
-export * from "./resolvers.js";
-export { typeDefs } from "./schema.js";
-export { IContext } from "./context.js";
+export * from './plugins/index.js'
+export * from './helpers/index.js'
+export * from './resolvers.js'
+export { typeDefs } from './schema.js'
+export type { IContext } from './context.js'

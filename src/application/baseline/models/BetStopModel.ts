@@ -1,11 +1,11 @@
-import { BetStopStatusModel} from "./BetStopStatusModel.js";
-import { BetStopTypeModel } from "./BetStopTypeModel.js";
+import { type BetStopStatusModel } from './BetStopStatusModel.js'
+import { type BetStopTypeModel } from './BetStopTypeModel.js'
 
 interface BetStopModel {
-  type: BetStopTypeModel;
-  value: BetStopStatusModel;
-  updatedBy: string;
-  updatedAt: string;
+  type: BetStopTypeModel
+  value: BetStopStatusModel
+  updatedBy: string
+  updatedAt: string
 }
 
-export { BetStopModel };
+export type { BetStopModel }

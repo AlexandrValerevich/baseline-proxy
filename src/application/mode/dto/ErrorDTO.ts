@@ -1,7 +1,6 @@
 interface ErrorDTO {
-  message: string;
-  details?: string;
-  extensions?: any;
+  message: string
+  extensions?: any
 }
 
-export { ErrorDTO };
+export type { ErrorDTO }

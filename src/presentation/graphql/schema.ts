@@ -3,8 +3,8 @@ const typeDefs = `#graphql
 scalar DateTime
 
 type Query {
-  matches(dateFrom: String!, dateTo: String!, status: MatchStatus = null, clientId: Int = null, allCalculated: Boolean = null): [Match!]!
-  getMatchScoutEvents(matchId: Int = null, timeFrom: DateTime = null, timeTo: DateTime = null): [InternalEvent!]!
+  getMatches(dateFrom: DateTime!, dateTo: DateTime!): [Match!]!
+  getScouts(dateFrom: DateTime!, dateTo: DateTime!): [InternalEvent!]!
 }
 
 type Match {
@@ -14,27 +14,15 @@ type Match {
   status: MatchStatus!
   homeTeam: ExternalTeam!
   awayTeam: ExternalTeam!
-  ingameTime: String
-  betstopStatus: BetstopsValues
-  refundStatus: Boolean
-  triggerId: String
-  options: Options
   homeScore: Int
   awayScore: Int
   periodScores: [PeriodScores!]
   period: Int
   aftermatchShootouts: Boolean
   shootoutsScores: ShootoutScores
-  timer: Int
-  timerStatus: TimerStatus
   betstop: [BetStop!]
-  assignedTrader: AssignedTrader
-  leagueName: String
-  homeCorrection: Float
-  awayCorrection: Float
   homeTotal: Float
   awayTotal: Float
-  matchDelay: Boolean
   timestamp: Float
   season: ExternalSeason
   tournament: ExternalTournament
@@ -45,17 +33,10 @@ type Match {
 
 type InternalEvent {
   id: Int!
-  team: String!
+  team: Int
   matchId: Int!
-  eventName: String!
   eventId: Int!
-  minutes: String!
-  timeOfEvent: String!
-  stage: Int!
-  eventTimestamp: Int!
-  playerId: Int
-  player: String
-  triggerId: String
+  scoutTime: String!
   changeType: String
   timestamp: Float
 }
@@ -64,6 +45,8 @@ type ExternalTeam {
   id: Int!
   name: String!
   languageCode: String!
+  total: Float
+  probability: Float
 }
 
 enum MatchStatus {
@@ -72,19 +55,6 @@ enum MatchStatus {
   live
   done
   forecast_missed
-}
-
-enum BetstopsValues {
-  ok
-  timeout
-  stop
-  ready_to_stop
-  ready_to_start
-}
-
-type Options {
-  periods: Int!
-  periodTime: Int!
 }
 
 type PeriodScores {
@@ -96,11 +66,6 @@ type PeriodScores {
 type ShootoutScores {
   homeScores: [Int!]!
   awayScores: [Int!]!
-}
-
-enum TimerStatus {
-  stopped
-  running
 }
 
 type BetStop {
@@ -120,12 +85,6 @@ enum BetstopStatus {
   ok
   stop
   ready_to_start
-}
-
-type AssignedTrader {
-  id: Int!
-  name: String!
-  email: String!
 }
 
 type ExternalSeason {
@@ -159,6 +118,6 @@ type ExternalCountry {
   name: String!
   languageCode: String!
 }
-`;
+`
 
-export { typeDefs };
+export { typeDefs }

@@ -1,18 +1,11 @@
 interface ScoutModel {
-  id: number;
-  team: string;
-  matchId: number;
-  eventName: string;
-  eventId: number;
-  minutes: string;
-  timeOfEvent: string;
-  stage: number;
-  eventTimestamp: number;
-  playerId?: number;
-  player?: string;
-  triggerId?: string;
-  changeType?: string;
-  timestamp?: number;
+  id: number
+  team?: 1 | 2
+  matchId: number
+  eventId: number
+  scoutTime: string
+  changeType?: 'ADDED' | 'REMOVED' | 'RESTORED'
+  timestamp?: number
 }
 
-export { ScoutModel };
+export type { ScoutModel }

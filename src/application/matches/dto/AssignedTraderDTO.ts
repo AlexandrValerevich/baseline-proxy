@@ -1,7 +1,7 @@
 interface AssignedTraderDTO {
-  id: number;
-  name: string;
-  email: string;
+  id: number
+  name: string
+  email: string
 }
 
-export { AssignedTraderDTO };
+export type { AssignedTraderDTO }

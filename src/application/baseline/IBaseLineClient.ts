@@ -1,13 +1,13 @@
 import {
-  GetMatchesForPeriodRequestModel,
-  GetScoutsFroPeriodRequestModel,
-  MatchModel,
-  ScoutModel,
-} from "./models/index.js";
+  type GetMatchesForPeriodRequestModel,
+  type GetScoutsFroPeriodRequestModel,
+  type MatchModel,
+  type ScoutModel
+} from './models/index.js'
 
 interface IBaseLineClient {
-  getScoutsForPeriod(request: GetScoutsFroPeriodRequestModel): Promise<ScoutModel[]>;
-  getMatchesForPeriod(request: GetMatchesForPeriodRequestModel): Promise<MatchModel[]>;
+  getScoutsForPeriod: (request: GetScoutsFroPeriodRequestModel) => Promise<ScoutModel[]>
+  getMatchesForPeriod: (request: GetMatchesForPeriodRequestModel) => Promise<MatchModel[]>
 }
 
-export { IBaseLineClient };
+export type { IBaseLineClient }
