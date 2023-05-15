@@ -4,8 +4,8 @@ import { IContext } from "./context.js";
 
 const query = {
   Query: {
-    matches: (_, { dateFrom, dateTo }, { matchesService }: IContext, __) => {
-      const response = matchesService.getMatches({ timeFrom: dateFrom, timeTo: dateTo });
+    getMatches: (_, { dateFrom, dateTo }, { matchesService }: IContext, __) => {
+      const response = matchesService.getMatches({ dateFrom: dateFrom, dateTo: dateTo });
       return response;
     },
     getScouts: (_, { dateFrom, dateTo }, { scoutService }: IContext, __) => {

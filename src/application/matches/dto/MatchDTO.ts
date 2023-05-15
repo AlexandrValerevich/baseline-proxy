@@ -7,44 +7,23 @@ import { CountryDTO } from "./CountryDTO.js";
 import { TournamentDTO } from "./TournamentDTO.js";
 import { PeriodScoreDTO } from "./PeriodScoreDTO.js";
 import { ShootoutScoresDTO } from "./ShootoutScoresDTO.js";
-import { AssignedTraderDTO } from "./AssignedTraderDTO.js";
 
-type BetStopValueDTO = "ok" | "timeout" | "stop" | "ready_to_stop" | "ready_to_start";
 type MatchStatusDTO = "planned" | "prematch" | "live" | "done" | "forecast_missed";
 type TimerStatusDTO = "stopped" | "running";
 
 interface MatchDTO {
   id: number;
   name: string;
-  startedAt: string;
-  status: MatchStatusDTO;
-  homeTeam: TeamDTO;
-  awayTeam: TeamDTO;
-  ingameTime?: string;
-  betstopStatus?: BetStopValueDTO;
-  refundStatus?: boolean;
-  triggerId?: string;
-  options?: {
-    periods: number;
-    periodTime: number;
-  };
-  homeScore?: number;
-  awayScore?: number;
-  periodScores?: PeriodScoreDTO[];
   period?: number;
+  status: MatchStatusDTO;
+  timestamp?: number;
+  startedAt: string;
   aftermatchShootouts?: boolean;
   shootoutsScores?: ShootoutScoresDTO;
-  timer?: number;
-  timerStatus?: TimerStatusDTO;
+  homeTeam: TeamDTO;
+  awayTeam: TeamDTO;
   betstop?: BetStopDTO[];
-  assignedTrader?: AssignedTraderDTO;
-  leagueName?: string;
-  homeCorrection?: number;
-  awayCorrection?: number;
-  homeTotal?: number;
-  awayTotal?: number;
-  matchDelay?: boolean;
-  timestamp?: number;
+  periodScores?: PeriodScoreDTO[];
   season?: SeasonDTO;
   tournament?: TournamentDTO;
   sport?: SportDTO;
@@ -52,4 +31,4 @@ interface MatchDTO {
   venue?: VenueDTO;
 }
 
-export { MatchDTO, BetStopValueDTO, MatchStatusDTO, TimerStatusDTO };
+export { MatchDTO, MatchStatusDTO, TimerStatusDTO };

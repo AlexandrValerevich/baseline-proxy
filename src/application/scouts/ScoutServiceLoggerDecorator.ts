@@ -15,17 +15,17 @@ class ScoutServiceLoggerDecorator implements IScoutService {
 
   async getScouts(query: GetScoutsForPeriodQuery): Promise<ScoutDTO[]> {
     const start = performance.now();
-    const { timeFrom, timeTo } = {
-      timeFrom: query.dateFrom.toISOString(),
-      timeTo: query.dateTo.toISOString(),
+    const { dateFrom, dateTo } = {
+      dateFrom: query.dateFrom.toISOString(),
+      dateTo: query.dateTo.toISOString(),
     };
     const timeDiff = query.dateFrom.timeDiff(query.dateTo);
     try {
       const scouts = await this.scoutService.getScouts(query);
-      const elapsed = (performance.now() - start).toFixed(2);;;
+      const elapsed = (performance.now() - start).toFixed(2);
 
       logger.info({
-        message: `Getting scouts on period from ${timeFrom} to ${timeTo} is competed successfully in ${elapsed} ms`,
+        message: `Getting scouts on period from ${dateFrom} to ${dateTo} is competed successfully in ${elapsed} ms`,
         timeDiff: timeDiff,
         query,
         scouts,
@@ -33,9 +33,9 @@ class ScoutServiceLoggerDecorator implements IScoutService {
 
       return scouts;
     } catch (error) {
-      const elapsed = (performance.now() - start).toFixed(2);;;
+      const elapsed = (performance.now() - start).toFixed(2);
       logger.error({
-        message: `Getting scouts on period from ${timeFrom} to ${timeTo} has failed in ${elapsed} ms`,
+        message: `Getting scouts on period from ${dateFrom} to ${dateTo} has failed in ${elapsed} ms`,
         timeDiff: timeDiff,
         error,
         query,

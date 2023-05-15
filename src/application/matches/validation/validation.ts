@@ -2,14 +2,16 @@ import Joi from "joi";
 import { GetMatchesForPeriodQuery, MatchDTO, TeamDTO } from "../dto/index.js";
 
 const getMatchesForPeriodQueryValidator = Joi.object<GetMatchesForPeriodQuery>({
-  timeFrom: Joi.date().required(),
-  timeTo: Joi.date().required(),
+  dateFrom: Joi.date().required(),
+  dateTo: Joi.date().required(),
 });
 
 const teamDtoValidator = Joi.object<TeamDTO>({
   id: Joi.number().integer().min(0).required(),
   name: Joi.string().trim().required(),
   languageCode: Joi.string().required(),
+  probability: Joi.number().min(0).max(10).allow(null).optional(),
+  total: Joi.number().min(0).max(10).allow(null).optional(),
 }).required();
 
 const matchDTOValidator = Joi.object<MatchDTO>({
@@ -19,20 +21,6 @@ const matchDTOValidator = Joi.object<MatchDTO>({
   status: Joi.valid("planned", "prematch", "live", "done", "forecast_missed").required(),
   homeTeam: teamDtoValidator,
   awayTeam: teamDtoValidator,
-  ingameTime: Joi.string().allow(null, "").optional(),
-  betstopStatus: Joi.valid("ok", "timeout", "stop", "ready_to_stop", "ready_to_start")
-    .allow(null)
-    .optional(),
-  refundStatus: Joi.boolean().allow(null).optional(),
-  triggerId: Joi.string().guid().allow(null).optional(),
-  options: Joi.object({
-    periods: Joi.number().integer().min(0).required(),
-    periodTime: Joi.number().integer().min(0).required(),
-  })
-    .allow(null)
-    .optional(),
-  homeScore: Joi.number().integer().min(0).allow(null).optional(),
-  awayScore: Joi.number().integer().min(0).allow(null).optional(),
   periodScores: Joi.array()
     .items(
       Joi.object({
@@ -51,8 +39,6 @@ const matchDTOValidator = Joi.object<MatchDTO>({
   })
     .allow(null)
     .optional(),
-  timer: Joi.number().integer().min(0).allow(null).optional(),
-  timerStatus: Joi.valid("stopped", "running").allow(null).optional(),
   betstop: Joi.array()
     .items(
       Joi.object({
@@ -64,19 +50,6 @@ const matchDTOValidator = Joi.object<MatchDTO>({
     )
     .allow(null)
     .optional(),
-  assignedTrader: Joi.object({
-    id: Joi.number().integer().min(0).required(),
-    name: Joi.string().trim().required(),
-    email: Joi.string().email().required(),
-  })
-    .allow(null)
-    .optional(),
-  leagueName: Joi.string().trim().allow(null, "").optional(),
-  homeCorrection: Joi.number().allow(null).optional(),
-  awayCorrection: Joi.number().allow(null).optional(),
-  homeTotal: Joi.number().min(0).allow(null).optional(),
-  awayTotal: Joi.number().min(0).allow(null).optional(),
-  matchDelay: Joi.boolean().allow(null).optional(),
   timestamp: Joi.number().min(0).allow(null).optional(),
   season: Joi.object({
     id: Joi.number().integer().min(0).required(),

@@ -4,7 +4,7 @@ import { inject, injectable } from "inversify";
 import { ValidationError } from "../exceptions/index.js";
 import { IMatchService } from "./IMatchService.js";
 import { getMatchesForPeriodQueryValidator } from "./validation/index.js";
-import { MatchDTO, GetMatchesForPeriodQuery, BetStopDTO } from "./dto/index.js";
+import { MatchDTO, GetMatchesForPeriodQuery } from "./dto/index.js";
 
 @injectable()
 class DirectMatchService implements IMatchService {
@@ -21,17 +21,31 @@ class DirectMatchService implements IMatchService {
     }
 
     const response = await this.client.getMatchesForPeriod({
-      dateFrom: query.timeFrom,
-      dateTo: query.timeTo,
+      dateFrom: query.dateFrom.toISOString().slice(0, -5),
+      dateTo: query.dateTo.toISOString().slice(0, -5),
     });
 
-    const matchesDto = this.map(response);
-
-    return matchesDto;
+    return response;
   }
 
   private map(matches: MatchModel[]): MatchDTO[] {
-    return matches;
+    return matches.map((m) => ({
+      ...m,
+      awayTeam: {
+        id: m.awayTeam.id,
+        name: m.awayTeam.name,
+        languageCode: m.awayTeam.languageCode,
+        total: m.awayTotal,
+        probability: 0,
+      },
+      homeTeam: {
+        id: m.homeTeam.id,
+        name: m.homeTeam.name,
+        languageCode: m.homeTeam.languageCode,
+        total: m.homeTotal,
+        probability: 1,
+      },
+    }));
   }
 }
 

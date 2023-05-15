@@ -1,6 +1,5 @@
 import { faker } from "@faker-js/faker";
 import { injectable } from "inversify";
-import { v4 as uuidv4 } from "uuid";
 import { IRandomMatchGenerator } from "./IRandomMatchGenerator.js";
 import { MatchDTO } from "../dto/index.js";
 
@@ -34,28 +33,17 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
         id: faker.datatype.number(),
         name: faker.company.name(),
         languageCode: "RU",
+        probability: faker.datatype.number({ min: 0, max: 10 }),
+        total: faker.datatype.number({ min: 0, max: 10 }),
       },
       awayTeam: {
         id: faker.datatype.number(),
         name: faker.company.name(),
         languageCode: "RU",
+        probability: faker.datatype.number({ min: 0, max: 10 }),
+        total: faker.datatype.number({ min: 0, max: 10 }),
       },
-      ingameTime: "00:00",
-      betstopStatus: faker.helpers.arrayElement([
-        "ok",
-        "timeout",
-        "stop",
-        "ready_to_stop",
-        "ready_to_start",
-      ]),
-      refundStatus: faker.datatype.boolean(),
-      triggerId: uuidv4(),
-      options: {
-        periods: faker.datatype.number({ min: 2, max: 4 }),
-        periodTime: faker.datatype.number({ min: 5, max: 20 }),
-      },
-      homeScore: faker.datatype.number({ min: 0, max: 10 }),
-      awayScore: faker.datatype.number({ min: 0, max: 10 }),
+
       periodScores: Array.from({ length: 3 }, (_, i) => ({
         period: i + 1,
         homeScore: faker.datatype.number({ min: 0, max: 10 }),
@@ -67,8 +55,6 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
         homeScores: Array.from({ length: 5 }, () => faker.datatype.number({ min: 0, max: 1 })),
         awayScores: Array.from({ length: 5 }, () => faker.datatype.number({ min: 0, max: 1 })),
       },
-      timer: faker.datatype.number({ min: 0, max: 90 }),
-      timerStatus: faker.helpers.arrayElement(["stopped", "running"]),
       betstop: [
         {
           type: faker.helpers.arrayElement(["scout", "system", "analyst"]),
@@ -77,17 +63,6 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
           updatedAt: faker.date.recent().toISOString().slice(0, -5),
         },
       ],
-      assignedTrader: {
-        id: faker.datatype.number(),
-        name: faker.name.firstName(),
-        email: faker.internet.email(),
-      },
-      leagueName: faker.random.word(),
-      homeCorrection: faker.datatype.number({ min: 0, max: 5 }),
-      awayCorrection: faker.datatype.number({ min: 0, max: 5 }),
-      homeTotal: faker.datatype.number({ min: 0, max: 10 }),
-      awayTotal: faker.datatype.number({ min: 0, max: 10 }),
-      matchDelay: faker.datatype.boolean(),
       timestamp: faker.datatype.number({ min: 1680000000, max: Date.now() }),
       season: {
         id: faker.datatype.number(),

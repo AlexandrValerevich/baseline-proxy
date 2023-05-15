@@ -15,15 +15,17 @@ class MatchServiceLoggerDecorator implements IMatchService {
 
   async getMatches(query: GetMatchesForPeriodQuery): Promise<MatchDTO[]> {
     const start = performance.now();
-    const { timeFrom, timeTo } = query;
-    const dateFrom = new Date(timeFrom);
-    const dateTo = new Date(timeTo);
-    const timeDiff = dateFrom.timeDiff(dateTo);
+    const { dateFrom, dateTo } = {
+      dateFrom: query.dateFrom.toISOString(),
+      dateTo: query.dateTo.toISOString(),
+    };
+    const timeDiff = query.dateFrom.timeDiff(query.dateTo);
+
     try {
       const matches = await this.matchService.getMatches(query);
-      const elapsed = (performance.now() - start).toFixed(2);;
+      const elapsed = (performance.now() - start).toFixed(2);
       logger.info({
-        message: `Getting matches on period from ${timeFrom} to ${timeTo} is competed successfully in ${elapsed} ms`,
+        message: `Getting matches on period from ${dateFrom} to ${dateTo} is competed successfully in ${elapsed} ms`,
         timeDiff: timeDiff,
         query,
         matches,
@@ -31,9 +33,9 @@ class MatchServiceLoggerDecorator implements IMatchService {
 
       return matches;
     } catch (error) {
-      const elapsed = (performance.now() - start).toFixed(2);;
+      const elapsed = (performance.now() - start).toFixed(2);
       logger.error({
-        message: `Getting matches on period from ${timeFrom} to ${timeTo} has failed in ${elapsed} ms`,
+        message: `Getting matches on period from ${dateFrom} to ${dateTo} has failed in ${elapsed} ms`,
         timeDiff: timeDiff,
         error,
         query,
