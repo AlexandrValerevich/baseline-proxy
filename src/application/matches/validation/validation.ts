@@ -34,8 +34,8 @@ const matchDTOValidator = Joi.object<MatchDTO>({
   period: Joi.number().integer().min(0).allow(null).optional(),
   aftermatchShootouts: Joi.boolean().allow(null).optional(),
   shootoutsScores: Joi.object({
-    homeScores: Joi.array().items(Joi.number().integer().min(0)).required(),
-    awayScores: Joi.array().items(Joi.number().integer().min(0)).required(),
+    homeScores: Joi.array().items(Joi.number().integer().min(0)).optional(),
+    awayScores: Joi.array().items(Joi.number().integer().min(0)).optional(),
   })
     .allow(null)
     .optional(),

@@ -23,11 +23,11 @@ const modeDTOValidator = Joi.string<ModeDTO>().valid(
 );
 
 const modeConfigurationDTOValidator = Joi.object<ModeConfigurationDTO>({
-  mode: modeDTOValidator,
-  delay: Joi.number().min(0),
-  error: errorDTOValidator,
-  predefinedResponses: predefinedResponsesDTOValidator,
-  bodySubstitutionMessage: Joi.string().allow("", null),
+  mode: modeDTOValidator.required(),
+  delay: Joi.number().min(0).required(),
+  error: errorDTOValidator.required(),
+  predefinedResponses: predefinedResponsesDTOValidator.required(),
+  bodySubstitutionMessage: Joi.string().allow("", null).required(),
 });
 
 export {
