@@ -45,7 +45,7 @@ type Match {
 
 type InternalEvent {
   id: Int!
-  team: Int!
+  team: Int
   matchId: Int!
   eventId: Int!
   scoutTime: String!

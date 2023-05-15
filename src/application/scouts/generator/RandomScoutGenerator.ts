@@ -33,7 +33,7 @@ class RandomScoutGenerator implements IRandomScoutGenerator {
   }
 
   private getRandomEventType(): number {
-    const eventTypeKeys = Object.keys(ScoutEventTypeRuDTO);
+    const eventTypeKeys = Object.keys(ScoutEventTypeRuDTO).filter((key) => isNaN(parseInt(key)));
     const randomIndex = faker.datatype.number(eventTypeKeys.length - 1);
     const randomEventTypeKey = eventTypeKeys[randomIndex];
     const eventId = ScoutEventTypeRuDTO[randomEventTypeKey];
