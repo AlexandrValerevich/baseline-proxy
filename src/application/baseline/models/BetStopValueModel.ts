@@ -1,9 +1,9 @@
 type BetStopValueModel =
-  | "ok"
-  | "timeout"
-  | "stop"
-  | "ready_to_stop"
-  | "ready_to_start"
-  | undefined;
+  | 'ok'
+  | 'timeout'
+  | 'stop'
+  | 'ready_to_stop'
+  | 'ready_to_start'
+  | undefined
 
-export { BetStopValueModel };
+export type { BetStopValueModel }

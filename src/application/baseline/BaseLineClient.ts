@@ -1,24 +1,24 @@
-import "reflect-metadata";
-import { inject, injectable } from "inversify";
-import { GraphQLClient } from "graphql-request";
-import { TYPES } from "../../container/types.js";
+import 'reflect-metadata'
+import { inject, injectable } from 'inversify'
+import { GraphQLClient } from 'graphql-request'
+import { TYPES } from '../../container/types.js'
 import {
-  GetMatchesForPeriodRequestModel,
-  GetScoutsFroPeriodRequestModel,
-  MatchModel,
-  ScoutModel,
-} from "./models/index.js";
-import { IBaseLineClient } from "./IBaseLineClient.js";
+  type GetMatchesForPeriodRequestModel,
+  type GetScoutsFroPeriodRequestModel,
+  type MatchModel,
+  type ScoutModel
+} from './models/index.js'
+import { type IBaseLineClient } from './IBaseLineClient.js'
 
 @injectable()
 class BaseLineClient implements IBaseLineClient {
-  private client: GraphQLClient;
+  private readonly client: GraphQLClient
 
-  constructor(@inject(TYPES.GraphQlBaseLineClient) client: GraphQLClient) {
-    this.client = client;
+  constructor (@inject(TYPES.GraphQlBaseLineClient) client: GraphQLClient) {
+    this.client = client
   }
 
-  async getScoutsForPeriod(request: GetScoutsFroPeriodRequestModel): Promise<ScoutModel[]> {
+  async getScoutsForPeriod (request: GetScoutsFroPeriodRequestModel): Promise<ScoutModel[]> {
     const query = `
       query GetScoutsForPeriod($dateFrom: DateTime!, $dateTo: DateTime!) {
         scouts: getMatchScoutEvents(timeFrom: $dateFrom, timeTo: $dateTo) {
@@ -38,22 +38,22 @@ class BaseLineClient implements IBaseLineClient {
             timestamp
         }
     }
-    `;
+    `
 
     const variables = {
       dateFrom: request.dateFrom.toISOString().slice(0, -5),
-      dateTo: request.dateTo.toISOString().slice(0, -5),
-    };
-    const operationName = "GetScoutsForPeriod";
+      dateTo: request.dateTo.toISOString().slice(0, -5)
+    }
+    const operationName = 'GetScoutsForPeriod'
 
-    const data = (await this.client.request(query, variables, { operationName })) as {
-      scouts: ScoutModel[];
-    };
+    const data = await this.client.request<{ scouts: ScoutModel[] }>(query, variables, {
+      operationName
+    })
 
-    return data.scouts;
+    return data.scouts
   }
 
-  async getMatchesForPeriod(request: GetMatchesForPeriodRequestModel): Promise<MatchModel[]> {
+  async getMatchesForPeriod (request: GetMatchesForPeriodRequestModel): Promise<MatchModel[]> {
     const query = `
       query GetMatchesForPeriod($dateFrom: String!, $dateTo: String!) {
         matches(dateFrom: $dateFrom, dateTo: $dateTo) {
@@ -141,20 +141,20 @@ class BaseLineClient implements IBaseLineClient {
           }
         }
       }
-    `;
+    `
 
-    const operationName = "GetMatchesForPeriod";
+    const operationName = 'GetMatchesForPeriod'
     const variables = {
       dateFrom: request.dateFrom,
-      dateTo: request.dateTo,
-    };
+      dateTo: request.dateTo
+    }
 
-    const data = (await this.client.request(query, variables, { operationName })) as {
-      matches: MatchModel[];
-    };
+    const data = await this.client.request<{ matches: MatchModel[] }>(query, variables, {
+      operationName
+    })
 
-    return data.matches;
+    return data.matches
   }
 }
 
-export { BaseLineClient };
+export { BaseLineClient }

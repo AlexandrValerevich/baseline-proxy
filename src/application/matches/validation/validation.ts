@@ -1,24 +1,24 @@
-import Joi from "joi";
-import { GetMatchesForPeriodQuery, MatchDTO, TeamDTO } from "../dto/index.js";
+import Joi from 'joi'
+import { type GetMatchesForPeriodQuery, type MatchDTO, type TeamDTO } from '../dto/index.js'
 
 const getMatchesForPeriodQueryValidator = Joi.object<GetMatchesForPeriodQuery>({
   dateFrom: Joi.date().required(),
-  dateTo: Joi.date().required(),
-});
+  dateTo: Joi.date().required()
+})
 
 const teamDtoValidator = Joi.object<TeamDTO>({
   id: Joi.number().integer().min(0).required(),
   name: Joi.string().trim().required(),
   languageCode: Joi.string().required(),
   probability: Joi.number().min(0).max(10).allow(null).optional(),
-  total: Joi.number().min(0).max(10).allow(null).optional(),
-}).required();
+  total: Joi.number().min(0).max(10).allow(null).optional()
+}).required()
 
 const matchDTOValidator = Joi.object<MatchDTO>({
   id: Joi.number().integer().min(0).required(),
   name: Joi.string().trim().required(),
   startedAt: Joi.string().required(),
-  status: Joi.valid("planned", "prematch", "live", "done", "forecast_missed").required(),
+  status: Joi.valid('planned', 'prematch', 'live', 'done', 'forecast_missed').required(),
   homeTeam: teamDtoValidator,
   awayTeam: teamDtoValidator,
   periodScores: Joi.array()
@@ -26,8 +26,8 @@ const matchDTOValidator = Joi.object<MatchDTO>({
       Joi.object({
         period: Joi.number().integer().min(0).required(),
         homeScore: Joi.number().integer().min(0).required(),
-        awayScore: Joi.number().integer().min(0).required(),
-      }),
+        awayScore: Joi.number().integer().min(0).required()
+      })
     )
     .allow(null)
     .optional(),
@@ -35,18 +35,18 @@ const matchDTOValidator = Joi.object<MatchDTO>({
   aftermatchShootouts: Joi.boolean().allow(null).optional(),
   shootoutsScores: Joi.object({
     homeScores: Joi.array().items(Joi.number().integer().min(0)).optional(),
-    awayScores: Joi.array().items(Joi.number().integer().min(0)).optional(),
+    awayScores: Joi.array().items(Joi.number().integer().min(0)).optional()
   })
     .allow(null)
     .optional(),
   betstop: Joi.array()
     .items(
       Joi.object({
-        type: Joi.valid("scout", "system", "analyst").required(),
-        value: Joi.valid("ok", "stop", "ready_to_start").required(),
-        updatedBy: Joi.string().allow("").optional(),
-        updatedAt: Joi.string().allow("", null).optional(),
-      }),
+        type: Joi.valid('scout', 'system', 'analyst').required(),
+        value: Joi.valid('ok', 'stop', 'ready_to_start').required(),
+        updatedBy: Joi.string().allow('').optional(),
+        updatedAt: Joi.string().allow('', null).optional()
+      })
     )
     .allow(null)
     .optional(),
@@ -56,40 +56,40 @@ const matchDTOValidator = Joi.object<MatchDTO>({
     name: Joi.string().trim().required(),
     languageCode: Joi.string().required(),
     startDate: Joi.string().required(),
-    endDate: Joi.string().required(),
+    endDate: Joi.string().required()
   })
     .allow(null)
     .optional(),
   tournament: Joi.object({
     id: Joi.number().required(),
     name: Joi.string().required(),
-    languageCode: Joi.string().required(),
+    languageCode: Joi.string().required()
   })
     .allow(null)
     .optional(),
   sport: Joi.object({
     id: Joi.number().required(),
     name: Joi.string().required(),
-    languageCode: Joi.string().required(),
+    languageCode: Joi.string().required()
   })
     .allow(null)
     .optional(),
   country: Joi.object({
     id: Joi.number().required(),
     name: Joi.string().required(),
-    languageCode: Joi.string().required(),
+    languageCode: Joi.string().required()
   })
     .allow(null)
     .optional(),
   venue: Joi.object({
     id: Joi.number().required(),
     name: Joi.string().required(),
-    languageCode: Joi.string().required(),
+    languageCode: Joi.string().required()
   })
     .allow(null)
-    .optional(),
-});
+    .optional()
+})
 
-const arrayMatchDtoValidator = Joi.array<MatchDTO[]>().items(matchDTOValidator);
+const arrayMatchDtoValidator = Joi.array<MatchDTO[]>().items(matchDTOValidator)
 
-export { getMatchesForPeriodQueryValidator, matchDTOValidator, arrayMatchDtoValidator };
+export { getMatchesForPeriodQueryValidator, matchDTOValidator, arrayMatchDtoValidator }

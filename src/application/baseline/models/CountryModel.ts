@@ -1,7 +1,7 @@
 interface CountryModel {
-  id: number;
-  name: string;
-  languageCode: string;
+  id: number
+  name: string
+  languageCode: string
 }
 
-export { CountryModel };
+export type { CountryModel }

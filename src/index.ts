@@ -1,69 +1,72 @@
-import http from "http";
-import cors from "cors";
-import dotenv from "dotenv";
-import express from "express";
-import "./extensions/index.js";
-import bodyParser from "body-parser";
-import { logger } from "./logger/index.js";
-import { ApolloServer } from "@apollo/server";
-import { TYPES, container } from "./container/index.js";
-import { GraphQLError, GraphQLFormattedError } from "graphql";
-import { expressMiddleware } from "@apollo/server/express4";
-import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import { DelayPlugin, IContext, LoggingPlugin, resolvers, typeDefs } from "./presentation/index.js";
-import { IMatchService, IModeConfigurationService, IScoutService } from "./application/index.js";
-import Middleware from "./presentation/middleware/index.js";
+import http from 'http'
+import cors from 'cors'
+import dotenv from 'dotenv'
+import express from 'express'
+import './extensions/index.js'
+import bodyParser from 'body-parser'
+import { logger } from './logger/index.js'
+import { ApolloServer } from '@apollo/server'
+import { TYPES, container } from './container/index.js'
+import { type GraphQLError, type GraphQLFormattedError } from 'graphql'
+import { expressMiddleware } from '@apollo/server/express4'
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
 import {
-  bodyRouter,
-  configurationRouter,
-  delayRouter,
-  errorRouter,
-  matchRouter,
-  modeRouter,
-  scoutRouter,
-} from "./presentation/routers/index.js";
-dotenv.config();
+  DelayPlugin,
+  type IContext,
+  LoggingPlugin,
+  resolvers,
+  typeDefs,
+  errorToGraphQLFormattedError
+} from './presentation/index.js'
+import * as Middleware from './presentation/middleware/index.js'
+import {
+  type IMatchService,
+  type IModeConfigurationService,
+  type IScoutService
+} from './application/index.js'
+import * as Routes from './presentation/routers/index.js'
+dotenv.config()
 
-const app = express();
-const httpServer = http.createServer(app);
+const app = express()
+const httpServer = http.createServer(app)
 
-app.use(bodyParser.json({ limit: "10mb" }));
-app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
-app.use(Middleware.logger);
+app.use(bodyParser.json({ limit: '10mb' }))
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }))
+app.use(Middleware.requestLogger)
 
-app.use(modeRouter);
-app.use(configurationRouter);
-app.use(errorRouter);
-app.use(scoutRouter);
-app.use(matchRouter);
-app.use(delayRouter);
-app.use(bodyRouter);
+app.use(Routes.modeRouter)
+app.use(Routes.configurationRouter)
+app.use(Routes.errorRouter)
+app.use(Routes.scoutRouter)
+app.use(Routes.matchRouter)
+app.use(Routes.delayRouter)
+app.use(Routes.bodyRouter)
 
-app.use(Middleware.bodySubstitution);
-app.use(Middleware.errorHandler);
-app.use(Middleware.errorLogger);
+app.use(Middleware.bodySubstitution)
+app.use(Middleware.errorHandler)
+app.use(Middleware.errorLogger)
 
 const server = new ApolloServer<IContext>({
-  typeDefs: typeDefs,
-  resolvers: resolvers,
+  typeDefs,
+  resolvers,
   plugins: [
     new LoggingPlugin(),
     new DelayPlugin(),
-    ApolloServerPluginDrainHttpServer({ httpServer }),
+    ApolloServerPluginDrainHttpServer({ httpServer })
   ],
 
-  formatError(formattedError: GraphQLFormattedError, error: GraphQLError): GraphQLFormattedError {
-    const originError = error.originalError;
-    if (!originError) {
-      return formattedError;
+  formatError (formattedError: GraphQLFormattedError, error: GraphQLError): GraphQLFormattedError {
+    const originError = error.originalError
+    if (originError == null) {
+      return formattedError
     }
-    return originError.toGraphQLFormattedError();
-  },
-});
+    return errorToGraphQLFormattedError(originError)
+  }
+})
 
-await server.start();
+await server.start()
 app.use(
-  "/graphql",
+  '/graphql',
   cors<cors.CorsRequest>(),
   expressMiddleware(server, {
     context: async () => ({
@@ -71,13 +74,13 @@ app.use(
       scoutService: container.get<IScoutService>(TYPES.ScoutsService),
       matchesService: container.get<IMatchService>(TYPES.MatchesService),
       modeConfigurationsService: container.get<IModeConfigurationService>(
-        TYPES.ModeConfigurationService,
-      ),
-    }),
-  }),
-);
+        TYPES.ModeConfigurationService
+      )
+    })
+  })
+)
 
-await new Promise<void>((resolve) => httpServer.listen({ port: 4000 }, resolve));
+await new Promise<void>((resolve) => httpServer.listen({ port: 4000 }, resolve))
 
-logger.info(`🚀  Server ready at: "http://localhost:4000"`);
-logger.info(`🚀  Environment: ${process.env.NODE_ENV}`);
+logger.info('🚀  Server ready at: "http://localhost:4000"')
+logger.info(`🚀  Environment: ${process.env.NODE_ENV ?? ''}`)

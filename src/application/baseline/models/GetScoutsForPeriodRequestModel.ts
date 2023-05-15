@@ -1,6 +1,6 @@
 interface GetScoutsFroPeriodRequestModel {
-  dateFrom: Date;
-  dateTo: Date;
+  dateFrom: Date
+  dateTo: Date
 }
 
-export { GetScoutsFroPeriodRequestModel };
+export type { GetScoutsFroPeriodRequestModel }

@@ -1,7 +1,7 @@
-import { ModeModel } from "./ModeModel.js";
+import { type ModeModel } from './ModeModel.js'
 
 interface ChangeModeRequest {
-  mode: ModeModel;
+  mode: ModeModel
 }
 
-export { ChangeModeRequest };
+export type { ChangeModeRequest }

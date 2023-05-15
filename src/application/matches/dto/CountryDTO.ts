@@ -1,7 +1,7 @@
 interface CountryDTO {
-  id: number;
-  name: string;
-  languageCode: string;
+  id: number
+  name: string
+  languageCode: string
 }
 
-export { CountryDTO };
+export type { CountryDTO }

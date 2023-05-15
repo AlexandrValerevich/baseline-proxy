@@ -1,2 +1,2 @@
-export { IRandomMatchGenerator } from "./IRandomMatchGenerator.js";
-export { RandomMatchGenerator } from "./RandomMatchGenerator.js";
+export type { IRandomMatchGenerator } from './IRandomMatchGenerator.js'
+export { RandomMatchGenerator } from './RandomMatchGenerator.js'

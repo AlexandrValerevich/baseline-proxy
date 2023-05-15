@@ -1,9 +1,10 @@
 abstract class ApplicationError extends Error {
-  constructor(message: string, details?: string) {
-    super(message);
-    this.detail = details;
+  constructor (message: string, details?: string) {
+    super(message)
+    this.detail = details
   }
-  detail?: string;
+
+  detail?: string
 }
 
-export { ApplicationError };
+export { ApplicationError }

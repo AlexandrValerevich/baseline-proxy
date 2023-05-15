@@ -1,7 +1,7 @@
 interface AssignedTraderModel {
-  id: number;
-  name: string;
-  email: string;
+  id: number
+  name: string
+  email: string
 }
 
-export { AssignedTraderModel };
+export type { AssignedTraderModel }

@@ -1,13 +1,13 @@
-import { ApplicationError } from "./ApplicationError.js";
+import { ApplicationError } from './ApplicationError.js'
 
 class InternalError extends ApplicationError {
-  constructor(message?: string, detail?: string) {
-    super(message ?? "Internal Error", detail);
-    this.name = "InternalError";
+  constructor (message?: string, detail?: string) {
+    super(message ?? 'Internal Error', detail)
+    this.name = 'InternalError'
   }
 
-  detail?: string;
-  message: string;
+  detail?: string
+  message: string
 }
 
-export { InternalError };
+export { InternalError }

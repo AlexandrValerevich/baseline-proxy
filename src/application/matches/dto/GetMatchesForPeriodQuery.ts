@@ -1,6 +1,6 @@
 interface GetMatchesForPeriodQuery {
-  dateFrom: Date;
-  dateTo: Date;
+  dateFrom: Date
+  dateTo: Date
 }
 
-export { GetMatchesForPeriodQuery };
+export type { GetMatchesForPeriodQuery }

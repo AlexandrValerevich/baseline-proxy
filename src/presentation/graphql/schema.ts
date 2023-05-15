@@ -118,6 +118,6 @@ type ExternalCountry {
   name: String!
   languageCode: String!
 }
-`;
+`
 
-export { typeDefs };
+export { typeDefs }

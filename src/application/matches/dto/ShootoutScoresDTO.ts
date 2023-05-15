@@ -1,6 +1,6 @@
 interface ShootoutScoresDTO {
-  homeScores: number[];
-  awayScores: number[];
+  homeScores: number[]
+  awayScores: number[]
 }
 
-export { ShootoutScoresDTO };
+export type { ShootoutScoresDTO }

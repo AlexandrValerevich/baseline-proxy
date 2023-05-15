@@ -1,7 +1,7 @@
 interface TournamentModel {
-  id: number;
-  name: string;
-  languageCode: string;
+  id: number
+  name: string
+  languageCode: string
 }
 
-export { TournamentModel };
+export type { TournamentModel }

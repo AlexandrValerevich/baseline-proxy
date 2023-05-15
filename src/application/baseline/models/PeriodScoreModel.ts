@@ -1,7 +1,7 @@
 interface PeriodScoreModel {
-  period: number;
-  homeScore: number;
-  awayScore: number;
+  period: number
+  homeScore: number
+  awayScore: number
 }
 
-export { PeriodScoreModel };
+export type { PeriodScoreModel }

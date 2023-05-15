@@ -1,6 +1,6 @@
 interface ShootoutScoresModel {
-  homeScores: number[];
-  awayScores: number[];
+  homeScores: number[]
+  awayScores: number[]
 }
 
-export { ShootoutScoresModel };
+export type { ShootoutScoresModel }

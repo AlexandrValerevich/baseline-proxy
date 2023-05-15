@@ -1,19 +1,19 @@
-export { GetMatchesForPeriodRequestModel } from "./GetMatchesForPeriodRequestModel.js";
-export { GetScoutsFroPeriodRequestModel } from "./GetScoutsForPeriodRequestModel.js";
-export { MatchModel } from "./MatchModel.js";
-export { ScoutModel } from "./ScoutModel.js";
-export { AssignedTraderModel } from "./AssignedTraderModel.js";
-export { BetStopModel } from "./BetStopModel.js";
-export { BetStopStatusModel } from "./BetStopStatusModel.js";
-export { BetStopTypeModel } from "./BetStopTypeModel.js";
-export { BetStopValueModel } from "./BetStopValueModel.js";
-export { CountryModel } from "./CountryModel.js";
-export { MatchStatusModel } from "./MatchStatusModel.js";
-export { PeriodScoreModel } from "./PeriodScoreModel.js";
-export { SeasonModel } from "./SeasonModel.js";
-export { ShootoutScoresModel } from "./ShootoutScoresModel.js";
-export { SportModel } from "./SportModel.js";
-export { TeamModel } from "./TeamModel.js";
-export { TimerStatusModel } from "./TimerStatusModel.js";
-export { TournamentModel } from "./TournamentModel.js";
-export { VenueModel } from "./VenueModel.js";
+export type { GetMatchesForPeriodRequestModel } from './GetMatchesForPeriodRequestModel.js'
+export type { GetScoutsFroPeriodRequestModel } from './GetScoutsForPeriodRequestModel.js'
+export type { MatchModel } from './MatchModel.js'
+export type { ScoutModel } from './ScoutModel.js'
+export type { AssignedTraderModel } from './AssignedTraderModel.js'
+export type { BetStopModel } from './BetStopModel.js'
+export type { BetStopStatusModel } from './BetStopStatusModel.js'
+export type { BetStopTypeModel } from './BetStopTypeModel.js'
+export type { BetStopValueModel } from './BetStopValueModel.js'
+export type { CountryModel } from './CountryModel.js'
+export type { MatchStatusModel } from './MatchStatusModel.js'
+export type { PeriodScoreModel } from './PeriodScoreModel.js'
+export type { SeasonModel } from './SeasonModel.js'
+export type { ShootoutScoresModel } from './ShootoutScoresModel.js'
+export type { SportModel } from './SportModel.js'
+export type { TeamModel } from './TeamModel.js'
+export type { TimerStatusModel } from './TimerStatusModel.js'
+export type { TournamentModel } from './TournamentModel.js'
+export type { VenueModel } from './VenueModel.js'

@@ -1,13 +1,13 @@
-import { ModeDTO } from "./ModeDTO.js";
-import { ErrorDTO } from "./ErrorDTO.js";
-import { PredefinedResponsesDTO } from "./PredefinedResponsesDTO.js";
+import { type ModeDTO } from './ModeDTO.js'
+import { type ErrorDTO } from './ErrorDTO.js'
+import { type PredefinedResponsesDTO } from './PredefinedResponsesDTO.js'
 
 interface ModeConfigurationDTO {
-  mode: ModeDTO;
-  error: ErrorDTO;
-  predefinedResponses: PredefinedResponsesDTO;
-  delay: number;
-  bodySubstitutionMessage?: string;
+  mode: ModeDTO
+  error: ErrorDTO
+  predefinedResponses: PredefinedResponsesDTO
+  delay: number
+  bodySubstitutionMessage?: string
 }
 
-export { ModeConfigurationDTO };
+export type { ModeConfigurationDTO }

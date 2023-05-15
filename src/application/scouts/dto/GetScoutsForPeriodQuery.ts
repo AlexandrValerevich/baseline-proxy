@@ -1,6 +1,6 @@
 interface GetScoutsForPeriodQuery {
-  dateFrom: Date;
-  dateTo: Date;
+  dateFrom: Date
+  dateTo: Date
 }
 
-export { GetScoutsForPeriodQuery };
+export type { GetScoutsForPeriodQuery }

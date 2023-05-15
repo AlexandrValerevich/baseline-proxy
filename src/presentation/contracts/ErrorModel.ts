@@ -1,7 +1,7 @@
 interface ErrorModel {
-  message: string;
-  details?: string;
-  extensions?: any;
+  message: string
+  details?: string
+  extensions?: any
 }
 
-export { ErrorModel };
+export type { ErrorModel }
