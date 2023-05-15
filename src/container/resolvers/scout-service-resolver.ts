@@ -23,6 +23,13 @@ const scoutServiceResolver = (context: interfaces.Context): IScoutService => {
       scoutService = new DirectScoutService(client);
       break;
     }
+    case "random": {
+      const scoutGenerator = context.container.get<IRandomScoutGenerator>(
+        TYPES.RandomScoutGenerator,
+      );
+      scoutService = new RandomScoutService(scoutGenerator);
+      break;
+    }
     case "error_once":
       scoutService = {
         getScouts: async (): Promise<ScoutDTO[]> => {
@@ -47,10 +54,7 @@ const scoutServiceResolver = (context: interfaces.Context): IScoutService => {
       };
       break;
     default: {
-      type NewType = IRandomScoutGenerator;
-
-      const scoutGenerator = context.container.get<NewType>(TYPES.RandomScoutGenerator);
-      scoutService = new RandomScoutService(scoutGenerator);
+      throw Error("Can't resolve ScoutService implementation due to unknown mode.");
     }
   }
 
