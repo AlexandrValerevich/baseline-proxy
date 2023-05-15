@@ -11,7 +11,7 @@ interface ScoutModel {
   playerId?: number;
   player?: string;
   triggerId?: string;
-  changeType?: string;
+  changeType?: "ADDED" | "REMOVED" | "SYSTEM";
   timestamp?: number;
 }
 

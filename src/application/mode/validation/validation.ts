@@ -5,7 +5,6 @@ import { scoutDTOValidator } from "../../scouts/validation/index.js";
 
 const errorDTOValidator = Joi.object<ErrorDTO>({
   message: Joi.string().required(),
-  details: Joi.string().optional(),
   extensions: Joi.any().allow(null).optional(),
 });
 

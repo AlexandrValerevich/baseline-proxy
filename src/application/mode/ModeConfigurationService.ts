@@ -23,8 +23,13 @@ class ModeConfigurationService implements IModeConfigurationService {
       mode: "direct",
       error: {
         message: "Internal Error",
-        details: "Some error details",
-        extensions: { http: { status: 500 }, randomField: "randomValue" },
+
+        extensions: {
+          http: { status: 500 },
+          code: "CUSTOM_GENERATED_ERROR",
+          details: "Some error details",
+          randomField: "randomValue",
+        },
       },
       predefinedResponses: { scouts: [], matches: [] },
       delay: 100,

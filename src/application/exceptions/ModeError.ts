@@ -3,7 +3,7 @@ import { ApplicationError } from "./ApplicationError.js";
 
 class ModeError extends ApplicationError {
   constructor(error: ErrorDTO) {
-    super(error.message, error.details);
+    super(error.message);
     this.name = "ModeError";
     this.extensions = error.extensions;
   }

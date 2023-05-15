@@ -16,10 +16,10 @@ class ScoutServiceLoggerDecorator implements IScoutService {
   async getScouts(query: GetScoutsForPeriodQuery): Promise<ScoutDTO[]> {
     const start = performance.now();
     const { timeFrom, timeTo } = {
-      timeFrom: query.timeFrom.toISOString(),
-      timeTo: query.timeTo.toISOString(),
+      timeFrom: query.dateFrom.toISOString(),
+      timeTo: query.dateTo.toISOString(),
     };
-    const timeDiff = query.timeFrom.timeDiff(query.timeTo);
+    const timeDiff = query.dateFrom.timeDiff(query.dateTo);
     try {
       const scouts = await this.scoutService.getScouts(query);
       const elapsed = (performance.now() - start).toFixed(2);;;

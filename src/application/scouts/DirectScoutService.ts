@@ -21,11 +21,19 @@ class DirectScoutService implements IScoutService {
     }
 
     const response = await this.client.getScoutsForPeriod({
-      dateFrom: query.timeFrom,
-      dateTo: query.timeTo,
+      dateFrom: query.dateFrom,
+      dateTo: query.dateTo,
     });
 
-    return response;
+    return response.map((s) => ({
+      id: s.id,
+      eventId: s.eventId,
+      matchId: s.matchId,
+      scoutTime: s.minutes,
+      team: 1, // Does not implemented in old BL API
+      timestamp: s.timestamp,
+      changeType: s.changeType === "SYSTEM" ? "RESTORED" : s.changeType, // In old BL implementation there no RESTORED
+    }));
   }
 }
 

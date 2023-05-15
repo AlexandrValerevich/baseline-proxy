@@ -8,8 +8,8 @@ const query = {
       const response = matchesService.getMatches({ timeFrom: dateFrom, timeTo: dateTo });
       return response;
     },
-    getMatchScoutEvents: (_, { timeFrom, timeTo }, { scoutService }: IContext, __) => {
-      const response = scoutService.getScouts({ timeFrom: timeFrom, timeTo: timeTo });
+    getScouts: (_, { dateFrom, dateTo }, { scoutService }: IContext, __) => {
+      const response = scoutService.getScouts({ dateFrom: dateFrom, dateTo: dateTo });
       return response;
     },
   },

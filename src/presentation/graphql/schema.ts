@@ -4,7 +4,7 @@ scalar DateTime
 
 type Query {
   matches(dateFrom: String!, dateTo: String!, status: MatchStatus = null, clientId: Int = null, allCalculated: Boolean = null): [Match!]!
-  getMatchScoutEvents(matchId: Int = null, timeFrom: DateTime = null, timeTo: DateTime = null): [InternalEvent!]!
+  getScouts(dateFrom: DateTime, dateTo: DateTime): [InternalEvent!]!
 }
 
 type Match {
@@ -45,17 +45,10 @@ type Match {
 
 type InternalEvent {
   id: Int!
-  team: String!
+  team: Int!
   matchId: Int!
-  eventName: String!
   eventId: Int!
-  minutes: String!
-  timeOfEvent: String!
-  stage: Int!
-  eventTimestamp: Int!
-  playerId: Int
-  player: String
-  triggerId: String
+  scoutTime: String!
   changeType: String
   timestamp: Float
 }

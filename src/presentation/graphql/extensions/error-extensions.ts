@@ -41,8 +41,6 @@ Error.prototype.toGraphQLFormattedError = function (this: Error): GraphQLFormatt
     return {
       message: originalError.message,
       extensions: {
-        code: "CUSTOM_GENERATED_ERROR",
-        details: originalError.detail,
         ...originalError.extensions,
       },
     };
