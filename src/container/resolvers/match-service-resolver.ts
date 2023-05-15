@@ -23,6 +23,13 @@ const matchServiceResolver = (context: interfaces.Context): IMatchService => {
         context.container.get<IBaseLineClient>(TYPES.BaseLineClient),
       );
       break;
+    case "random": {
+      const matchGenerator = context.container.get<IRandomMatchGenerator>(
+        TYPES.RandomMatchGenerator,
+      );
+      matchService = new RandomMatchService(matchGenerator);
+      break;
+    }
     case "error_once":
       matchService = {
         getMatches: async (): Promise<MatchDTO[]> => {
@@ -46,11 +53,9 @@ const matchServiceResolver = (context: interfaces.Context): IMatchService => {
         },
       };
       break;
-    default:
-      const matchGenerator = context.container.get<IRandomMatchGenerator>(
-        TYPES.RandomMatchGenerator,
-      );
-      matchService = new RandomMatchService(matchGenerator);
+    default: {
+      throw new Error("Can't resolve MatchService due to unknown mode.");
+    }
   }
   return new MatchServiceLoggerDecorator(matchService);
 };
