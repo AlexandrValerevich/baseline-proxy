@@ -10,20 +10,10 @@ import { TYPES, container } from './container/index.js'
 import { type GraphQLError, type GraphQLFormattedError } from 'graphql'
 import { expressMiddleware } from '@apollo/server/express4'
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
-import {
-  DelayPlugin,
-  type IContext,
-  LoggingPlugin,
-  resolvers,
-  typeDefs,
-  errorToGraphQLFormattedError
-} from './presentation/index.js'
+import { DelayPlugin, LoggingPlugin } from './presentation/graphql/plugins/index.js'
+import { type IContext, resolvers, typeDefs, errorToGraphQLFormattedError } from './presentation/index.js'
+import { type IMatchService, type IModeConfigurationService, type IScoutService } from './application/index.js'
 import * as Middleware from './presentation/middleware/index.js'
-import {
-  type IMatchService,
-  type IModeConfigurationService,
-  type IScoutService
-} from './application/index.js'
 import * as Routes from './presentation/routers/index.js'
 dotenv.config()
 
