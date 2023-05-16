@@ -5,10 +5,10 @@ import { type IModeConfigurationService } from '../../application/index.js'
 const statusRouter = Router()
 
 statusRouter
-  .get('/api/status', (req: Request, res: Response<string>) => {
+  .get('/api/status', (req: Request, res: Response<{ status }>) => {
     const modeService = container.get<IModeConfigurationService>(TYPES.ModeConfigurationService)
-    const { body } = modeService.getSubstitutionMessage()
-    return res.send(body)
+    const { status } = modeService.getSubstitutionMessage()
+    return res.json({ status })
   })
   .put(
     '/api/status',

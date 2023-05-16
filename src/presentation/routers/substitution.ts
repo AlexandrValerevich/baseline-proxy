@@ -8,8 +8,8 @@ const substitutionRouter = Router()
 substitutionRouter
   .get('/api/substitution', (req: Request, res: Response<SubstitutionModel>) => {
     const modeService = container.get<IModeConfigurationService>(TYPES.ModeConfigurationService)
-    const body = modeService.getSubstitutionMessage()
-    return res.send(body)
+    const substitution = modeService.getSubstitutionMessage()
+    return res.send(substitution)
   })
   .put(
     '/api/substitution',
