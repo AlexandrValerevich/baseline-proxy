@@ -2,6 +2,7 @@ import Joi from 'joi'
 import { type PredefinedResponsesDTO, type ErrorDTO, type ModeDTO, type ModeConfigurationDTO } from '../dto/index.js'
 import { matchDTOValidator } from '../../matches/validation/index.js'
 import { scoutDTOValidator } from '../../scouts/validation/index.js'
+import { type SubstitutionDTO } from '../dto/SubstitutionDTO.js'
 
 const errorDTOValidator = Joi.object<ErrorDTO>({
   message: Joi.string().required(),
@@ -22,15 +23,21 @@ const modeDTOValidator = Joi.string<ModeDTO>().valid(
   'body_substitution'
 )
 
+const substitutionValidator = Joi.object<SubstitutionDTO>({
+  body: Joi.string().allow('', null).optional(),
+  status: Joi.number().integer().min(0).max(599).required()
+})
+
 const modeConfigurationDTOValidator = Joi.object<ModeConfigurationDTO>({
   mode: modeDTOValidator.required(),
   delay: Joi.number().min(0).required(),
   error: errorDTOValidator.required(),
   predefinedResponses: predefinedResponsesDTOValidator.required(),
-  bodySubstitutionMessage: Joi.string().allow('', null).required()
+  substitutionMessage: substitutionValidator.required()
 })
 
 export {
+  substitutionValidator,
   errorDTOValidator,
   predefinedResponsesDTOValidator,
   modeDTOValidator,

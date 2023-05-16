@@ -1,18 +1,19 @@
 import 'reflect-metadata'
 import { injectable } from 'inversify'
-import { type IModeConfigurationService } from './IModeConfigurationService.js'
 import {
   errorDTOValidator,
   modeConfigurationDTOValidator,
-  modeDTOValidator
+  modeDTOValidator,
+  substitutionValidator
 } from './validation/index.js'
-import { ModeError, ValidationError, WrongConfigurationModeError } from '../exceptions/index.js'
-import { type ErrorDTO, type ModeDTO, type ModeConfigurationDTO } from './dto/index.js'
-import { logger } from '../../logger/index.js'
-import { type MatchDTO } from '../matches/index.js'
-import { type ScoutDTO } from '../scouts/index.js'
 import { arrayScoutDTOValidator } from '../scouts/validation/index.js'
 import { arrayMatchDtoValidator } from '../matches/validation/index.js'
+import { ModeError, ValidationError, WrongConfigurationModeError } from '../exceptions/index.js'
+import { type IModeConfigurationService } from './IModeConfigurationService.js'
+import { type ErrorDTO, type ModeDTO, type ModeConfigurationDTO, type SubstitutionDTO } from './dto/index.js'
+import { type MatchDTO } from '../matches/index.js'
+import { type ScoutDTO } from '../scouts/index.js'
+import { logger } from '../../logger/index.js'
 import { detailsAsSting } from '../helpers/index.js'
 
 @injectable()
@@ -34,7 +35,10 @@ class ModeConfigurationService implements IModeConfigurationService {
       },
       predefinedResponses: { scouts: [], matches: [] },
       delay: 100,
-      bodySubstitutionMessage: ''
+      substitutionMessage: {
+        body: '',
+        status: 200
+      }
     }
   }
 
@@ -55,8 +59,13 @@ class ModeConfigurationService implements IModeConfigurationService {
     this.logNewConfigurationValue()
   }
 
-  setBodySubstitutionMessage (message?: string): void {
-    this.configuration.bodySubstitutionMessage = message
+  setSubstitutionMessage (substitution?: SubstitutionDTO): void {
+    const { value, error } = substitutionValidator.validate(substitution)
+    if (error != null) {
+      throw new ValidationError(error.message, detailsAsSting(error))
+    }
+
+    this.configuration.substitutionMessage = value
     this.logNewConfigurationValue()
   }
 
@@ -96,7 +105,7 @@ class ModeConfigurationService implements IModeConfigurationService {
     this.configuration.delay = value.delay
     this.configuration.error = value.error
     this.configuration.predefinedResponses = value.predefinedResponses
-    this.configuration.bodySubstitutionMessage = value.bodySubstitutionMessage
+    this.configuration.substitutionMessage = value.substitutionMessage
   }
 
   getModeConfiguration (): ModeConfigurationDTO {
@@ -119,8 +128,8 @@ class ModeConfigurationService implements IModeConfigurationService {
     return this.configuration.predefinedResponses.matches
   }
 
-  getBodySubstitutionMessage (): string | undefined {
-    return this.configuration.bodySubstitutionMessage
+  getSubstitutionMessage (): SubstitutionDTO {
+    return this.configuration.substitutionMessage
   }
 
   getError (): ErrorDTO {

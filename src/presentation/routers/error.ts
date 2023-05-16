@@ -1,7 +1,7 @@
 import { Router, type Request, type Response } from 'express'
 import { TYPES, container } from '../../container/index.js'
 import { type IModeConfigurationService } from '../../application/index.js'
-import { type ErrorModel } from '../contracts/ErrorModel.js'
+import { type ErrorModel } from '../contracts/index.js'
 
 const errorRouter = Router()
 

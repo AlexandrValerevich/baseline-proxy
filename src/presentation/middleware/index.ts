@@ -14,9 +14,10 @@ const bodySubstitution = (req: Request, res: Response, next: NextFunction): void
     next()
     return
   }
-  const message = modeService.getBodySubstitutionMessage()
-  res.send(message)
-  logger.debug({ message: 'Current mode is BodySubstitution.', body: message })
+  const substitution = modeService.getSubstitutionMessage()
+  res.status(substitution?.status)
+  res.send(substitution.body)
+  logger.debug({ message: 'Current mode is BodySubstitution.', substitution })
 }
 
 const requestLogger = (req: Request, res: Response, next: NextFunction): void => {

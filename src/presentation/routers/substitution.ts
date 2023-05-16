@@ -1,22 +1,23 @@
 import { Router, type Request, type Response } from 'express'
 import { TYPES, container } from '../../container/index.js'
 import { type IModeConfigurationService } from '../../application/index.js'
+import { type SubstitutionModel } from '../contracts/index.js'
 
-const bodyRouter = Router()
+const substitutionRouter = Router()
 
-bodyRouter
-  .get('/api/body', (req: Request, res: Response) => {
+substitutionRouter
+  .get('/api/substitution', (req: Request, res: Response<SubstitutionModel>) => {
     const modeService = container.get<IModeConfigurationService>(TYPES.ModeConfigurationService)
-    const body = modeService.getBodySubstitutionMessage()
+    const body = modeService.getSubstitutionMessage()
     return res.send(body)
   })
   .put(
-    '/api/body',
-    (req: Request<Record<string, unknown>, Record<string, unknown>, string>, res: Response) => {
+    '/api/substitution',
+    (req: Request<Record<string, unknown>, Record<string, unknown>, SubstitutionModel>, res: Response) => {
       const modeService = container.get<IModeConfigurationService>(TYPES.ModeConfigurationService)
-      modeService.setBodySubstitutionMessage(req.body)
+      modeService.setSubstitutionMessage(req.body)
       return res.status(204).send()
     }
   )
 
-export { bodyRouter }
+export { substitutionRouter }

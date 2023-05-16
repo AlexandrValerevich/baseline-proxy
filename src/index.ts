@@ -30,7 +30,7 @@ app.use(Routes.errorRouter)
 app.use(Routes.scoutRouter)
 app.use(Routes.matchRouter)
 app.use(Routes.delayRouter)
-app.use(Routes.bodyRouter)
+app.use(Routes.substitutionRouter)
 
 app.use(Middleware.bodySubstitution)
 app.use(Middleware.errorHandler)

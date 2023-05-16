@@ -1,6 +1,7 @@
 import { type MatchDTO } from '../matches/index.js'
 import { type ScoutDTO } from '../scouts/index.js'
 import { type ModeConfigurationDTO } from './dto/ModeConfigurationDTO.js'
+import { type SubstitutionDTO } from './dto/SubstitutionDTO.js'
 import { type ErrorDTO, type ModeDTO } from './dto/index.js'
 
 export interface IModeConfigurationService {
@@ -9,7 +10,7 @@ export interface IModeConfigurationService {
   getDelay: () => number
   getPredefinedScouts: () => ScoutDTO[]
   getPredefinedMatches: () => MatchDTO[]
-  getBodySubstitutionMessage: () => string | undefined
+  getSubstitutionMessage: () => SubstitutionDTO
   getModeConfiguration: () => ModeConfigurationDTO
 
   setMode: (mode: ModeDTO) => void
@@ -17,7 +18,7 @@ export interface IModeConfigurationService {
   setDelay: (delay: number) => void
   setPredefinedScouts: (scouts: ScoutDTO[]) => void
   setPredefinedMatches: (matches: MatchDTO[]) => void
-  setBodySubstitutionMessage: (message?: string) => void
+  setSubstitutionMessage: (message?: SubstitutionDTO) => void
   setModeConfiguration: (configuration: ModeConfigurationDTO) => void
 
   throwOnceError: () => any
