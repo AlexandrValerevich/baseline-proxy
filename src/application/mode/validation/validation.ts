@@ -25,7 +25,7 @@ const modeDTOValidator = Joi.string<ModeDTO>().valid(
 
 const substitutionValidator = Joi.object<SubstitutionDTO>({
   body: Joi.string().allow('', null).optional(),
-  status: Joi.number().integer().min(0).max(599).required()
+  status: Joi.number().integer().min(200).max(599).required()
 })
 
 const modeConfigurationDTOValidator = Joi.object<ModeConfigurationDTO>({

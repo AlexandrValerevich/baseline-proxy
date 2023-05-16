@@ -16,6 +16,7 @@ const bodySubstitution = (req: Request, res: Response, next: NextFunction): void
   }
   const substitution = modeService.getSubstitutionMessage()
   res.status(substitution?.status)
+  res.type('json')
   res.send(substitution.body)
   logger.debug({ message: 'Current mode is BodySubstitution.', substitution })
 }
