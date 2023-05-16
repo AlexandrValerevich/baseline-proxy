@@ -19,6 +19,8 @@ export interface IModeConfigurationService {
   setPredefinedScouts: (scouts: ScoutDTO[]) => void
   setPredefinedMatches: (matches: MatchDTO[]) => void
   setSubstitutionMessage: (message?: SubstitutionDTO) => void
+  setBodySubstitutionMessage: (body: string | undefined) => void
+  setStatusSubstitutionMessage: (status: number) => void
   setModeConfiguration: (configuration: ModeConfigurationDTO) => void
 
   throwOnceError: () => any

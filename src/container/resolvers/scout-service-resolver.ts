@@ -5,8 +5,8 @@ import {
   type IModeConfigurationService,
   type IRandomScoutGenerator,
   type IScoutService,
-  RandomScoutService,
   type ScoutDTO,
+  RandomScoutService,
   ScoutServiceLoggerDecorator
 } from '../../application/index.js'
 import { TYPES } from '../types.js'
@@ -53,6 +53,14 @@ const scoutServiceResolver = (context: interfaces.Context): IScoutService => {
         }
       }
       break
+    case 'body_substitution': {
+      scoutService = {
+        getScouts: async (): Promise<ScoutDTO[]> => {
+          return []
+        }
+      }
+      break
+    }
     default: {
       throw Error("Can't resolve ScoutService implementation due to unknown mode.")
     }

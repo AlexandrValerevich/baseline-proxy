@@ -53,6 +53,14 @@ const matchServiceResolver = (context: interfaces.Context): IMatchService => {
         }
       }
       break
+    case 'body_substitution':{
+      matchService = {
+        getMatches: async (): Promise<MatchDTO[]> => {
+          return []
+        }
+      }
+      break
+    }
     default: {
       throw new Error("Can't resolve MatchService due to unknown mode.")
     }

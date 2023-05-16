@@ -2,7 +2,6 @@ import http from 'http'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import express from 'express'
-import './extensions/index.js'
 import bodyParser from 'body-parser'
 import { logger } from './logger/index.js'
 import { ApolloServer } from '@apollo/server'
@@ -31,6 +30,8 @@ app.use(Routes.scoutRouter)
 app.use(Routes.matchRouter)
 app.use(Routes.delayRouter)
 app.use(Routes.substitutionRouter)
+app.use(Routes.bodyRouter)
+app.use(Routes.statusRouter)
 
 app.use(Middleware.bodySubstitution)
 app.use(Middleware.errorHandler)

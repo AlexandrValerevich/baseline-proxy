@@ -18,6 +18,7 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
   }
 
   generate (): MatchDTO {
+    const period = faker.datatype.number({ min: 0, max: 4 })
     return {
       id: faker.datatype.number(),
       name: faker.company.name(),
@@ -44,12 +45,14 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
         total: faker.datatype.number({ min: 0, max: 10 })
       },
 
-      periodScores: Array.from({ length: 3 }, (_, i) => ({
-        period: i + 1,
-        homeScore: faker.datatype.number({ min: 0, max: 10 }),
-        awayScore: faker.datatype.number({ min: 0, max: 10 })
-      })),
-      period: faker.datatype.number({ min: 1, max: 3 }),
+      periodScores: period !== 0
+        ? Array.from({ length: period }, (_, i) => ({
+          period: i + 1,
+          homeScore: faker.datatype.number({ min: 0, max: 10 }),
+          awayScore: faker.datatype.number({ min: 0, max: 10 })
+        }))
+        : [],
+      period,
       aftermatchShootouts: faker.datatype.boolean(),
       shootoutsScores: {
         homeScores: Array.from({ length: 5 }, () => faker.datatype.number({ min: 0, max: 1 })),

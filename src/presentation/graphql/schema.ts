@@ -10,25 +10,20 @@ type Query {
 type Match {
   id: Int!
   name: String!
-  startedAt: String!
-  status: MatchStatus!
-  homeTeam: ExternalTeam!
-  awayTeam: ExternalTeam!
-  homeScore: Int
-  awayScore: Int
-  periodScores: [PeriodScores!]
   period: Int
+  status: MatchStatus!
+  timestamp: Float
+  startedAt: String!
   aftermatchShootouts: Boolean
   shootoutsScores: ShootoutScores
+  homeTeam: ExternalTeam!
+  awayTeam: ExternalTeam!
   betstop: [BetStop!]
-  homeTotal: Float
-  awayTotal: Float
-  timestamp: Float
   season: ExternalSeason
   tournament: ExternalTournament
   sport: ExternalSport
   country: ExternalCountry
-  venue: ExternalVenue
+  periodScores: [PeriodScores!]
 }
 
 type InternalEvent {
@@ -71,8 +66,6 @@ type ShootoutScores {
 type BetStop {
   type: BetstopType!
   value: BetstopStatus!
-  updatedBy: String!
-  updatedAt: String!
 }
 
 enum BetstopType {
@@ -96,12 +89,6 @@ type ExternalSeason {
 }
 
 type ExternalTournament {
-  id: Int!
-  name: String!
-  languageCode: String!
-}
-
-type ExternalVenue {
   id: Int!
   name: String!
   languageCode: String!

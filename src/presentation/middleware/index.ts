@@ -8,9 +8,17 @@ import { TYPES, container } from '../../container/index.js'
 import { type Request, type Response, type NextFunction } from 'express'
 import { logger } from '../../logger/index.js'
 
-const bodySubstitution = (req: Request, res: Response, next: NextFunction): void => {
+const bodySubstitution = (
+  req: Request<Record<string, unknown>, Record<string, unknown>, { query: string | undefined }>,
+  res: Response,
+  next: NextFunction
+): void => {
   const modeService = container.get<IModeConfigurationService>(TYPES.ModeConfigurationService)
-  if (modeService.getMode() !== 'body_substitution') {
+  logger.debug(JSON.stringify(req.body))
+  if (
+    modeService.getMode() !== 'body_substitution' ||
+    (req.body.query?.includes('query IntrospectionQuery') ?? false)
+  ) {
     next()
     return
   }
@@ -18,7 +26,7 @@ const bodySubstitution = (req: Request, res: Response, next: NextFunction): void
   res.status(substitution?.status)
   res.type('json')
   res.send(substitution.body)
-  logger.debug({ message: 'Current mode is BodySubstitution.', substitution })
+  logger.debug({ message: 'Current mode is body_substitution.', substitution })
 }
 
 const requestLogger = (req: Request, res: Response, next: NextFunction): void => {

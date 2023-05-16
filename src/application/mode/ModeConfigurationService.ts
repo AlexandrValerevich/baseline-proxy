@@ -69,6 +69,20 @@ class ModeConfigurationService implements IModeConfigurationService {
     this.logNewConfigurationValue()
   }
 
+  setBodySubstitutionMessage (body: string | undefined): void {
+    this.configuration.substitutionMessage.body = body
+    this.logNewConfigurationValue()
+  }
+
+  setStatusSubstitutionMessage (status: number): void {
+    if (status < 200 || status > 599) {
+      throw new ValidationError(`Status should be grater than 200 and less that 599. Provided value: ${status}`)
+    }
+
+    this.configuration.substitutionMessage.status = status
+    this.logNewConfigurationValue()
+  }
+
   setError (error?: ErrorDTO | undefined): void {
     const { value, error: validationError } = errorDTOValidator.validate(error)
     if (validationError != null) {
