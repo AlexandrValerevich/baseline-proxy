@@ -27,15 +27,30 @@ class DirectScoutService implements IScoutService {
       dateTo: query.dateTo
     })
 
-    return response.map((s) => ({
-      id: s.id,
-      eventId: s.eventId,
-      matchId: s.matchId,
-      ingameTime: s.minutes,
-      owned: faker.helpers.arrayElement(['game', 'home', 'away']), // Does not implemented in old BL API
-      timestamp: s.timestamp,
-      changeType: s.changeType === 'SYSTEM' ? 'RESTORED' : s.changeType // In old BL implementation there no RESTORED
-    }))
+    return response.map((s) => {
+      let changeType: 'added' | 'removed' | 'restored';
+      switch(s.changeType) {
+        case "ADDED": 
+          changeType = 'added'
+          break;
+        case "REMOVED" :
+          changeType = 'removed'
+          break;
+        default: {
+          changeType = 'restored'
+        }
+      }
+      
+      return {
+        id: s.id,
+        eventId: s.eventId,
+        matchId: s.matchId,
+        ingameTime: s.minutes,
+        owner: faker.helpers.arrayElement(['game', 'home', 'away']), // Does not implemented in old BL API
+        dateTime: new Date(s.timestamp * 1000),
+        changeType // In old BL implementation there no RESTORED
+      };
+    })
   }
 }
 

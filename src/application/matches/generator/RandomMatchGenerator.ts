@@ -58,13 +58,12 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
         { length: faker.datatype.number({ min: 0, max: 10 }) },
         (_, i) => ({
           shootoutsNumber: i + 1,
-          scoreTeam: i % 2 === 1 ? 1 : 2,
-          scoreHome: i % 2 === 1 ? faker.helpers.arrayElement([0, 1]) : 0,
-          scoreAway: i % 2 === 0 ? faker.helpers.arrayElement([0, 1]) : 0
+          scoreTeam: i % 2 === 1 ? 'home' : 'away',
+          realised:  faker.datatype.boolean() 
         })
       ),
       betStatus: faker.datatype.boolean(),
-      timestamp: faker.datatype.number({ min: 1680000000, max: Date.now() }),
+      dateTime: faker.datatype.datetime({ min: 1680000000, max: Date.now() }),
       season: {
         id: faker.datatype.number(),
         name: faker.lorem.word(),

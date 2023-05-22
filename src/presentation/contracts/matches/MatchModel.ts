@@ -10,11 +10,21 @@ type MatchStatusModel =
 interface MatchModel {
   id: number
   name: string
-  period?: number
   status: MatchStatusModel
-  timestamp?: number
+  dateTime: Date
   startedAt: string
+  period?: number
   betStatus?: boolean
+  periodScores?: Array<{
+    period: number
+    homeScore: number
+    awayScore: number
+  }>
+  shootoutsScores?: Array<{
+    shootoutsNumber: number
+    scoreTeam: 'home' | 'away'
+    realised: boolean
+  }>
   homeTeam: {
     id: number
     name: string
@@ -29,35 +39,29 @@ interface MatchModel {
     total?: number
     probability?: number
   }
-  periodScores?: Array<{
-    period: number
-    homeScore: number
-    awayScore: number
-  }>
-  shootoutsScores?: Array<{
-    shootoutsNumber: number
-    scoreTeam: 1 | 2
-    scoreHome: 0 | 1
-    scoreAway: 0 | 1
-  }>
-  season?: {
+  season: {
     id: number
     name: string
     languageCode: string
     startDate: string
     endDate: string
   }
-  tournament?: {
+  tournament: {
     id: number
     name: string
     languageCode: string
   }
-  sport?: {
+  sport: {
     id: number
     name: string
     languageCode: string
   }
-  country?: {
+  country: {
+    id: number
+    name: string
+    languageCode: string
+  }
+  venue: {
     id: number
     name: string
     languageCode: string

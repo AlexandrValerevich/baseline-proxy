@@ -1,14 +1,14 @@
 type EventSource = 'game' | 'home' | 'away'
-type ChangeType = 'ADDED' | 'REMOVED' | 'RESTORED' | undefined
+type ChangeType = 'added' | 'removed' | 'restored'
 
 interface ScoutDTO {
   id: number
   matchId: number
-  owned: EventSource
   eventId: number
+  dateTime: Date
   ingameTime: string
-  timestamp?: number
-  changeType?: ChangeType
+  owner: EventSource
+  changeType: ChangeType
 }
 
 export type { ScoutDTO }

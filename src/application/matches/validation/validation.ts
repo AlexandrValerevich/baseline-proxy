@@ -39,7 +39,7 @@ const matchDTOValidator = Joi.object<MatchDTO>({
     .allow(null)
     .optional(),
   betStatus: Joi.boolean().allow(null).optional(),
-  timestamp: Joi.number().min(0).allow(null).optional(),
+  dateTime: Joi.date().min(0).allow(null).optional(),
   season: Joi.object({
     id: Joi.number().integer().min(0).required(),
     name: Joi.string().trim().required(),

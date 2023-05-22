@@ -10,29 +10,30 @@ type Query {
 type Match {
   id: Int!
   name: String!
-  period: Int
   status: MatchStatus!
-  timestamp: Float
+  dateTime: DateTime!
   startedAt: String!
-  shootoutsScores: [ShootoutScores!]
   homeTeam: ExternalTeam!
   awayTeam: ExternalTeam!
+  season: ExternalSeason!
+  tournament: ExternalTournament!
+  sport: ExternalSport!
+  country: ExternalCountry!
+  venue: ExternalVenue!
   betStatus: Boolean
-  season: ExternalSeason
-  tournament: ExternalTournament
-  sport: ExternalSport
-  country: ExternalCountry
+  period: Int
   periodScores: [PeriodScores!]
+  shootoutsScores: [ShootoutScores!]
 }
 
 type InternalEvent {
   id: Int!
-  owned: EventSource!
+  owner: EventSource!
   matchId: Int!
   eventId: Int!
   ingameTime: String!
-  changeType: String
-  timestamp: Float
+  changeType: ChangeType
+  dateTime: DateTime
 }
 
 type ExternalTeam {
@@ -41,6 +42,12 @@ type ExternalTeam {
   languageCode: String!
   total: Float
   probability: Float
+}
+
+enum ChangeType {
+  added
+  removed
+  restored
 }
 
 enum EventSource{
@@ -67,9 +74,13 @@ type PeriodScores {
 
 type ShootoutScores {
   shootoutsNumber: Int!
-  scoreTeam: Int!
-  scoreHome: Int!
-  scoreAway: Int!
+  scoreTeam: ShootingTeam!
+  realised: Boolean!
+}
+
+enum ShootingTeam {
+  home
+  away
 }
 
 type ExternalSeason {
@@ -93,6 +104,12 @@ type ExternalSport {
 }
 
 type ExternalCountry {
+  id: Int!
+  name: String!
+  languageCode: String!
+}
+
+type ExternalVenue {
   id: Int!
   name: String!
   languageCode: String!

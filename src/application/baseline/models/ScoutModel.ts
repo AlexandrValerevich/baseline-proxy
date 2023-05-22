@@ -12,7 +12,7 @@ interface ScoutModel {
   player?: string
   triggerId?: string
   changeType?: 'ADDED' | 'REMOVED' | 'SYSTEM'
-  timestamp?: number
+  timestamp: number
 }
 
 export type { ScoutModel }

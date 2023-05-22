@@ -21,14 +21,14 @@ class RandomScoutGenerator implements IRandomScoutGenerator {
     return {
       id: faker.datatype.number(),
       matchId: faker.datatype.number(),
-      owned: faker.helpers.arrayElement(['game', 'home', 'away']),
+      owner: faker.helpers.arrayElement(['game', 'home', 'away']),
       eventId: this.getRandomEventType(),
       ingameTime: faker.date
         .between('2000-01-01T00:00:00.000Z', '2000-01-01T07:00:00.000Z')
         .toISOString()
         .slice(11, 16),
-      timestamp: faker.datatype.number({ min: 0, max: Date.now() }),
-      changeType: faker.helpers.arrayElement(['ADDED', 'REMOVED', 'RESTORED', undefined])
+      dateTime: faker.datatype.datetime({ min: 0, max: Date.now() }),
+      changeType: faker.helpers.arrayElement(['added', 'removed', 'restored'])
     }
   }
 

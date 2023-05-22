@@ -43,12 +43,12 @@ interface MatchModel {
   homeTotal?: number
   awayTotal?: number
   matchDelay?: boolean
-  timestamp?: number
-  season?: SeasonModel
-  tournament?: TournamentModel
-  sport?: SportModel
-  country?: CountryModel
-  venue?: VenueModel
+  timestamp: number
+  season: SeasonModel
+  tournament: TournamentModel
+  sport: SportModel
+  country: CountryModel
+  venue: VenueModel
 }
 
 export type { MatchModel }

@@ -1,11 +1,11 @@
 interface ScoutModel {
   id: number
-  owned: 'game' | 'home' | 'away'
+  owner: 'game' | 'home' | 'away'
   matchId: number
   eventId: number
   ingameTime: string
-  changeType?: 'ADDED' | 'REMOVED' | 'RESTORED'
-  timestamp?: number
+  changeType: 'added' | 'removed' | 'restored'
+  dateTime: Date
 }
 
 export type { ScoutModel }

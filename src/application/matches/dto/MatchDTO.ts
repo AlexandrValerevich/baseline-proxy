@@ -12,20 +12,20 @@ type MatchStatusDTO = 'planned' | 'prematch' | 'live' | 'done' | 'forecast_misse
 interface MatchDTO {
   id: number
   name: string
-  period?: number
   status: MatchStatusDTO
-  timestamp?: number
+  dateTime: Date
   startedAt: string
-  betStatus?: boolean
   homeTeam: TeamDTO
   awayTeam: TeamDTO
-  shootoutsScores?: ShootoutScoresDTO[]
+  season: SeasonDTO
+  tournament: TournamentDTO
+  sport: SportDTO
+  country: CountryDTO
+  venue: VenueDTO
+  betStatus?: boolean
+  period?: number
   periodScores?: PeriodScoreDTO[]
-  season?: SeasonDTO
-  tournament?: TournamentDTO
-  sport?: SportDTO
-  country?: CountryDTO
-  venue?: VenueDTO
+  shootoutsScores?: ShootoutScoresDTO[]
 }
 
 export type { MatchDTO, MatchStatusDTO }

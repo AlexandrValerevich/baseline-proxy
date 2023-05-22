@@ -33,14 +33,14 @@ class DirectMatchService implements IMatchService {
   private map (matches: MatchModel[]): MatchDTO[] {
     return matches.map((m) => ({
       ...m,
+      dateTime: new Date(m.timestamp * 1000),
       betStatus: m.betstop?.find((x) => x.value === 'stop') === null,
       shootoutsScores:
         m.shootoutsScores != null && m.periodScores != null
           ? Array.from({ length: faker.datatype.number({ min: 0, max: 10 }) }, (_, i) => ({
             shootoutsNumber: i + 1,
-            scoreTeam: i % 2 === 1 ? 1 : 2,
-            scoreHome: i % 2 === 1 ? faker.helpers.arrayElement([0, 1]) : 0,
-            scoreAway: i % 2 === 0 ? faker.helpers.arrayElement([0, 1]) : 0
+            scoreTeam: i % 2 === 1 ? "home" : 'away',
+            realised: faker.datatype.boolean()
           }))
           : undefined,
       awayTeam: {
