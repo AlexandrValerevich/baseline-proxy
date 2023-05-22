@@ -44,7 +44,6 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
         probability: faker.datatype.float({ min: 0, max: 10, precision: 2 }),
         total: faker.datatype.float({ min: 0, max: 10, precision: 2 })
       },
-
       periodScores:
         period !== 0
           ? Array.from({ length: period }, (_, i) => ({
@@ -52,17 +51,17 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
             homeScore: faker.datatype.number({ min: 0, max: 10 }),
             awayScore: faker.datatype.number({ min: 0, max: 10 })
           }))
-          : [],
+          : undefined,
       period,
-      shootoutsScores: Array.from(
+      shootoutsScores: faker.helpers.arrayElement([Array.from(
         { length: faker.datatype.number({ min: 0, max: 10 }) },
         (_, i) => ({
           shootoutsNumber: i + 1,
           scoreTeam: i % 2 === 1 ? 'home' : 'away',
           realised:  faker.datatype.boolean() 
         })
-      ),
-      betStatus: faker.datatype.boolean(),
+      ), undefined]),
+      betStatus: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]),
       dateTime: faker.datatype.datetime({ min: 1680000000, max: Date.now() }),
       season: {
         id: faker.datatype.number(),

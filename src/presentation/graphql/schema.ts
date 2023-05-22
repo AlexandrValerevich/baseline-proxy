@@ -32,8 +32,8 @@ type InternalEvent {
   matchId: Int!
   eventId: Int!
   ingameTime: String!
-  changeType: ChangeType
-  dateTime: DateTime
+  changeType: ChangeType!
+  dateTime: DateTime!
 }
 
 type ExternalTeam {
