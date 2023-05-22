@@ -2,14 +2,12 @@ import { type TeamDTO } from './TeamDTO.js'
 import { type SportDTO } from './SportDTO.js'
 import { type VenueDTO } from './VenueDTO.js'
 import { type SeasonDTO } from './SeasonDTO.js'
-import { type BetStopDTO } from './BetStopDTO.js'
 import { type CountryDTO } from './CountryDTO.js'
 import { type TournamentDTO } from './TournamentDTO.js'
 import { type PeriodScoreDTO } from './PeriodScoreDTO.js'
 import { type ShootoutScoresDTO } from './ShootoutScoresDTO.js'
 
-type MatchStatusDTO = 'planned' | 'prematch' | 'live' | 'done' | 'forecast_missed'
-type TimerStatusDTO = 'stopped' | 'running'
+type MatchStatusDTO = 'planned' | 'prematch' | 'live' | 'done' | 'forecast_missed' | 'delayed' | 'canceled'
 
 interface MatchDTO {
   id: number
@@ -18,11 +16,10 @@ interface MatchDTO {
   status: MatchStatusDTO
   timestamp?: number
   startedAt: string
-  aftermatchShootouts?: boolean
-  shootoutsScores?: ShootoutScoresDTO
+  betStatus?: boolean
   homeTeam: TeamDTO
   awayTeam: TeamDTO
-  betstop?: BetStopDTO[]
+  shootoutsScores?: ShootoutScoresDTO[]
   periodScores?: PeriodScoreDTO[]
   season?: SeasonDTO
   tournament?: TournamentDTO
@@ -31,4 +28,4 @@ interface MatchDTO {
   venue?: VenueDTO
 }
 
-export type { MatchDTO, MatchStatusDTO, TimerStatusDTO }
+export type { MatchDTO, MatchStatusDTO }

@@ -9,11 +9,11 @@ const getScoutsForPeriodQueryValidator = Joi.object<GetScoutsForPeriodQuery>({
 const scoutDTOValidator = Joi.object<ScoutDTO>({
   id: Joi.number().required(),
   matchId: Joi.number().required(),
-  team: Joi.number().valid(1, 2).allow(null).optional(),
+  owned: Joi.number().valid('game', 'home', 'away'),
   eventId: Joi.number()
     .valid(...Object.values(ScoutEventTypeRuDTO))
     .required(),
-  scoutTime: Joi.string()
+  ingameTime: Joi.string()
     .pattern(/^([01]\d|2[0-3]):[0-5]\d$/)
     .required(),
   timestamp: Joi.number().optional(),

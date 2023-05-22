@@ -14,7 +14,6 @@ const bodySubstitution = (
   next: NextFunction
 ): void => {
   const modeService = container.get<IModeConfigurationService>(TYPES.ModeConfigurationService)
-  logger.debug(JSON.stringify(req.body))
   if (
     modeService.getMode() !== 'body_substitution' ||
     (req.body.query?.includes('query IntrospectionQuery') ?? false)

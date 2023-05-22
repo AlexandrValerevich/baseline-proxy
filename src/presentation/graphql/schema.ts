@@ -3,8 +3,8 @@ const typeDefs = `#graphql
 scalar DateTime
 
 type Query {
-  getMatches(dateFrom: DateTime!, dateTo: DateTime!): [Match!]!
-  getScouts(dateFrom: DateTime!, dateTo: DateTime!): [InternalEvent!]!
+  matches(dateFrom: DateTime!, dateTo: DateTime!): [Match!]!
+  scouts(dateFrom: DateTime!, dateTo: DateTime!): [InternalEvent!]!
 }
 
 type Match {
@@ -14,11 +14,10 @@ type Match {
   status: MatchStatus!
   timestamp: Float
   startedAt: String!
-  aftermatchShootouts: Boolean
-  shootoutsScores: ShootoutScores
+  shootoutsScores: [ShootoutScores!]
   homeTeam: ExternalTeam!
   awayTeam: ExternalTeam!
-  betstop: [BetStop!]
+  betStatus: Boolean
   season: ExternalSeason
   tournament: ExternalTournament
   sport: ExternalSport
@@ -28,10 +27,10 @@ type Match {
 
 type InternalEvent {
   id: Int!
-  team: Int
+  owned: EventSource!
   matchId: Int!
   eventId: Int!
-  scoutTime: String!
+  ingameTime: String!
   changeType: String
   timestamp: Float
 }
@@ -44,12 +43,20 @@ type ExternalTeam {
   probability: Float
 }
 
+enum EventSource{
+  game
+  home
+  away
+}
+
 enum MatchStatus {
   planned
   prematch
   live
   done
   forecast_missed
+  delayed
+  canceled
 }
 
 type PeriodScores {
@@ -59,25 +66,10 @@ type PeriodScores {
 }
 
 type ShootoutScores {
-  homeScores: [Int!]!
-  awayScores: [Int!]!
-}
-
-type BetStop {
-  type: BetstopType!
-  value: BetstopStatus!
-}
-
-enum BetstopType {
-  scout
-  system
-  analyst
-}
-
-enum BetstopStatus {
-  ok
-  stop
-  ready_to_start
+  shootoutsNumber: Int!
+  scoreTeam: Int!
+  scoreHome: Int!
+  scoreAway: Int!
 }
 
 type ExternalSeason {

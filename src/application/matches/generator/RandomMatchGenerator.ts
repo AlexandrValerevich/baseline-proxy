@@ -34,38 +34,36 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
         id: faker.datatype.number(),
         name: faker.company.name(),
         languageCode: 'RU',
-        probability: faker.datatype.number({ min: 0, max: 10 }),
-        total: faker.datatype.number({ min: 0, max: 10 })
+        probability: faker.datatype.float({ min: 0, max: 10, precision: 2 }),
+        total: faker.datatype.float({ min: 0, max: 10, precision: 2 })
       },
       awayTeam: {
         id: faker.datatype.number(),
         name: faker.company.name(),
         languageCode: 'RU',
-        probability: faker.datatype.number({ min: 0, max: 10 }),
-        total: faker.datatype.number({ min: 0, max: 10 })
+        probability: faker.datatype.float({ min: 0, max: 10, precision: 2 }),
+        total: faker.datatype.float({ min: 0, max: 10, precision: 2 })
       },
 
-      periodScores: period !== 0
-        ? Array.from({ length: period }, (_, i) => ({
-          period: i + 1,
-          homeScore: faker.datatype.number({ min: 0, max: 10 }),
-          awayScore: faker.datatype.number({ min: 0, max: 10 })
-        }))
-        : [],
+      periodScores:
+        period !== 0
+          ? Array.from({ length: period }, (_, i) => ({
+            period: i + 1,
+            homeScore: faker.datatype.number({ min: 0, max: 10 }),
+            awayScore: faker.datatype.number({ min: 0, max: 10 })
+          }))
+          : [],
       period,
-      aftermatchShootouts: faker.datatype.boolean(),
-      shootoutsScores: {
-        homeScores: Array.from({ length: 5 }, () => faker.datatype.number({ min: 0, max: 1 })),
-        awayScores: Array.from({ length: 5 }, () => faker.datatype.number({ min: 0, max: 1 }))
-      },
-      betstop: [
-        {
-          type: faker.helpers.arrayElement(['scout', 'system', 'analyst']),
-          value: faker.helpers.arrayElement(['ok', 'stop', 'ready_to_start']),
-          updatedBy: faker.name.firstName(),
-          updatedAt: faker.date.recent().toISOString().slice(0, -5)
-        }
-      ],
+      shootoutsScores: Array.from(
+        { length: faker.datatype.number({ min: 0, max: 10 }) },
+        (_, i) => ({
+          shootoutsNumber: i + 1,
+          scoreTeam: i % 2 === 1 ? 1 : 2,
+          scoreHome: i % 2 === 1 ? faker.helpers.arrayElement([0, 1]) : 0,
+          scoreAway: i % 2 === 0 ? faker.helpers.arrayElement([0, 1]) : 0
+        })
+      ),
+      betStatus: faker.datatype.boolean(),
       timestamp: faker.datatype.number({ min: 1680000000, max: Date.now() }),
       season: {
         id: faker.datatype.number(),

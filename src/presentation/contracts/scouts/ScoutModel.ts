@@ -1,9 +1,9 @@
 interface ScoutModel {
   id: number
-  team?: 1 | 2
+  owned: 'game' | 'home' | 'away'
   matchId: number
   eventId: number
-  scoutTime: string
+  ingameTime: string
   changeType?: 'ADDED' | 'REMOVED' | 'RESTORED'
   timestamp?: number
 }

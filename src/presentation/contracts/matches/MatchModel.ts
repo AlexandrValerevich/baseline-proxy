@@ -1,13 +1,20 @@
-type BetStopStatusModel = 'ok' | 'stop' | 'ready_to_start'
-type BetStopTypeModel = 'scout' | 'system' | 'analyst'
-type MatchStatusModel = 'planned' | 'prematch' | 'live' | 'done' | 'forecast_missed'
-type TimerStatusModel = 'stopped' | 'running'
+type MatchStatusModel =
+  | 'planned'
+  | 'prematch'
+  | 'live'
+  | 'done'
+  | 'forecast_missed'
+  | 'delayed'
+  | 'canceled'
 
 interface MatchModel {
   id: number
   name: string
-  startedAt: string
+  period?: number
   status: MatchStatusModel
+  timestamp?: number
+  startedAt: string
+  betStatus?: boolean
   homeTeam: {
     id: number
     name: string
@@ -27,19 +34,12 @@ interface MatchModel {
     homeScore: number
     awayScore: number
   }>
-  period?: number
-  aftermatchShootouts?: boolean
-  shootoutsScores?: {
-    homeScores: number[]
-    awayScores: number[]
-  }
-  betstop?: Array<{
-    type: BetStopTypeModel
-    value: BetStopStatusModel
-    updatedBy: string
-    updatedAt: string
+  shootoutsScores?: Array<{
+    shootoutsNumber: number
+    scoreTeam: 1 | 2
+    scoreHome: 0 | 1
+    scoreAway: 0 | 1
   }>
-  timestamp?: number
   season?: {
     id: number
     name: string
@@ -62,11 +62,6 @@ interface MatchModel {
     name: string
     languageCode: string
   }
-  venue?: {
-    id: number
-    name: string
-    languageCode: string
-  }
 }
 
-export type { MatchModel, BetStopStatusModel, BetStopTypeModel, MatchStatusModel, TimerStatusModel }
+export type { MatchModel }

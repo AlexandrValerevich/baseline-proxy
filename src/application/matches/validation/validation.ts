@@ -32,24 +32,13 @@ const matchDTOValidator = Joi.object<MatchDTO>({
     .allow(null)
     .optional(),
   period: Joi.number().integer().min(0).allow(null).optional(),
-  aftermatchShootouts: Joi.boolean().allow(null).optional(),
   shootoutsScores: Joi.object({
     homeScores: Joi.array().items(Joi.number().integer().min(0)).optional(),
     awayScores: Joi.array().items(Joi.number().integer().min(0)).optional()
   })
     .allow(null)
     .optional(),
-  betstop: Joi.array()
-    .items(
-      Joi.object({
-        type: Joi.valid('scout', 'system', 'analyst').required(),
-        value: Joi.valid('ok', 'stop', 'ready_to_start').required(),
-        updatedBy: Joi.string().allow('').optional(),
-        updatedAt: Joi.string().allow('', null).optional()
-      })
-    )
-    .allow(null)
-    .optional(),
+  betStatus: Joi.boolean().allow(null).optional(),
   timestamp: Joi.number().min(0).allow(null).optional(),
   season: Joi.object({
     id: Joi.number().integer().min(0).required(),

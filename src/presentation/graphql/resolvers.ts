@@ -2,17 +2,36 @@ import { ApolloServerErrorCode } from '@apollo/server/errors'
 import { GraphQLError, GraphQLScalarType, Kind } from 'graphql'
 import { type IContext } from './context.js'
 import { isValidDate } from './helpers/index.js'
+import { type MatchModel, type ScoutModel } from '../contracts/index.js'
 
 const query = {
   Query: {
-    getMatches: async (_, { dateFrom, dateTo }, { matchesService }: IContext, __) => {
+    matches: async (
+      _,
+      { dateFrom, dateTo },
+      { matchesService }: IContext,
+      __
+    ): Promise<MatchModel[]> => {
       const response = matchesService.getMatches({ dateFrom, dateTo })
       return await response
     },
-    getScouts: async (_, { dateFrom, dateTo }, { scoutService }: IContext, __) => {
+    scouts: async (
+      _,
+      { dateFrom, dateTo },
+      { scoutService }: IContext,
+      __
+    ): Promise<ScoutModel[]> => {
       const response = scoutService.getScouts({ dateFrom, dateTo })
       return await response
     }
+  }
+}
+
+const eventSource = {
+  EventSource: {
+    game: 'game',
+    home: 'home',
+    away: 'away'
   }
 }
 
@@ -83,6 +102,6 @@ const dateTime = {
   })
 }
 
-const resolvers = [query, dateTime]
+const resolvers = [query, dateTime, eventSource]
 
 export { resolvers }

@@ -1,5 +1,3 @@
-export type { AssignedTraderDTO } from './AssignedTraderDTO.js'
-export type { BetStopDTO } from './BetStopDTO.js'
 export type { CountryDTO } from './CountryDTO.js'
 export type { GetMatchesForPeriodQuery } from './GetMatchesForPeriodQuery.js'
 export type { MatchDTO } from './MatchDTO.js'

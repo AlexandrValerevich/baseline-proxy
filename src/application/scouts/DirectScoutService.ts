@@ -6,6 +6,7 @@ import { type IScoutService } from './IScoutService.js'
 import { type GetScoutsForPeriodQuery, type ScoutDTO } from './dto/index.js'
 import { getScoutsForPeriodQueryValidator } from './validation/index.js'
 import { detailsAsSting } from '../helpers/index.js'
+import { faker } from '@faker-js/faker'
 
 @injectable()
 class DirectScoutService implements IScoutService {
@@ -30,8 +31,8 @@ class DirectScoutService implements IScoutService {
       id: s.id,
       eventId: s.eventId,
       matchId: s.matchId,
-      scoutTime: s.minutes,
-      team: 1, // Does not implemented in old BL API
+      ingameTime: s.minutes,
+      owned: faker.helpers.arrayElement(['game', 'home', 'away']), // Does not implemented in old BL API
       timestamp: s.timestamp,
       changeType: s.changeType === 'SYSTEM' ? 'RESTORED' : s.changeType // In old BL implementation there no RESTORED
     }))

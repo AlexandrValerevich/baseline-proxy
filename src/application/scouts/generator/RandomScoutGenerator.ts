@@ -21,9 +21,9 @@ class RandomScoutGenerator implements IRandomScoutGenerator {
     return {
       id: faker.datatype.number(),
       matchId: faker.datatype.number(),
-      team: faker.helpers.arrayElement([1, 2, undefined]),
+      owned: faker.helpers.arrayElement(['game', 'home', 'away']),
       eventId: this.getRandomEventType(),
-      scoutTime: faker.date
+      ingameTime: faker.date
         .between('2000-01-01T00:00:00.000Z', '2000-01-01T07:00:00.000Z')
         .toISOString()
         .slice(11, 16),
