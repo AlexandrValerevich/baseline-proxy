@@ -18,7 +18,16 @@ const matchDTOValidator = Joi.object<MatchDTO>({
   id: Joi.number().integer().min(0).required(),
   name: Joi.string().trim().required(),
   startedAt: Joi.string().required(),
-  status: Joi.valid('planned', 'prematch', 'live', 'done', 'forecast_missed').required(),
+  status: Joi.valid(
+    'planned',
+    'prematch',
+    'live',
+    'done',
+    'forecast_missed',
+    'canceled',
+    'delayed',
+    'new_value'
+  ).required(),
   homeTeam: teamDtoValidator,
   awayTeam: teamDtoValidator,
   periodScores: Joi.array()

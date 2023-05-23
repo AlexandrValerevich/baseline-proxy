@@ -1,10 +1,10 @@
 interface ScoutModel {
   id: number
-  owner: 'game' | 'home' | 'away'
+  owner: 'game' | 'home' | 'away' | 'new_value'
   matchId: number
   eventId: number
   ingameTime: string
-  changeType: 'added' | 'removed' | 'restored'
+  changeType: 'added' | 'removed' | 'restored' | 'new_value'
   dateTime: Date
 }
 

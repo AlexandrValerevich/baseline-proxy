@@ -7,7 +7,15 @@ import { type TournamentDTO } from './TournamentDTO.js'
 import { type PeriodScoreDTO } from './PeriodScoreDTO.js'
 import { type ShootoutScoresDTO } from './ShootoutScoresDTO.js'
 
-type MatchStatusDTO = 'planned' | 'prematch' | 'live' | 'done' | 'forecast_missed' | 'delayed' | 'canceled'
+type MatchStatusDTO =
+  | 'planned'
+  | 'prematch'
+  | 'live'
+  | 'done'
+  | 'forecast_missed'
+  | 'delayed'
+  | 'canceled'
+  | 'new_value'
 
 interface MatchDTO {
   id: number

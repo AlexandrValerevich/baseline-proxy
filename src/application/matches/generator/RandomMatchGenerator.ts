@@ -28,7 +28,10 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
         'prematch',
         'live',
         'done',
-        'forecast_missed'
+        'forecast_missed',
+        'canceled',
+        'delayed',
+        'new_value'
       ]),
       homeTeam: {
         id: faker.datatype.number(),

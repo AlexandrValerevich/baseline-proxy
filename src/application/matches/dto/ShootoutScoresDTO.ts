@@ -1,6 +1,6 @@
 interface ShootoutScoresDTO {
   shootoutsNumber: number
-  scoreTeam: 'home' | 'away'
+  scoreTeam: 'home' | 'away' | 'new_value'
   realised: boolean
 }
 

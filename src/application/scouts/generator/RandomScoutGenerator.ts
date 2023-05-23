@@ -5,7 +5,7 @@ import { type IRandomScoutGenerator } from './IRandomScoutGenerator.js'
 
 @injectable()
 class RandomScoutGenerator implements IRandomScoutGenerator {
-  generateArray (count: number): ScoutDTO[] {
+  generateArray(count: number): ScoutDTO[] {
     if (count <= 0) {
       throw new Error(`Can't generate scouts less than 1. provided count ${count}`)
     }
@@ -17,22 +17,22 @@ class RandomScoutGenerator implements IRandomScoutGenerator {
     return scoutDTOs
   }
 
-  generate (): ScoutDTO {
+  generate(): ScoutDTO {
     return {
       id: faker.datatype.number(),
       matchId: faker.datatype.number(),
-      owner: faker.helpers.arrayElement(['game', 'home', 'away']),
+      owner: faker.helpers.arrayElement(['game', 'home', 'away', 'new_value']),
       eventId: this.getRandomEventType(),
       ingameTime: faker.date
         .between('2000-01-01T00:00:00.000Z', '2000-01-01T07:00:00.000Z')
         .toISOString()
         .slice(11, 16),
       dateTime: faker.datatype.datetime({ min: 0, max: Date.now() }),
-      changeType: faker.helpers.arrayElement(['added', 'removed', 'restored'])
+      changeType: faker.helpers.arrayElement(['added', 'removed', 'restored', 'new_value'])
     }
   }
 
-  private getRandomEventType (): number {
+  private getRandomEventType(): number {
     const eventTypeKeys = Object.keys(ScoutEventTypeRuDTO).filter((key) => isNaN(parseInt(key)))
     const randomIndex = faker.datatype.number(eventTypeKeys.length - 1)
     const randomEventTypeKey = eventTypeKeys[randomIndex]

@@ -9,7 +9,7 @@ const getScoutsForPeriodQueryValidator = Joi.object<GetScoutsForPeriodQuery>({
 const scoutDTOValidator = Joi.object<ScoutDTO>({
   id: Joi.number().required(),
   matchId: Joi.number().required(),
-  owner: Joi.number().valid('game', 'home', 'away'),
+  owner: Joi.number().valid('game', 'home', 'away', 'new_value'),
   eventId: Joi.number()
     .valid(...Object.values(ScoutEventTypeRuDTO))
     .required(),
@@ -17,7 +17,7 @@ const scoutDTOValidator = Joi.object<ScoutDTO>({
     .pattern(/^([01]\d|2[0-3]):[0-5]\d$/)
     .required(),
   dateTime: Joi.date(),
-  changeType: Joi.string().valid('added', 'removed', 'restored')
+  changeType: Joi.string().valid('added', 'removed', 'restored', 'new_value')
 })
 
 const arrayScoutDTOValidator = Joi.array<ScoutDTO[]>().items(scoutDTOValidator)

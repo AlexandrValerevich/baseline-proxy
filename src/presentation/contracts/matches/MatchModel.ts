@@ -6,6 +6,7 @@ type MatchStatusModel =
   | 'forecast_missed'
   | 'delayed'
   | 'canceled'
+  | 'new_value'
 
 interface MatchModel {
   id: number
@@ -22,7 +23,7 @@ interface MatchModel {
   }>
   shootoutsScores?: Array<{
     shootoutsNumber: number
-    scoreTeam: 'home' | 'away'
+    scoreTeam: 'home' | 'away' | 'new_value'
     realised: boolean
   }>
   homeTeam: {

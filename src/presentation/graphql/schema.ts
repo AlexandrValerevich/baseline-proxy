@@ -48,12 +48,14 @@ enum ChangeType {
   added
   removed
   restored
+  new_value
 }
 
 enum EventSource{
   game
   home
   away
+  new_value
 }
 
 enum MatchStatus {
@@ -64,6 +66,7 @@ enum MatchStatus {
   forecast_missed
   delayed
   canceled
+  new_value
 }
 
 type PeriodScores {
@@ -81,6 +84,7 @@ type ShootoutScores {
 enum ShootingTeam {
   home
   away
+  new_value
 }
 
 type ExternalSeason {
