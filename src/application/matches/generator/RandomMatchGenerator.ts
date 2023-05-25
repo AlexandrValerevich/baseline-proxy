@@ -5,7 +5,7 @@ import { type MatchDTO } from '../dto/index.js'
 
 @injectable()
 class RandomMatchGenerator implements IRandomMatchGenerator {
-  generateArray (count: number): MatchDTO[] {
+  generateArray(count: number): MatchDTO[] {
     if (count <= 0) {
       throw new Error(`Can't generate matches less than 1. provided count ${count}`)
     }
@@ -17,7 +17,7 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
     return matchDTOs
   }
 
-  generate (): MatchDTO {
+  generate(): MatchDTO {
     const period = faker.datatype.number({ min: 0, max: 4 })
     return {
       id: faker.datatype.number(),
@@ -50,20 +50,22 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
       periodScores:
         period !== 0
           ? Array.from({ length: period }, (_, i) => ({
-            period: i + 1,
-            homeScore: faker.datatype.number({ min: 0, max: 10 }),
-            awayScore: faker.datatype.number({ min: 0, max: 10 })
-          }))
+              period: i + 1,
+              homeScore: faker.datatype.number({ min: 0, max: 10 }),
+              awayScore: faker.datatype.number({ min: 0, max: 10 })
+            }))
           : undefined,
       period,
-      shootoutsScores: faker.helpers.arrayElement([Array.from(
-        { length: faker.datatype.number({ min: 0, max: 10 }) },
-        (_, i) => ({
+      homeScore: faker.datatype.number({ min: 0, max: 15 }),
+      awayScore: faker.datatype.number({ min: 0, max: 15 }),
+      shootoutsScores: faker.helpers.arrayElement([
+        Array.from({ length: faker.datatype.number({ min: 0, max: 10 }) }, (_, i) => ({
           shootoutsNumber: i + 1,
           scoreTeam: i % 2 === 1 ? 'home' : 'away',
-          realised:  faker.datatype.boolean() 
-        })
-      ), undefined]),
+          realised: faker.datatype.boolean()
+        })),
+        undefined
+      ]),
       betStatus: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]),
       dateTime: faker.datatype.datetime({ min: 1680000000, max: Date.now() }),
       season: {

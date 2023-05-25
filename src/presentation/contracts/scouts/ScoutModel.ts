@@ -6,6 +6,7 @@ interface ScoutModel {
   ingameTime: string
   changeType: 'added' | 'removed' | 'restored' | 'new_value'
   dateTime: Date
+  period: number
 }
 
 export type { ScoutModel }

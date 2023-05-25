@@ -14,6 +14,8 @@ interface MatchModel {
   status: MatchStatusModel
   dateTime: Date
   startedAt: string
+  homeScore?: number
+  awayScore?: number
   period?: number
   betStatus?: boolean
   periodScores?: Array<{

@@ -31,6 +31,8 @@ interface MatchDTO {
   country: CountryDTO
   venue: VenueDTO
   betStatus?: boolean
+  homeScore?: number
+  awayScore?: number
   period?: number
   periodScores?: PeriodScoreDTO[]
   shootoutsScores?: ShootoutScoresDTO[]

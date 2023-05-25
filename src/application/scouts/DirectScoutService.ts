@@ -12,11 +12,11 @@ import { faker } from '@faker-js/faker'
 class DirectScoutService implements IScoutService {
   private readonly client: IBaseLineClient
 
-  constructor (@inject(TYPES.BaseLineClient) client: IBaseLineClient) {
+  constructor(@inject(TYPES.BaseLineClient) client: IBaseLineClient) {
     this.client = client
   }
 
-  async getScouts (query: GetScoutsForPeriodQuery): Promise<ScoutDTO[]> {
+  async getScouts(query: GetScoutsForPeriodQuery): Promise<ScoutDTO[]> {
     const { error } = getScoutsForPeriodQueryValidator.validate(query)
     if (error != null) {
       throw new ValidationError(error.message, detailsAsSting(error))
@@ -28,19 +28,19 @@ class DirectScoutService implements IScoutService {
     })
 
     return response.map((s) => {
-      let changeType: 'added' | 'removed' | 'restored';
-      switch(s.changeType) {
-        case "ADDED": 
+      let changeType: 'added' | 'removed' | 'restored'
+      switch (s.changeType) {
+        case 'ADDED':
           changeType = 'added'
-          break;
-        case "REMOVED" :
+          break
+        case 'REMOVED':
           changeType = 'removed'
-          break;
+          break
         default: {
           changeType = 'restored'
         }
       }
-      
+
       return {
         id: s.id,
         eventId: s.eventId,
@@ -48,8 +48,9 @@ class DirectScoutService implements IScoutService {
         ingameTime: s.minutes,
         owner: faker.helpers.arrayElement(['game', 'home', 'away']), // Does not implemented in old BL API
         dateTime: new Date(s.timestamp * 1000),
-        changeType // In old BL implementation there no RESTORED
-      };
+        changeType, // In old BL implementation there no RESTORED
+        period: faker.datatype.number({ min: 1, max: 4 })
+      }
     })
   }
 }

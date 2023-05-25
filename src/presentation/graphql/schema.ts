@@ -13,6 +13,8 @@ type Match {
   status: MatchStatus!
   dateTime: DateTime!
   startedAt: String!
+  homeScore: Int
+  awayScore: Int
   homeTeam: ExternalTeam!
   awayTeam: ExternalTeam!
   season: ExternalSeason!
@@ -34,6 +36,7 @@ type InternalEvent {
   ingameTime: String!
   changeType: ChangeType!
   dateTime: DateTime!
+  period: Int!
 }
 
 type ExternalTeam {

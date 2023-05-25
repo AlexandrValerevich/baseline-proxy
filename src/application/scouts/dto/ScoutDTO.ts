@@ -9,6 +9,7 @@ interface ScoutDTO {
   ingameTime: string
   owner: EventSource
   changeType: ChangeType
+  period: number
 }
 
 export type { ScoutDTO }

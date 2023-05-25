@@ -30,6 +30,8 @@ const matchDTOValidator = Joi.object<MatchDTO>({
   ).required(),
   homeTeam: teamDtoValidator,
   awayTeam: teamDtoValidator,
+  homeScore: Joi.number().integer().min(0).max(15).allow(null).optional(),
+  awayScore: Joi.number().integer().min(0).max(15).allow(null).optional(),
   periodScores: Joi.array()
     .items(
       Joi.object({

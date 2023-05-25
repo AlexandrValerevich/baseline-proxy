@@ -28,7 +28,8 @@ class RandomScoutGenerator implements IRandomScoutGenerator {
         .toISOString()
         .slice(11, 16),
       dateTime: faker.datatype.datetime({ min: 0, max: Date.now() }),
-      changeType: faker.helpers.arrayElement(['added', 'removed', 'restored', 'new_value'])
+      changeType: faker.helpers.arrayElement(['added', 'removed', 'restored', 'new_value']),
+      period: faker.datatype.number({min: 1, max: 4})
     }
   }
 
