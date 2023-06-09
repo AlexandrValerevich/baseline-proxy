@@ -18,18 +18,29 @@ class RandomScoutGenerator implements IRandomScoutGenerator {
   }
 
   generate(): ScoutDTO {
+    const randomNum = Math.random()
     return {
       id: faker.datatype.number(),
       matchId: faker.datatype.number(),
       owner: faker.helpers.arrayElement(['game', 'home', 'away', 'new_value']),
       eventId: this.getRandomEventType(),
+      eventName: faker.lorem.word(),
       ingameTime: faker.date
         .between('2000-01-01T00:00:00.000Z', '2000-01-01T07:00:00.000Z')
         .toISOString()
         .slice(11, 16),
       dateTime: faker.datatype.datetime({ min: 0, max: Date.now() }),
       changeType: faker.helpers.arrayElement(['added', 'removed', 'restored', 'new_value']),
-      period: faker.datatype.number({min: 1, max: 4})
+      period: faker.datatype.number({ min: 1, max: 4 }),
+      additional:
+        randomNum < 0.2
+          ? undefined
+          : {
+              playerId: faker.datatype.number({ min: 0 }),
+              player: faker.lorem.word(),
+              assistingPlayerId: faker.datatype.number({ min: 0 }),
+              assistingPlayer: faker.lorem.word()
+            }
     }
   }
 

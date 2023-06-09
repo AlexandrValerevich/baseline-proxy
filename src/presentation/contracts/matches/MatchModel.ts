@@ -1,73 +1,75 @@
-type MatchStatusModel =
-  | 'planned'
-  | 'prematch'
-  | 'live'
-  | 'done'
-  | 'forecast_missed'
-  | 'delayed'
-  | 'canceled'
-  | 'new_value'
+type MatchStatusModel = 'live' | 'done' | 'canceled' | 'planned' | 'delayed' | 'new_value'
+
+interface LocalizedStringModel {
+  name: string
+  languageCode: 'RU' | 'EN' | "NEW"
+}
 
 interface MatchModel {
   id: number
   name: string
   status: MatchStatusModel
+
   dateTime: Date
   startedAt: string
+
   homeScore?: number
   awayScore?: number
   period?: number
   betStatus?: boolean
+  shootoutsStatus?: boolean
+
   periodScores?: Array<{
     period: number
     homeScore: number
     awayScore: number
   }>
+
   shootoutsScores?: Array<{
-    shootoutsNumber: number
-    scoreTeam: 'home' | 'away' | 'new_value'
-    realised: boolean
+    number: number
+    owner: 'home' | 'away' | 'new_value'
+    isScored: boolean
   }>
+
   homeTeam: {
     id: number
-    name: string
-    languageCode: string
+    names: LocalizedStringModel[]
     total?: number
     probability?: number
   }
+
   awayTeam: {
     id: number
-    name: string
-    languageCode: string
+    names: LocalizedStringModel[]
     total?: number
     probability?: number
   }
+
   season: {
     id: number
-    name: string
-    languageCode: string
+    names: LocalizedStringModel[]
     startDate: string
     endDate: string
   }
+
   tournament: {
     id: number
-    name: string
-    languageCode: string
+    names: LocalizedStringModel[]
   }
+
   sport: {
     id: number
-    name: string
-    languageCode: string
+    names: LocalizedStringModel[]
   }
+
   country: {
     id: number
-    name: string
-    languageCode: string
+    names: LocalizedStringModel[]
   }
+
   venue: {
     id: number
-    name: string
-    languageCode: string
+    names: LocalizedStringModel[]
   }
 }
 

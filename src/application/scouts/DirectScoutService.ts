@@ -44,6 +44,7 @@ class DirectScoutService implements IScoutService {
       return {
         id: s.id,
         eventId: s.eventId,
+        eventName: s.eventName,
         matchId: s.matchId,
         ingameTime: s.minutes,
         owner: faker.helpers.arrayElement(['game', 'home', 'away']), // Does not implemented in old BL API

@@ -15,7 +15,7 @@ const query = {
       const response = matchesService.getMatches({ dateFrom, dateTo })
       return await response
     },
-    scouts: async (
+    events: async (
       _,
       { dateFrom, dateTo },
       { scoutService }: IContext,

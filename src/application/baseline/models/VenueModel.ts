@@ -1,7 +1,9 @@
+import { type LanguageCodeModel } from "./LanguageCodeModel"
+
 interface VenueModel {
   id: number
   name: string
-  languageCode: string
+  languageCode: LanguageCodeModel
 }
 
 export type { VenueModel }

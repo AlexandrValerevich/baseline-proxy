@@ -4,28 +4,34 @@ scalar DateTime
 
 type Query {
   matches(dateFrom: DateTime!, dateTo: DateTime!): [Match!]!
-  scouts(dateFrom: DateTime!, dateTo: DateTime!): [InternalEvent!]!
+  events(dateFrom: DateTime!, dateTo: DateTime!): [InternalEvent!]!
 }
 
 type Match {
   id: Int!
   name: String!
   status: MatchStatus!
+
   dateTime: DateTime!
   startedAt: String!
+
   homeScore: Int
   awayScore: Int
+  period: Int
+  betStatus: Boolean
+  shootoutsStatus: Boolean
+
   homeTeam: ExternalTeam!
   awayTeam: ExternalTeam!
+
+  periodScores: [PeriodScores!]
+  shootoutsScores: [ShootoutScores!]
+  
   season: ExternalSeason!
   tournament: ExternalTournament!
   sport: ExternalSport!
   country: ExternalCountry!
   venue: ExternalVenue!
-  betStatus: Boolean
-  period: Int
-  periodScores: [PeriodScores!]
-  shootoutsScores: [ShootoutScores!]
 }
 
 type InternalEvent {
@@ -33,16 +39,29 @@ type InternalEvent {
   owner: EventSource!
   matchId: Int!
   eventId: Int!
+  eventName: String!
   ingameTime: String!
   changeType: ChangeType!
   dateTime: DateTime!
   period: Int!
+  additional: AdditionalEventInfo
+}
+
+type AdditionalEventInfo {
+  playerId: Int!
+  player: String!
+  assistingPlayerId: Int
+  assistingPlayer: String
+}
+
+type LocalizedString{
+  name: String!
+  languageCode: String!
 }
 
 type ExternalTeam {
   id: Int!
-  name: String!
-  languageCode: String!
+  names: [LocalizedString!]!
   total: Float
   probability: Float
 }
@@ -62,13 +81,11 @@ enum EventSource{
 }
 
 enum MatchStatus {
-  planned
-  prematch
   live
   done
-  forecast_missed
-  delayed
   canceled
+  planned
+  delayed
   new_value
 }
 
@@ -79,9 +96,9 @@ type PeriodScores {
 }
 
 type ShootoutScores {
-  shootoutsNumber: Int!
-  scoreTeam: ShootingTeam!
-  realised: Boolean!
+  number: Int!
+  owner: ShootingTeam!
+  isScored: Boolean!
 }
 
 enum ShootingTeam {
@@ -92,34 +109,29 @@ enum ShootingTeam {
 
 type ExternalSeason {
   id: Int!
-  name: String!
+  names: [LocalizedString!]!
   startDate: String!
   endDate: String!
-  languageCode: String!
 }
 
 type ExternalTournament {
   id: Int!
-  name: String!
-  languageCode: String!
+  names: [LocalizedString!]!
 }
 
 type ExternalSport {
   id: Int!
-  name: String!
-  languageCode: String!
+  names: [LocalizedString!]!
 }
 
 type ExternalCountry {
   id: Int!
-  name: String!
-  languageCode: String!
+  names: [LocalizedString!]!
 }
 
 type ExternalVenue {
   id: Int!
-  name: String!
-  languageCode: String!
+  names: [LocalizedString!]!
 }
 `
 
