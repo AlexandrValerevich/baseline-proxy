@@ -5,7 +5,7 @@ interface ScoutModel {
   eventId: number
   eventName: string
   ingameTime: string
-  changeType: 'added' | 'removed' | 'restored' | 'new_value'
+  changeType: 'added' | 'removed' | 'restored' | 'edited' | 'new_value'
   dateTime: Date
   period: number
   additional?: {

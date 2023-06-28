@@ -1,8 +1,8 @@
 type MatchStatusModel = 'live' | 'done' | 'canceled' | 'planned' | 'delayed' | 'new_value'
 
 interface LocalizedStringModel {
-  name: string
-  languageCode: 'RU' | 'EN' | "NEW"
+  ru: string
+  en: string
 }
 
 interface MatchModel {
@@ -33,43 +33,43 @@ interface MatchModel {
 
   homeTeam: {
     id: number
-    names: LocalizedStringModel[]
+    names: LocalizedStringModel
     total?: number
     probability?: number
   }
 
   awayTeam: {
     id: number
-    names: LocalizedStringModel[]
+    names: LocalizedStringModel
     total?: number
     probability?: number
   }
 
   season: {
     id: number
-    names: LocalizedStringModel[]
+    names: LocalizedStringModel
     startDate: string
     endDate: string
   }
 
   tournament: {
     id: number
-    names: LocalizedStringModel[]
+    names: LocalizedStringModel
   }
 
   sport: {
     id: number
-    names: LocalizedStringModel[]
+    names: LocalizedStringModel
   }
 
   country: {
     id: number
-    names: LocalizedStringModel[]
+    names: LocalizedStringModel
   }
 
   venue: {
     id: number
-    names: LocalizedStringModel[]
+    names: LocalizedStringModel
   }
 }
 

@@ -55,13 +55,13 @@ type AdditionalEventInfo {
 }
 
 type LocalizedString{
-  name: String!
-  languageCode: String!
+  ru: String!
+  en: String!
 }
 
 type ExternalTeam {
   id: Int!
-  names: [LocalizedString!]!
+  names: LocalizedString!
   total: Float
   probability: Float
 }
@@ -70,6 +70,7 @@ enum ChangeType {
   added
   removed
   restored
+  edited
   new_value
 }
 
@@ -109,29 +110,29 @@ enum ShootingTeam {
 
 type ExternalSeason {
   id: Int!
-  names: [LocalizedString!]!
+  names: LocalizedString!
   startDate: String!
   endDate: String!
 }
 
 type ExternalTournament {
   id: Int!
-  names: [LocalizedString!]!
+  names: LocalizedString!
 }
 
 type ExternalSport {
   id: Int!
-  names: [LocalizedString!]!
+  names: LocalizedString!
 }
 
 type ExternalCountry {
   id: Int!
-  names: [LocalizedString!]!
+  names: LocalizedString!
 }
 
 type ExternalVenue {
   id: Int!
-  names: [LocalizedString!]!
+  names: LocalizedString!
 }
 `
 

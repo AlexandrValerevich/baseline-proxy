@@ -35,13 +35,13 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
       ]),
       homeTeam: {
         id: faker.datatype.number(),
-        names: Array.from({ length: 3 }, this.generateLocalizedStringDTO),
+        names: this.generateLocalizedStringDTO(),
         probability: faker.datatype.float({ min: 0, max: 10, precision: 2 }),
         total: faker.datatype.float({ min: 0, max: 10, precision: 2 })
       },
       awayTeam: {
         id: faker.datatype.number(),
-        names: Array.from({ length: 3 }, this.generateLocalizedStringDTO),
+        names: this.generateLocalizedStringDTO(),
         probability: faker.datatype.float({ min: 0, max: 10, precision: 2 }),
         total: faker.datatype.float({ min: 0, max: 10, precision: 2 })
       },
@@ -68,34 +68,33 @@ class RandomMatchGenerator implements IRandomMatchGenerator {
       dateTime: faker.datatype.datetime({ min: 1680000000, max: Date.now() }),
       season: {
         id: faker.datatype.number(),
-        names: Array.from({ length: 3 }, this.generateLocalizedStringDTO),
+        names: this.generateLocalizedStringDTO(),
         startDate: faker.date.recent().toISOString().slice(0, -5),
         endDate: faker.date.future().toISOString().slice(0, -5)
       },
       tournament: {
         id: faker.datatype.number(),
-        names: Array.from({ length: 3 }, this.generateLocalizedStringDTO)
+        names: this.generateLocalizedStringDTO()
       },
       sport: {
         id: faker.datatype.number(),
-        names: Array.from({ length: 3 }, this.generateLocalizedStringDTO)
+        names: this.generateLocalizedStringDTO()
       },
       country: {
         id: faker.datatype.number(),
-        names: Array.from({ length: 3 }, this.generateLocalizedStringDTO)
+        names: this.generateLocalizedStringDTO()
       },
       venue: {
         id: faker.datatype.number(),
-        names: Array.from({ length: 3 }, this.generateLocalizedStringDTO)
+        names: this.generateLocalizedStringDTO()
       }
     }
   }
 
-  generateLocalizedStringDTO(v: any, k: number): LocalizedStringDTO {
-    const languageCodes: Array<'RU' | 'EN' | 'NEW'> = ['RU', 'EN', 'NEW']
+  generateLocalizedStringDTO(): LocalizedStringDTO {
     return {
-      name: faker.lorem.word(),
-      languageCode: languageCodes[k]
+      ru: faker.lorem.word(),
+      en: faker.lorem.word()
     }
   }
 }

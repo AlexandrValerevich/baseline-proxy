@@ -1,8 +1,8 @@
 type MatchStatusDTO = 'live' | 'done' | 'canceled' | 'planned' | 'delayed' | 'new_value'
 
 interface LocalizedStringDTO {
-  name: string
-  languageCode: 'RU' | 'EN' | 'NEW'
+  ru: string
+  en: string
 }
 
 interface MatchDTO {
@@ -33,43 +33,43 @@ interface MatchDTO {
 
   homeTeam: {
     id: number
-    names: LocalizedStringDTO[]
+    names: LocalizedStringDTO
     total?: number
     probability?: number
   }
 
   awayTeam: {
     id: number
-    names: LocalizedStringDTO[]
+    names: LocalizedStringDTO
     total?: number
     probability?: number
   }
 
   season: {
     id: number
-    names: LocalizedStringDTO[]
+    names: LocalizedStringDTO
     startDate: string
     endDate: string
   }
 
   tournament: {
     id: number
-    names: LocalizedStringDTO[]
+    names: LocalizedStringDTO
   }
 
   sport: {
     id: number
-    names: LocalizedStringDTO[]
+    names: LocalizedStringDTO
   }
 
   country: {
     id: number
-    names: LocalizedStringDTO[]
+    names: LocalizedStringDTO
   }
 
   venue: {
     id: number
-    names: LocalizedStringDTO[]
+    names: LocalizedStringDTO
   }
 }
 

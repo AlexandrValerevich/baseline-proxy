@@ -53,23 +53,19 @@ class DirectMatchService implements IMatchService {
           : undefined,
       awayTeam: {
         id: m.awayTeam.id,
-        names: [
-          {
-            name: m.awayTeam.name,
-            languageCode: m.awayTeam.languageCode
-          }
-        ],
+        names: {
+          ru: m.awayTeam.name,
+          en: m.awayTeam.name
+        },
         total: m.awayTotal,
         probability: 0
       },
       homeTeam: {
         id: m.homeTeam.id,
-        names: [
-          {
-            name: m.homeTeam.name,
-            languageCode: m.homeTeam.languageCode
-          }
-        ],
+        names: {
+          ru: m.homeTeam.name,
+          en: m.homeTeam.name
+        },
         total: m.homeTotal,
         probability: 1
       },
@@ -77,48 +73,38 @@ class DirectMatchService implements IMatchService {
         id: m.season.id,
         endDate: m.season.endDate,
         startDate: m.season.startDate,
-        names: [
-          {
-            name: m.season.name,
-            languageCode: m.season.languageCode
-          }
-        ]
+        names: {
+          ru: m.season.name,
+          en: m.season.languageCode
+        }
       },
       tournament: {
         id: m.tournament.id,
-        names: [
-          {
-            name: m.tournament.name,
-            languageCode: m.tournament.languageCode
-          }
-        ]
+        names: {
+          ru: m.tournament.name,
+          en: m.tournament.name
+        }
       },
       sport: {
         id: m.sport.id,
-        names: [
-          {
-            name: m.sport.name,
-            languageCode: m.sport.languageCode
-          }
-        ]
+        names: {
+          ru: m.sport.name,
+          en: m.sport.name
+        }
       },
       country: {
         id: m.country.id,
-        names: [
-          {
-            name: m.country.name,
-            languageCode: m.country.languageCode
-          }
-        ]
+        names: {
+          ru: m.country.name,
+          en: m.country.name
+        }
       },
       venue: {
         id: m.venue.id,
-        names: [
-          {
-            name: m.venue.name,
-            languageCode: m.venue.languageCode
-          }
-        ]
+        names: {
+          ru: m.venue.name,
+          en: m.venue.name
+        }
       }
     }))
   }

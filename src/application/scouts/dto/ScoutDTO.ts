@@ -1,5 +1,5 @@
 type EventSource = 'game' | 'home' | 'away' | 'new_value'
-type ChangeType = 'added' | 'removed' | 'restored' | 'new_value'
+type ChangeType = 'added' | 'removed' | 'restored' | 'edited' | 'new_value'
 
 interface ScoutDTO {
   id: number

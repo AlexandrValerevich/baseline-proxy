@@ -28,7 +28,7 @@ class DirectScoutService implements IScoutService {
     })
 
     return response.map((s) => {
-      let changeType: 'added' | 'removed' | 'restored'
+      let changeType: 'added' | 'removed' | 'restored' | 'edited'
       switch (s.changeType) {
         case 'ADDED':
           changeType = 'added'

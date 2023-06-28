@@ -17,7 +17,7 @@ const scoutDTOValidator = Joi.object<ScoutDTO>({
     .pattern(/^([01]\d|2[0-3]):[0-5]\d$/)
     .required(),
   dateTime: Joi.date(),
-  changeType: Joi.string().valid('added', 'removed', 'restored', 'new_value'),
+  changeType: Joi.string().valid('added', 'removed', 'restored', 'edited', 'new_value'),
   period: Joi.number().min(1).max(4)
 })
 

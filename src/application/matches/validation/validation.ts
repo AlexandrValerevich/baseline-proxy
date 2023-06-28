@@ -9,8 +9,8 @@ const getMatchesForPeriodQueryValidator = Joi.object<GetMatchesForPeriodQuery>({
 const matchStatusDTOValidator = Joi.string().valid('live', 'done', 'canceled', 'planned', 'delayed', 'new_value');
 
 const localizedStringDTOValidator = Joi.object({
-  name: Joi.string().required(),
-  languageCode: Joi.string().valid('RU', 'EN', 'NEW').required()
+  ru: Joi.string().required(),
+  en: Joi.string().required(),
 });
 
 const matchDTOValidator = Joi.object({
@@ -40,37 +40,37 @@ const matchDTOValidator = Joi.object({
   ),
   homeTeam: Joi.object({
     id: Joi.number().required(),
-    names: Joi.array().items(localizedStringDTOValidator).required(),
+    names: localizedStringDTOValidator,
     total: Joi.number(),
     probability: Joi.number()
   }),
   awayTeam: Joi.object({
     id: Joi.number().required(),
-    names: Joi.array().items(localizedStringDTOValidator).required(),
+    names: localizedStringDTOValidator,
     total: Joi.number(),
     probability: Joi.number()
   }),
   season: Joi.object({
     id: Joi.number().required(),
-    names: Joi.array().items(localizedStringDTOValidator).required(),
+    names: localizedStringDTOValidator,
     startDate: Joi.string().required(),
     endDate: Joi.string().required()
   }),
   tournament: Joi.object({
     id: Joi.number().required(),
-    names: Joi.array().items(localizedStringDTOValidator).required()
+    names: localizedStringDTOValidator
   }),
   sport: Joi.object({
     id: Joi.number().required(),
-    names: Joi.array().items(localizedStringDTOValidator).required()
+    names: localizedStringDTOValidator
   }),
   country: Joi.object({
     id: Joi.number().required(),
-    names: Joi.array().items(localizedStringDTOValidator).required()
+    names: localizedStringDTOValidator
   }),
   venue: Joi.object({
     id: Joi.number().required(),
-    names: Joi.array().items(localizedStringDTOValidator).required()
+    names: localizedStringDTOValidator
   })
 });
 
